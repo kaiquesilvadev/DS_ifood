@@ -3,7 +3,6 @@ package com.kaique.ifood.services;
 import java.math.BigDecimal;
 import java.util.List;
 
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.orm.jpa.JpaObjectRetrievalFailureException;
@@ -24,7 +23,7 @@ public class RestauranteService {
 
 	@Autowired
 	private RestauranteRepository repository;
-	
+
 	@Autowired
 	private RestauranteDtoConversor conversor;
 
@@ -56,7 +55,7 @@ public class RestauranteService {
 	@Transactional
 	public Restaurante adiciona(RestaurantesDtoRequest restauranteDto) {
 		try {
-			Restaurante restaurante = new RestauranteDtoConversor().converteParaRestaurante(restauranteDto);
+			Restaurante restaurante = conversor.converteParaRestaurante(restauranteDto);
 			Restaurante novoRestaurante = repository.save(restaurante);
 			repository.flush();
 			return novoRestaurante;
@@ -70,7 +69,7 @@ public class RestauranteService {
 	public Restaurante atualiza(Long id, RestaurantesDtoRequest NovoRestaurante) {
 		try {
 			Restaurante restauranteAtual = buscaPorId(id);
-			conversor.copiaPropiedades(NovoRestaurante , restauranteAtual);
+			conversor.copiaPropiedades(NovoRestaurante, restauranteAtual);
 			Restaurante atualizacaoOk = repository.save(restauranteAtual);
 			repository.flush();
 			return atualizacaoOk;

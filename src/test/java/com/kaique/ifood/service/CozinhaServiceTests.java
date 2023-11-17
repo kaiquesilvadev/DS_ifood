@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import com.kaique.ifood.dto.request.CozinhaDtoRequest;
 import com.kaique.ifood.entities.Cozinha;
 import com.kaique.ifood.exception.EntidadeEmUsoException;
 import com.kaique.ifood.exception.EntidadeNaoEncontradaException;
@@ -25,11 +26,11 @@ class CozinhaServiceTests {
 	@DisplayName("deve cadastrar uma cozinha com sucesso")
 	public void testeCadastroCozinha() {
 		// cenário
-		Cozinha novaCozinha = new Cozinha();
-		novaCozinha.setNome("novaCozinha");
+		CozinhaDtoRequest CozinhaDto = new CozinhaDtoRequest();
+		CozinhaDto.setNome("novaCozinha");
 
 		// ação
-		novaCozinha = cozinhaService.adiciona(novaCozinha);
+		Cozinha novaCozinha = cozinhaService.adiciona(CozinhaDto);
 
 		// validação
 		assertThat(novaCozinha).isNotNull();
@@ -40,7 +41,7 @@ class CozinhaServiceTests {
 	@DisplayName("testar erro se nome for null")
 	public void testeCadastroCozinhaSemNome() {
 
-		Cozinha novaCozinha = new Cozinha();
+		CozinhaDtoRequest novaCozinha = new CozinhaDtoRequest();
 		novaCozinha.setNome(null);
 
 		assertThrows(ConstraintViolationException.class, () -> {

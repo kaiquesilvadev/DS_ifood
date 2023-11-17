@@ -2,11 +2,12 @@ package com.kaique.ifood.services;
 
 import java.util.List;
 
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
+import com.kaique.ifood.dto.conversor.CozinhaDtoConversor;
+import com.kaique.ifood.dto.request.CozinhaDtoRequest;
 import com.kaique.ifood.entities.Cozinha;
 import com.kaique.ifood.exception.CozinhaNaoEncontradaException;
 import com.kaique.ifood.exception.EntidadeEmUsoException;
@@ -19,6 +20,9 @@ public class CozinhaService {
 
 	@Autowired
 	private CozinhaRepository repository;
+
+	@Autowired
+	private CozinhaDtoConversor Conversor;
 
 	public List<Cozinha> listar() {
 		return repository.findAll();
@@ -33,14 +37,15 @@ public class CozinhaService {
 	}
 
 	@Transactional
-	public Cozinha adiciona(Cozinha Cozinha) {
-		return repository.save(Cozinha);
+	public Cozinha adiciona(CozinhaDtoRequest Cozinha) {
+		Cozinha novaCozinha = Conversor.converteDtopara(Cozinha);
+		return repository.save(novaCozinha);
 	}
 
 	@Transactional
-	public Cozinha atualiza(Long id, Cozinha NovaCozinha) {
+	public Cozinha atualiza(Long id, CozinhaDtoRequest NovaCozinha) {
 		Cozinha CozinhaAtual = buscaPorId(id);
-		BeanUtils.copyProperties(NovaCozinha, CozinhaAtual, "id");
+		Conversor.copiaPropiedades(NovaCozinha, CozinhaAtual);
 		return repository.save(CozinhaAtual);
 	}
 

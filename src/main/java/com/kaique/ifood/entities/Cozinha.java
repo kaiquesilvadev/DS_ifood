@@ -32,7 +32,6 @@ public class Cozinha implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@NotBlank
 	private String nome;
 
 	@OneToMany(mappedBy = "cozinha")
