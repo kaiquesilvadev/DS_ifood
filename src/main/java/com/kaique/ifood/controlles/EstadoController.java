@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.kaique.ifood.dto.request.EstadoDtoRequest;
 import com.kaique.ifood.entities.Estado;
 import com.kaique.ifood.services.EstadoService;
 
@@ -38,12 +39,12 @@ public class EstadoController {
 
 	@ResponseStatus(HttpStatus.CREATED)
 	@PostMapping
-	public Estado adiciona(@Valid @RequestBody Estado estado) {
+	public Estado adiciona(@Valid @RequestBody EstadoDtoRequest estado) {
 		return service.adiciona(estado);
 	}
 
 	@PutMapping("/{estadiId}")
-	public Estado atualiza(@PathVariable Long estadiId,@Valid @RequestBody Estado estado) {
+	public Estado atualiza(@PathVariable Long estadiId,@Valid @RequestBody EstadoDtoRequest estado) {
 		return service.atualiza(estadiId, estado);
 	}
 

@@ -2,11 +2,12 @@ package com.kaique.ifood.services;
 
 import java.util.List;
 
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
+import com.kaique.ifood.dto.conversor.EstadoDtoConversor;
+import com.kaique.ifood.dto.request.EstadoDtoRequest;
 import com.kaique.ifood.entities.Estado;
 import com.kaique.ifood.exception.EntidadeEmUsoException;
 import com.kaique.ifood.exception.EstadoNaoEncontradaException;
@@ -19,6 +20,9 @@ public class EstadoService {
 
 	@Autowired
 	private EstadoRepository repository;
+	
+	@Autowired
+	private EstadoDtoConversor conversor;
 
 	public List<Estado> listar() {
 		return repository.findAll();
@@ -29,15 +33,16 @@ public class EstadoService {
 	}
 
 	@Transactional
-	public Estado adiciona(Estado estado) {
-		return repository.save(estado);
+	public Estado adiciona(EstadoDtoRequest estadoDto) {
+		Estado novoEstado = conversor.conversorDto(estadoDto);
+		return repository.save(novoEstado);
 	}
 
 	@Transactional
-	public Estado atualiza(Long id, Estado NovoEstado) {
+	public Estado atualiza(Long id, EstadoDtoRequest estadoDto) {
 
 		Estado estadoAtual = buscaPorId(id);
-		BeanUtils.copyProperties(NovoEstado, estadoAtual, "id");
+		conversor.copiaPropiedades(estadoDto, estadoAtual);
 		return repository.save(estadoAtual);
 	}
 
