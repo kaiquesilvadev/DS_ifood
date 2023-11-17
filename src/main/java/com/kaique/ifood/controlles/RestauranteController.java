@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.kaique.ifood.dto.request.RestaurantesDtoRequest;
 import com.kaique.ifood.entities.Restaurante;
 import com.kaique.ifood.services.RestauranteService;
 
@@ -62,8 +63,8 @@ public class RestauranteController {
 
 	@ResponseStatus(HttpStatus.CREATED)
 	@PostMapping
-	public Restaurante adiciona(@Valid @RequestBody Restaurante restaurante) {
-		return service.adiciona(restaurante);
+	public Restaurante adiciona(@Valid @RequestBody RestaurantesDtoRequest restauranteDto) {
+		return service.adiciona(restauranteDto);
 	}
 
 	@PutMapping("/{restauranteId}")

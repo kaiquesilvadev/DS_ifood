@@ -9,6 +9,8 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.orm.jpa.JpaObjectRetrievalFailureException;
 import org.springframework.stereotype.Service;
 
+import com.kaique.ifood.dto.conversor.RestauranteDtoConversor;
+import com.kaique.ifood.dto.request.RestaurantesDtoRequest;
 import com.kaique.ifood.entities.Restaurante;
 import com.kaique.ifood.exception.ChaveEstrangeiraNaoEncontradaException;
 import com.kaique.ifood.exception.EntidadeEmUsoException;
@@ -49,14 +51,15 @@ public class RestauranteService {
 	}
 
 	@Transactional
-	public Restaurante adiciona(Restaurante restaurante) {
+	public Restaurante adiciona(RestaurantesDtoRequest restauranteDto) {
 		try {
+			Restaurante restaurante = new RestauranteDtoConversor().converteParaRestaurante(restauranteDto);
 			Restaurante novoRestaurante = repository.save(restaurante);
 			repository.flush();
 			return novoRestaurante;
 
 		} catch (DataIntegrityViolationException | JpaObjectRetrievalFailureException e) {
-			throw new ChaveEstrangeiraNaoEncontradaException("cozinha", restaurante.getCozinha().getId());
+			throw new ChaveEstrangeiraNaoEncontradaException("cozinha", restauranteDto.getCozinha().getId());
 		}
 	}
 

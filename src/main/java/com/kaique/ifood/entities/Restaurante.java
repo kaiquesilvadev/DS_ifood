@@ -46,14 +46,8 @@ public class Restaurante implements Serializable {
 	@EqualsAndHashCode.Include
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
-	//@NotNull
-	@NotBlank
 	private String nome;
 
-	// @PositiveOrZero o valor que o usuário digitar tem quer igual ou maio que zero 
-	@TaxaFrete // A anotação @TaxaFrete foi criada com propósitos didáticos e tem o mesmo efeito prático que a anotação @PositiveOrZero. 
-	@DecimalMin("0")
 	@JoinColumn(name = "taxa_frete")
 	private BigDecimal taxaFrete;
 
@@ -68,8 +62,6 @@ public class Restaurante implements Serializable {
 	@Embedded
 	private Endereco endereco;
 
-	//@Valid Valida as associações de uma entidade em cascata
- 	//@NotNull
 	@ManyToOne
 	@JoinColumn(name = "cozinha_id")
 	private Cozinha cozinha;
@@ -80,5 +72,4 @@ public class Restaurante implements Serializable {
 	@ManyToMany
 	@JoinTable(name = "tb_Restaurante_forma_pagamento", joinColumns = @JoinColumn(name = "restaurante_id"), inverseJoinColumns = @JoinColumn(name = "forma_pagamento_id"))
 	private List<FormaPagamento> formaPagamentos = new ArrayList<>();
-
 }
