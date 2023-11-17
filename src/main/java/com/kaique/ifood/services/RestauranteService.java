@@ -24,6 +24,9 @@ public class RestauranteService {
 
 	@Autowired
 	private RestauranteRepository repository;
+	
+	@Autowired
+	private RestauranteDtoConversor conversor;
 
 	public List<Restaurante> listar() {
 		return repository.findAll();
@@ -64,11 +67,10 @@ public class RestauranteService {
 	}
 
 	@Transactional
-	public Restaurante atualiza(Long id, Restaurante NovoRestaurante) {
+	public Restaurante atualiza(Long id, RestaurantesDtoRequest NovoRestaurante) {
 		try {
 			Restaurante restauranteAtual = buscaPorId(id);
-			BeanUtils.copyProperties(NovoRestaurante, restauranteAtual, "id", "formaPagamentos", "endereco",
-					"dataCadastro");
+			conversor.copiaPropiedades(NovoRestaurante , restauranteAtual);
 			Restaurante atualizacaoOk = repository.save(restauranteAtual);
 			repository.flush();
 			return atualizacaoOk;
