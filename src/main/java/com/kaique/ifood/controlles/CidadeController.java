@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.kaique.ifood.dto.request.CidadeDtoRequest;
 import com.kaique.ifood.entities.Cidade;
 import com.kaique.ifood.services.CidadeService;
 
@@ -39,12 +40,12 @@ public class CidadeController {
 
 	@ResponseStatus(HttpStatus.CREATED)
 	@PostMapping
-	public Cidade adiciona(@Valid @RequestBody Cidade cidade) {
+	public Cidade adiciona(@Valid @RequestBody CidadeDtoRequest cidade) {
 		return service.adiciona(cidade);
 	}
 
 	@PutMapping("/{cidadeId}")
-	public Cidade atualiza(@PathVariable Long cidadeId, @Valid @RequestBody Cidade cidade) {
+	public Cidade atualiza(@PathVariable Long cidadeId, @Valid @RequestBody CidadeDtoRequest cidade) {
 		return service.atualiza(cidadeId, cidade);
 	}
 

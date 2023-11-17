@@ -2,11 +2,12 @@ package com.kaique.ifood.services;
 
 import java.util.List;
 
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.kaique.ifood.dto.conversor.CidadeDtoConversor;
+import com.kaique.ifood.dto.request.CidadeDtoRequest;
 import com.kaique.ifood.entities.Cidade;
 import com.kaique.ifood.exception.ChaveEstrangeiraNaoEncontradaException;
 import com.kaique.ifood.exception.CidadeNaoEncontradaException;
@@ -22,6 +23,9 @@ public class CidadeService {
 	@Autowired
 	private EstadoRepository estado;
 
+	@Autowired
+	private CidadeDtoConversor conversor;
+
 	public List<Cidade> listar() {
 		return repository.findAll();
 	}
@@ -31,22 +35,24 @@ public class CidadeService {
 	}
 
 	@Transactional
-	public Cidade adiciona(Cidade cidade) {
-		estado.findById(cidade.getEstado().getId())
-				.orElseThrow(() -> new ChaveEstrangeiraNaoEncontradaException("Estado", cidade.getEstado().getId()));
+	public Cidade adiciona(CidadeDtoRequest cidadeDto) {
 
-		return repository.save(cidade);
+		Cidade novaCidade = conversor.converteDto(cidadeDto);
+
+		estado.findById(novaCidade.getEstado().getId()).orElseThrow(
+				() -> new ChaveEstrangeiraNaoEncontradaException("Estado", novaCidade.getEstado().getId()));
+
+		return repository.save(novaCidade);
 	}
 
 	@Transactional
-	public Cidade atualiza(Long id, Cidade NovaCidade) {
+	public Cidade atualiza(Long id, CidadeDtoRequest cidadeDto) {
 
-		if (NovaCidade.getEstado() != null)
-			estado.findById(NovaCidade.getEstado().getId()).orElseThrow(
-					() -> new ChaveEstrangeiraNaoEncontradaException("Estado", NovaCidade.getEstado().getId()));
+		estado.findById(cidadeDto.getEstado().getId())
+				.orElseThrow(() -> new ChaveEstrangeiraNaoEncontradaException("Estado", cidadeDto.getEstado().getId()));
 
 		Cidade cidadeAtual = buscaPorId(id);
-		BeanUtils.copyProperties(NovaCidade, cidadeAtual, "id");
+		conversor.copiaPropiedades(cidadeDto, cidadeAtual);
 		return repository.save(cidadeAtual);
 	}
 
