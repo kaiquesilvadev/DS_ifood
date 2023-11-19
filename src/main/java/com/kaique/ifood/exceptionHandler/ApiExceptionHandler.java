@@ -28,6 +28,7 @@ import com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException;
 import com.kaique.ifood.exception.ChaveEstrangeiraNaoEncontradaException;
 import com.kaique.ifood.exception.EntidadeEmUsoException;
 import com.kaique.ifood.exception.EntidadeNaoEncontradaException;
+import com.kaique.ifood.exception.FormaPagamentoNaoEncontradaException;
 import com.kaique.ifood.exception.NegocioException;
 import com.kaique.ifood.exceptionHandler.ApiErro.Field;
 
@@ -219,6 +220,20 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 		return handleExceptionInternal(e, erro, new HttpHeaders(), HttpStatus.CONFLICT, request);
 	}
 	
+	@ExceptionHandler(FormaPagamentoNaoEncontradaException.class)
+	public ResponseEntity<?> trataFormaPagamentoNaoEncontradaException(FormaPagamentoNaoEncontradaException e, WebRequest request) {
+
+		ApiErro erro = ApiErro.builder()
+				.timestamp(OffsetDateTime.now())
+				.Status(HttpStatus.NOT_FOUND.value())
+				.type(ProblemType.ENTIDADE_NAO_ENCONTRADA.getUrl())
+				.title(ProblemType.ENTIDADE_NAO_ENCONTRADA.getTitle())
+				.detail(e.getMessage())
+				.build();
+
+		return handleExceptionInternal(e, erro, new HttpHeaders(), HttpStatus.NOT_FOUND, request);
+	}
+	
 	@Override
 	protected ResponseEntity<Object> handleNoHandlerFoundException(NoHandlerFoundException ex, HttpHeaders headers,
 			HttpStatusCode status, WebRequest request) {
@@ -238,13 +253,15 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 	protected ResponseEntity<Object> handleHttpRequestMethodNotSupported(HttpRequestMethodNotSupportedException ex,
 			HttpHeaders headers, HttpStatusCode status, WebRequest request) {
 		
+		 String methodNotAllowed = "O método '" + ex.getMethod() + "' não é suportado para este endpoint. "
+		            + "Por favor, verifique e utilize um método válido, ou corrija a URL para o método desejado.";
+		
 		ApiErro erro = ApiErro.builder()
 				.timestamp(OffsetDateTime.now())
 				.Status(status.value())
 				.type(ProblemType.DADO_INVALIDO.getUrl())
 				.title(ProblemType.DADO_INVALIDO.getTitle())
-				.detail("Identificamos que um ou mais campos foram preenchidos incorretamente. Por favor, "
-						+ "revise as informações e preencha os campos corretamente antes de tentar novamente.")
+				.detail(methodNotAllowed)
 				.build();
 		
 		return handleExceptionInternal(ex, erro, headers, status, request);
