@@ -77,6 +77,19 @@ public class RestauranteService {
 			throw new ChaveEstrangeiraNaoEncontradaException("cozinha", NovoRestaurante.getCozinha().getId());
 		}
 	}
+	
+	@Transactional
+	public void ativa(Long id) {
+		Restaurante ativa = buscaPorId(id);
+		ativa.setAtivo(true);
+	}
+	
+	@Transactional
+	public void desativa(Long id) {
+		Restaurante dersativa = buscaPorId(id);
+		dersativa.setAtivo(false);
+	}
+
 
 	@Transactional
 	public void deletar(Long id) {

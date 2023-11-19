@@ -54,7 +54,8 @@ public class Restaurante implements Serializable {
 	@UpdateTimestamp
 	@Column(columnDefinition = "datetime")
 	private OffsetDateTime dataAtualizacao;
-
+	private Boolean ativo = Boolean.TRUE;
+			
 	@Embedded
 	private Endereco endereco;
 

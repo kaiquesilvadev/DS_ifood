@@ -71,6 +71,19 @@ public class RestauranteController {
 	public Restaurante atualiza(@PathVariable Long restauranteId,@Valid @RequestBody RestaurantesDtoRequest restaurante) {
 		return service.atualiza(restauranteId, restaurante);
 	}
+	
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	@PutMapping("/{restauranteId}/ativa")
+	public void ativa(@PathVariable Long restauranteId) {
+		service.ativa(restauranteId);
+		
+	}
+	
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	@PutMapping("/{restauranteId}/desativa")
+	public void desativa(@PathVariable Long restauranteId) {
+		service.desativa(restauranteId);
+	}
 
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	@DeleteMapping("/{id}")
