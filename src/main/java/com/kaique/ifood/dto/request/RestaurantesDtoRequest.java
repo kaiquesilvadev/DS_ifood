@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 import com.kaique.ifood.core.validation.TaxaFrete;
 import com.kaique.ifood.dto.referencias.CozinhaDtoRef;
 
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -22,7 +23,12 @@ public class RestaurantesDtoRequest {
 	@TaxaFrete // A anotação @TaxaFrete foi criada com propósitos didáticos e tem o mesmo efeito prático que a anotação @PositiveOrZero. 
 	@DecimalMin("0")
 	private BigDecimal taxaFrete;
+	
+	@Valid
+	@NotNull
+	private EnderecoDtoRequest endereco;
 
+	@Valid
  	@NotNull
 	private CozinhaDtoRef cozinha;
 }
