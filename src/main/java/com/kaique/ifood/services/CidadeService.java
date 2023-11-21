@@ -3,6 +3,7 @@ package com.kaique.ifood.services;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -11,6 +12,7 @@ import com.kaique.ifood.dto.request.CidadeDtoRequest;
 import com.kaique.ifood.entities.Cidade;
 import com.kaique.ifood.exception.ChaveEstrangeiraNaoEncontradaException;
 import com.kaique.ifood.exception.CidadeNaoEncontradaException;
+import com.kaique.ifood.exception.EntidadeEmUsoException;
 import com.kaique.ifood.repositories.CidadeRepository;
 import com.kaique.ifood.repositories.EstadoRepository;
 
@@ -58,8 +60,12 @@ public class CidadeService {
 
 	@Transactional
 	public void deletar(Long id) {
-		buscaPorId(id);
-		repository.deleteById(id);
-
+		try {
+			buscaPorId(id);
+			repository.deleteById(id);
+			repository.flush();
+		} catch (DataIntegrityViolationException e) {
+			throw new EntidadeEmUsoException(id);
+		}
 	}
 }

@@ -6,11 +6,13 @@ import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.kaique.ifood.entities.Cozinha;
 import com.kaique.ifood.entities.Endereco;
 import com.kaique.ifood.entities.Estado;
+import com.kaique.ifood.entities.Grupo;
 import com.kaique.ifood.entities.Produto;
 import com.kaique.ifood.entities.Restaurante;
 import com.kaique.ifood.mixin.CozinhaMixin;
 import com.kaique.ifood.mixin.EnderecoMixin;
 import com.kaique.ifood.mixin.EstadoMixin;
+import com.kaique.ifood.mixin.GrupoMixin;
 import com.kaique.ifood.mixin.ProdutoMixin;
 import com.kaique.ifood.mixin.RestauranteMixin;
 
@@ -29,5 +31,7 @@ public class jacksonMixinModule extends SimpleModule {
 		setMixInAnnotation(Estado.class, EstadoMixin.class);
 		
 		setMixInAnnotation(Produto.class, ProdutoMixin.class);
+		
+		setMixInAnnotation(Grupo.class, GrupoMixin.class);
 	}
 }

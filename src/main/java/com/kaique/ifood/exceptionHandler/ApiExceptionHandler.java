@@ -29,6 +29,7 @@ import com.kaique.ifood.exception.ChaveEstrangeiraNaoEncontradaException;
 import com.kaique.ifood.exception.EntidadeEmUsoException;
 import com.kaique.ifood.exception.EntidadeNaoEncontradaException;
 import com.kaique.ifood.exception.FormaPagamentoNaoEncontradaException;
+import com.kaique.ifood.exception.GrupoNaoEncontradoException;
 import com.kaique.ifood.exception.NegocioException;
 import com.kaique.ifood.exceptionHandler.ApiErro.Field;
 
@@ -233,6 +234,20 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 				.build();
 
 		return handleExceptionInternal(e, erro, new HttpHeaders(), HttpStatus.NOT_FOUND, request);
+	}
+	
+	@ExceptionHandler(GrupoNaoEncontradoException.class)
+	public ResponseEntity<?> trataGrupoNaoEncontradoException(GrupoNaoEncontradoException e , WebRequest request) {
+		
+		ApiErro erro = ApiErro.builder()
+				.timestamp(OffsetDateTime.now())
+				.Status(HttpStatus.NOT_FOUND.value())
+				.title(ProblemType.ENTIDADE_NAO_ENCONTRADA.getTitle())
+				.type(ProblemType.ENTIDADE_NAO_ENCONTRADA.getUrl())
+				.detail(e.getMessage())
+				.build();
+		
+		return handleExceptionInternal(e, erro ,new  HttpHeaders(), HttpStatus.NOT_FOUND , request);
 	}
 	
 	@Override

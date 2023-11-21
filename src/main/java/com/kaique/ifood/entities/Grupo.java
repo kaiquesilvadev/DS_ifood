@@ -33,8 +33,6 @@ public class Grupo implements Serializable {
 	@EqualsAndHashCode.Include
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
-	@NotBlank
 	private String nome;
 
 	@ManyToMany
