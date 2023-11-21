@@ -181,6 +181,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 	public ResponseEntity<?> trataChaveEstrangeiraNaoEncontradaException(ChaveEstrangeiraNaoEncontradaException e,
 			WebRequest request) {
 
+		
 		ApiErro erro = ApiErro.builder()
 				.timestamp(OffsetDateTime.now())
 				.Status(HttpStatus.BAD_REQUEST.value())

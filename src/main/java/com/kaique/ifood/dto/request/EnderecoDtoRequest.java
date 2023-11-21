@@ -1,7 +1,5 @@
 package com.kaique.ifood.dto.request;
 
-import org.aspectj.weaver.ast.Not;
-
 import com.kaique.ifood.dto.referencias.CidadeDtoRef;
 
 import jakarta.validation.Valid;

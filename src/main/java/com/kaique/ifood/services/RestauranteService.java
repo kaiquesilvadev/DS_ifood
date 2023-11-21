@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.orm.jpa.JpaObjectRetrievalFailureException;
 import org.springframework.stereotype.Service;
 
 import com.kaique.ifood.dto.conversor.RestauranteDtoConversor;
@@ -60,8 +59,8 @@ public class RestauranteService {
 			repository.flush();
 			return novoRestaurante;
 
-		} catch (DataIntegrityViolationException | JpaObjectRetrievalFailureException e) {
-			throw new ChaveEstrangeiraNaoEncontradaException("cozinha", restauranteDto.getCozinha().getId());
+		} catch (DataIntegrityViolationException e) {
+			throw new ChaveEstrangeiraNaoEncontradaException(e);
 		}
 	}
 
@@ -74,7 +73,7 @@ public class RestauranteService {
 			repository.flush();
 			return atualizacaoOk;
 		} catch (DataIntegrityViolationException e) {
-			throw new ChaveEstrangeiraNaoEncontradaException("cozinha", NovoRestaurante.getCozinha().getId());
+			throw new ChaveEstrangeiraNaoEncontradaException(e);
 		}
 	}
 
@@ -99,6 +98,5 @@ public class RestauranteService {
 		} catch (DataIntegrityViolationException e) {
 			throw new EntidadeEmUsoException(id);
 		}
-
 	}
 }
