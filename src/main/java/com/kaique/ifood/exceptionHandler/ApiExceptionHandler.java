@@ -26,11 +26,13 @@ import com.fasterxml.jackson.databind.exc.IgnoredPropertyException;
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException;
 import com.kaique.ifood.exception.ChaveEstrangeiraNaoEncontradaException;
+import com.kaique.ifood.exception.EmailJaExistenteException;
 import com.kaique.ifood.exception.EntidadeEmUsoException;
 import com.kaique.ifood.exception.EntidadeNaoEncontradaException;
 import com.kaique.ifood.exception.FormaPagamentoNaoEncontradaException;
 import com.kaique.ifood.exception.GrupoNaoEncontradoException;
 import com.kaique.ifood.exception.NegocioException;
+import com.kaique.ifood.exception.UsuarioNaoEncontradoException;
 import com.kaique.ifood.exceptionHandler.ApiErro.Field;
 
 @ControllerAdvice
@@ -249,6 +251,35 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 		
 		return handleExceptionInternal(e, erro ,new  HttpHeaders(), HttpStatus.NOT_FOUND , request);
 	}
+	
+	@ExceptionHandler(UsuarioNaoEncontradoException.class)
+	public ResponseEntity<?> trataUsuarioNaoEncontradoException(UsuarioNaoEncontradoException e , WebRequest request) {
+		
+		ApiErro erro = ApiErro.builder()
+				.timestamp(OffsetDateTime.now())
+				.Status(HttpStatus.NOT_FOUND.value())
+				.title(ProblemType.ENTIDADE_NAO_ENCONTRADA.getTitle())
+				.type(ProblemType.ENTIDADE_NAO_ENCONTRADA.getUrl())
+				.detail(e.getMessage())
+				.build();
+		
+		return handleExceptionInternal(e, erro ,new  HttpHeaders(), HttpStatus.NOT_FOUND , request);
+	}
+	
+	@ExceptionHandler(EmailJaExistenteException.class)
+	public ResponseEntity<?> trataEmailJaExistenteException(EmailJaExistenteException e , WebRequest request) {
+		
+		ApiErro erro = ApiErro.builder()
+				.timestamp(OffsetDateTime.now())
+				.Status(HttpStatus.CONFLICT.value())
+				.title(ProblemType.EMAIL_EM_USO.getTitle())
+				.type(ProblemType.EMAIL_EM_USO.getUrl())
+				.detail(e.getMessage())
+				.build();
+		
+		return handleExceptionInternal(e, erro ,new  HttpHeaders(), HttpStatus.CONFLICT , request);
+	}
+	
 	
 	@Override
 	protected ResponseEntity<Object> handleNoHandlerFoundException(NoHandlerFoundException ex, HttpHeaders headers,

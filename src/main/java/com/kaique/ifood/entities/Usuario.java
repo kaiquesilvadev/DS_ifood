@@ -39,15 +39,8 @@ public class Usuario implements Serializable {
 	@EqualsAndHashCode.Include
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
-	@NotBlank
 	private String nome;
-	
-	@Email
 	private String email;
-	
-	@NotNull
-	@Size(min = 6 , max = 15)
 	private String senha;
 
 	@CreationTimestamp
