@@ -1,6 +1,6 @@
 package com.kaique.ifood.exception;
 
-public class GrupoNaoEncontradoException extends NegocioException{
+public class GrupoNaoEncontradoException extends EntidadeNaoEncontradaException{
 	private static final long serialVersionUID = 1L;
 
 	public GrupoNaoEncontradoException(String msg) {
