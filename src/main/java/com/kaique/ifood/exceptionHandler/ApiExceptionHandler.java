@@ -32,6 +32,7 @@ import com.kaique.ifood.exception.EntidadeNaoEncontradaException;
 import com.kaique.ifood.exception.FormaPagamentoNaoEncontradaException;
 import com.kaique.ifood.exception.GrupoNaoEncontradoException;
 import com.kaique.ifood.exception.NegocioException;
+import com.kaique.ifood.exception.SenhaInexistenteException;
 import com.kaique.ifood.exception.UsuarioNaoEncontradoException;
 import com.kaique.ifood.exceptionHandler.ApiErro.Field;
 
@@ -278,6 +279,20 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 				.build();
 		
 		return handleExceptionInternal(e, erro ,new  HttpHeaders(), HttpStatus.CONFLICT , request);
+	}
+	
+	@ExceptionHandler(SenhaInexistenteException.class)
+	public ResponseEntity<?> trataSenhaInexistenteException(SenhaInexistenteException e , WebRequest request) {
+		
+		ApiErro erro = ApiErro.builder()
+				.timestamp(OffsetDateTime.now())
+				.Status(HttpStatus.UNAUTHORIZED.value())
+				.title(ProblemType.SENHA_INVALIDA.getTitle())
+				.type(ProblemType.SENHA_INVALIDA.getUrl())
+				.detail(e.getMessage())
+				.build();
+		
+		return handleExceptionInternal(e, erro ,new  HttpHeaders(), HttpStatus.UNAUTHORIZED , request);
 	}
 	
 	

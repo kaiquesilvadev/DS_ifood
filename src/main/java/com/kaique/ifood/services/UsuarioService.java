@@ -6,9 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kaique.ifood.dto.conversor.UsuarioDtoConversor;
+import com.kaique.ifood.dto.request.AtualizaSenhaDtoRequest;
+import com.kaique.ifood.dto.request.AtualizaUsuarioDtoRequest;
 import com.kaique.ifood.dto.request.UsuarioDtoRequest;
+import com.kaique.ifood.dto.responce.UsuarioDtoResponce;
 import com.kaique.ifood.entities.Usuario;
 import com.kaique.ifood.exception.EmailJaExistenteException;
+import com.kaique.ifood.exception.SenhaInexistenteException;
 import com.kaique.ifood.exception.UsuarioNaoEncontradoException;
 import com.kaique.ifood.repositories.UsuarioRepositorie;
 
@@ -23,8 +27,8 @@ public class UsuarioService {
 	@Autowired
 	private UsuarioDtoConversor conversor;
 
-	public List<Usuario> lista() {
-		return repositorie.findAll();
+	public List<UsuarioDtoResponce> lista() {
+		return conversor.ListaResponce(repositorie.findAll());
 	}
 
 	public Usuario buscarPorId(Long id) {
@@ -36,8 +40,28 @@ public class UsuarioService {
 
 		if (repositorie.existsByEmail(dto.getEmail())) {
 			throw new EmailJaExistenteException(dto);
-			
+
 		}
 		return repositorie.save(conversor.converteDto(dto));
+	}
+
+	@Transactional
+	public Usuario atualizaUsuario(AtualizaUsuarioDtoRequest dto, Long id) {
+		Usuario usuario = this.buscarPorId(id);
+		conversor.CopiaPropiedadesAtualizacao(dto, usuario);
+
+		return repositorie.save(usuario);
+	}
+
+	@Transactional
+	public void atualizaSenha(AtualizaSenhaDtoRequest senha, Long id) {
+
+		Usuario usuario = this.buscarPorId(id);
+		if (!repositorie.existsBySenha(senha.getSenhaAtual())) {
+			throw new SenhaInexistenteException();
+		}
+
+		usuario.setSenha(senha.getNovaSenha());
+		repositorie.save(usuario);
 	}
 }

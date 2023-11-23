@@ -14,7 +14,8 @@ public enum ProblemType {
 	ENTIDADE_NAO_ENCONTRADA("/entidade-nao-encontrada" , "Entidade não encontrada"),
 	ENTIDADE_EM_USO("/entidade-em-uso" , "Entidade em uso"),
 	CHAVE_ESTRANGEIRA_NAO_ENCONTRA("/chave-estrangeira-nao-encontrada" , "Chave estrangeira não encontrada"),
-	NEGOCIO( "/negocio", "Negócio");
+	NEGOCIO( "/negocio", "Negócio"),
+	SENHA_INVALIDA("/senha-invalida" , "Senha invalida");
 	
 	private String url;
 	private String title;
