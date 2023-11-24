@@ -1,6 +1,7 @@
 package com.kaique.ifood.services;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -40,14 +41,21 @@ public class UsuarioService {
 
 		if (repositorie.existsByEmail(dto.getEmail())) {
 			throw new EmailJaExistenteException(dto);
-
 		}
+
 		return repositorie.save(conversor.converteDto(dto));
 	}
 
 	@Transactional
 	public Usuario atualizaUsuario(AtualizaUsuarioDtoRequest dto, Long id) {
+
+		Optional<Usuario> usuarioExistente = repositorie.findByEmail(dto.getEmail());
 		Usuario usuario = this.buscarPorId(id);
+
+		if (repositorie.existsByEmail(dto.getEmail()) && !usuarioExistente.get().equals(usuario)) {
+			throw new EmailJaExistenteException();
+		}
+
 		conversor.CopiaPropiedadesAtualizacao(dto, usuario);
 
 		return repositorie.save(usuario);
