@@ -25,6 +25,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 import com.fasterxml.jackson.databind.exc.IgnoredPropertyException;
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException;
+import com.kaique.ifood.exception.FormaPagamentoJaExistenteException;
 import com.kaique.ifood.exception.ChaveEstrangeiraNaoEncontradaException;
 import com.kaique.ifood.exception.EmailJaExistenteException;
 import com.kaique.ifood.exception.EntidadeEmUsoException;
@@ -293,6 +294,20 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 				.build();
 		
 		return handleExceptionInternal(e, erro ,new  HttpHeaders(), HttpStatus.UNAUTHORIZED , request);
+	}
+	
+	@ExceptionHandler(FormaPagamentoJaExistenteException.class)
+	public ResponseEntity<?> trataFormaPagamentoJaExistenteException(FormaPagamentoJaExistenteException e , WebRequest request) {
+		
+		ApiErro erro = ApiErro.builder()
+				.timestamp(OffsetDateTime.now())
+				.Status(HttpStatus.NOT_FOUND.value())
+				.title(ProblemType.FORMA_PAGAMENTO_JA_EXISTENTE.getTitle())
+				.type(ProblemType.FORMA_PAGAMENTO_JA_EXISTENTE.getUrl())
+				.detail(e.getMessage())
+				.build();
+		
+		return handleExceptionInternal(e, erro ,new  HttpHeaders(), HttpStatus.NOT_FOUND , request);
 	}
 	
 	

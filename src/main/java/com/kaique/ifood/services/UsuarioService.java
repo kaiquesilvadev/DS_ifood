@@ -52,7 +52,7 @@ public class UsuarioService {
 		Optional<Usuario> usuarioExistente = repositorie.findByEmail(dto.getEmail());
 		Usuario usuario = this.buscarPorId(id);
 
-		if (repositorie.existsByEmail(dto.getEmail()) && !usuarioExistente.get().equals(usuario)) {
+		if (usuarioExistente.isPresent() && !usuarioExistente.get().equals(usuario)) {
 			throw new EmailJaExistenteException();
 		}
 

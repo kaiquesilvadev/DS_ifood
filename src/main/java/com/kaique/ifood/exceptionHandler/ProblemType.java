@@ -5,6 +5,7 @@ import lombok.Getter;
 @Getter
 public enum ProblemType {
 	
+	FORMA_PAGAMENTO_JA_EXISTENTE("/forma-pagamento-ja-existente", "Forma de pagamento já existente"),
 	EMAIL_EM_USO("/email-em-uso","Email em uso"),
 	DADO_INVALIDO("/dado-invalido" , "Dado inválido"),
 	ERRO_DE_SISTEMA("/erro-interno" , "erro interno"),
