@@ -7,6 +7,8 @@ import com.kaique.ifood.entities.Produto;
 import com.kaique.ifood.exception.ProdutoNaoEncontradoException;
 import com.kaique.ifood.repositories.ProdutoRepositorie;
 
+import jakarta.transaction.Transactional;
+
 @Service
 public class ProdutoService {
 
@@ -20,5 +22,10 @@ public class ProdutoService {
 	public Produto buscaIdEmRestaurante(Long restauranteId, Long produtoId) {
 		return repositorie.buscaProdutoPorIdEmRestaurante(produtoId , restauranteId)
 				.orElseThrow(() -> new ProdutoNaoEncontradoException(produtoId));
+	}
+	
+	@Transactional 
+	public Produto salva(Produto produto) {
+		return repositorie.save(produto);
 	}
 }

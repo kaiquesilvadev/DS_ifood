@@ -42,7 +42,7 @@ public class Produto implements Serializable {
 	private BigDecimal preco;
 
 	@NotNull
-	private Boolean ativo;
+	private Boolean ativo = false;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "restaurante_id")
