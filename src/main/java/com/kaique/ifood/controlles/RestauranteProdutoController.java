@@ -18,12 +18,17 @@ public class RestauranteProdutoController {
 
 	@Autowired
 	private RestauranteProdutoService service;
-	
+
 	@Autowired
 	private ProdutoDtoConversor conversor;
-	
+
 	@GetMapping
 	public List<ProdutoDtoResponce> listaProdutos(@PathVariable Long restauranteId) {
 		return conversor.ListDtoProduto(service.lista(restauranteId));
+	}
+
+	@GetMapping("/{produtoId}")
+	public ProdutoDtoResponce buscaidEmRestaurante(@PathVariable Long restauranteId, @PathVariable Long produtoId) {
+		return conversor.converteProduto(service.buscaIdEmRestaurante(restauranteId, produtoId));
 	}
 }

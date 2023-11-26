@@ -45,7 +45,7 @@ public class Produto implements Serializable {
 	private Boolean ativo;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "restaurantes_id")
+	@JoinColumn(name = "restaurante_id")
 	private Restaurante restaurante;
 
 }

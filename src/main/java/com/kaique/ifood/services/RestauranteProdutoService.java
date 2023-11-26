@@ -7,13 +7,12 @@ import org.springframework.stereotype.Service;
 
 import com.kaique.ifood.entities.Produto;
 import com.kaique.ifood.entities.Restaurante;
-import com.kaique.ifood.repositories.ProdutoRepositorie;
 
 @Service
 public class RestauranteProdutoService {
 
 	@Autowired
-	private ProdutoRepositorie produtoRepositorie;
+	private ProdutoService produtoService;
 	
 	@Autowired
 	private RestauranteService restauranteService;
@@ -22,5 +21,10 @@ public class RestauranteProdutoService {
 	public List<Produto> lista(Long restauranteId) {
 		Restaurante restaurante = restauranteService.buscaPorId(restauranteId);
 		return restaurante.getProdutos();
+	}
+	
+	public Produto buscaIdEmRestaurante(Long restauranteId , Long ProdutoId) {
+		restauranteService.buscaPorId(restauranteId);
+		return  produtoService.buscaIdEmRestaurante(restauranteId , ProdutoId);
 	}
 }
