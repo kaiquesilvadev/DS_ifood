@@ -42,14 +42,30 @@ public class RestauranteProdutoService {
 	}
 	
 	@Transactional
-	public void ativarProduto(Long restauranteId , Long Produtoid) {
-		Produto produto = produtoService.buscaIdEmRestaurante(restauranteId, Produtoid);
+	public Produto atualizar(ProdutoDtoRequest dtoRequest, Long restauranteId , Long produtoId) {
+		restauranteService.buscaPorId(restauranteId);
+		Produto produto = produtoService.buscaIdEmRestaurante(restauranteId, produtoId);
+		conversor.copiaPropiedades(dtoRequest, produto);
+		return produtoService.salva(produto);
+	}
+	
+	@Transactional
+	public void ativarProduto(Long restauranteId , Long produtoid) {
+		restauranteService.buscaPorId(restauranteId);
+		Produto produto = produtoService.buscaIdEmRestaurante(restauranteId, produtoid);
 		produto.setAtivo(true);
 	}
 	
 	@Transactional
-	public void desativaProduto(Long restauranteId , Long Produtoid) {
-		Produto produto = produtoService.buscaIdEmRestaurante(restauranteId, Produtoid);
+	public void desativaProduto(Long restauranteId , Long produtoid) {
+		restauranteService.buscaPorId(restauranteId);
+		Produto produto = produtoService.buscaIdEmRestaurante(restauranteId, produtoid);
 		produto.setAtivo(false);
+	}
+	
+	public void deletaProduto (Long restauranteId , Long produtoid) {
+		restauranteService.buscaPorId(restauranteId);
+		produtoService.buscaIdEmRestaurante(restauranteId, produtoid);
+		produtoService.deleta(produtoid);
 	}
 }
