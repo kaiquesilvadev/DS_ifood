@@ -41,5 +41,15 @@ public class RestauranteProdutoService {
 		return produtoService.salva(produto);
 	}
 	
+	@Transactional
+	public void ativarProduto(Long restauranteId , Long Produtoid) {
+		Produto produto = produtoService.buscaIdEmRestaurante(restauranteId, Produtoid);
+		produto.setAtivo(true);
+	}
 	
+	@Transactional
+	public void desativaProduto(Long restauranteId , Long Produtoid) {
+		Produto produto = produtoService.buscaIdEmRestaurante(restauranteId, Produtoid);
+		produto.setAtivo(false);
+	}
 }
