@@ -28,8 +28,6 @@ public class Permissao implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
-	@NotBlank
 	private String nome;
 	private String descricao;
 }
