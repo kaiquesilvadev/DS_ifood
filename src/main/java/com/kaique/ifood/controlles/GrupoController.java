@@ -43,6 +43,11 @@ public class GrupoController {
 		return service.adiciona(dto);
 	}
 	
+	@PostMapping("/{grupoId}/permissoes/{permissaoId}")
+	public Grupo atualiza(@PathVariable Long grupoId , @PathVariable Long permissaoId) {
+		return service.referencia(grupoId, permissaoId);
+	}
+	
 	@PutMapping("/{id}")
 	public Grupo atualiza(@Valid @RequestBody GrupoDtoRequest dto , @PathVariable Long id) {
 		return service.atualiza(dto, id);
@@ -52,5 +57,10 @@ public class GrupoController {
 	@DeleteMapping("/{id}")
 	public void deleta(@PathVariable Long id) {
 		service.deleta(id);
+	}
+	
+	@DeleteMapping("/{grupoId}/permissoes/{permissaoId}")
+	public Grupo removerPermissao(@PathVariable Long grupoId , @PathVariable Long permissaoId) {
+		return service.removerPermissao(grupoId, permissaoId);
 	}
 }

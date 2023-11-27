@@ -7,7 +7,9 @@ import org.springframework.stereotype.Service;
 
 import com.kaique.ifood.dto.conversor.GrupoDtoConversor;
 import com.kaique.ifood.dto.request.GrupoDtoRequest;
+import com.kaique.ifood.dto.request.PermissaoDtoRequest;
 import com.kaique.ifood.entities.Grupo;
+import com.kaique.ifood.entities.Permissao;
 import com.kaique.ifood.exception.GrupoNaoEncontradoException;
 import com.kaique.ifood.repositories.GrupoRepositorie;
 
@@ -18,6 +20,9 @@ public class GrupoService {
 
 	@Autowired
 	private GrupoRepositorie repositorie;
+
+	@Autowired
+	private PermissaoService permissaoService;
 
 	@Autowired
 	private GrupoDtoConversor conversor;
@@ -35,6 +40,22 @@ public class GrupoService {
 		Grupo grupo = conversor.converteDto(dto);
 		return repositorie.save(grupo);
 	}
+	
+	@Transactional
+	public Grupo referencia(Long grupoId, Long permissaoId) {
+		Grupo grupo = buscaPorId(grupoId);
+		Permissao permissao = permissaoService.buscaPorId(permissaoId);
+		grupo.getPermissoes().add(permissao);
+		return grupo;
+	}
+	
+	@Transactional
+	public Grupo removerPermissao(Long grupoId, Long permissaoId) {
+		Grupo grupo = buscaPorId(grupoId);
+		Permissao permissao = permissaoService.buscaPorId(permissaoId);
+		grupo.getPermissoes().remove(permissao);
+		return grupo;
+	}
 
 	@Transactional
 	public Grupo atualiza(GrupoDtoRequest dtoRequest, Long id) {
@@ -49,4 +70,6 @@ public class GrupoService {
 		this.buscaPorId(id);
 		repositorie.deleteById(id);
 	}
+
+	
 }
