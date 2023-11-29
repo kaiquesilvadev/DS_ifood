@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import com.kaique.ifood.dto.conversor.GrupoDtoConversor;
 import com.kaique.ifood.dto.request.GrupoDtoRequest;
-import com.kaique.ifood.dto.request.PermissaoDtoRequest;
 import com.kaique.ifood.entities.Grupo;
 import com.kaique.ifood.entities.Permissao;
 import com.kaique.ifood.exception.GrupoNaoEncontradoException;

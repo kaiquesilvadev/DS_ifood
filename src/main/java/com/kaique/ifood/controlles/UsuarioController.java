@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -47,15 +48,21 @@ public class UsuarioController {
 	public UsuarioDtoResponce adiciona(@Valid @RequestBody UsuarioDtoRequest dtoRequest) {
 		return conversor.converteUsuario(service.adiciona(dtoRequest));
 	}
-	
+
 	@PutMapping("{id}")
-	public UsuarioDtoResponce atualizaUsuario(@Valid @RequestBody AtualizaUsuarioDtoRequest dtoRequest ,@PathVariable Long id) {
+	public UsuarioDtoResponce atualizaUsuario(@Valid @RequestBody AtualizaUsuarioDtoRequest dtoRequest,
+			@PathVariable Long id) {
 		return conversor.converteUsuario(service.atualizaUsuario(dtoRequest, id));
 	}
-	
+
 	@ResponseStatus(value = HttpStatus.NO_CONTENT)
 	@PutMapping("{id}/atualizar-senha")
-	public void atualizaSenha(@Valid @RequestBody AtualizaSenhaDtoRequest dtoRequest ,@PathVariable Long id) {
+	public void atualizaSenha(@Valid @RequestBody AtualizaSenhaDtoRequest dtoRequest, @PathVariable Long id) {
 		service.atualizaSenha(dtoRequest, id);
+	}
+
+	@DeleteMapping("{id}")
+	public void deletar(@PathVariable Long id) {
+		service.deleta(id);
 	}
 }

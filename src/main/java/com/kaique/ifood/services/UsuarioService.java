@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import com.kaique.ifood.dto.conversor.UsuarioDtoConversor;
@@ -13,6 +14,7 @@ import com.kaique.ifood.dto.request.UsuarioDtoRequest;
 import com.kaique.ifood.dto.responce.UsuarioDtoResponce;
 import com.kaique.ifood.entities.Usuario;
 import com.kaique.ifood.exception.EmailJaExistenteException;
+import com.kaique.ifood.exception.EntidadeEmUsoException;
 import com.kaique.ifood.exception.SenhaInexistenteException;
 import com.kaique.ifood.exception.UsuarioNaoEncontradoException;
 import com.kaique.ifood.repositories.UsuarioRepositorie;
@@ -71,5 +73,16 @@ public class UsuarioService {
 
 		usuario.setSenha(senha.getNovaSenha());
 		repositorie.save(usuario);
+	}
+	
+
+	@Transactional
+	public void deleta(Long id) {
+		try {
+			buscarPorId(id);
+			repositorie.deleteById(id);
+		} catch (DataIntegrityViolationException e) {
+			throw new EntidadeEmUsoException(id);
+		}
 	}
 }

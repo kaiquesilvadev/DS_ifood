@@ -1,9 +1,13 @@
 package com.kaique.ifood.repositories;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
+import com.kaique.ifood.entities.Grupo;
 import com.kaique.ifood.entities.Usuario;
 
 public interface UsuarioRepositorie extends JpaRepository<Usuario, Long>{
@@ -12,5 +16,9 @@ public interface UsuarioRepositorie extends JpaRepository<Usuario, Long>{
     
     Boolean existsBySenha(String senha);
     
-    Optional<Usuario> findByEmail(String email);;
+    Optional<Usuario> findByEmail(String email);
+    
+    @Query("SELECT u.grupos FROM Usuario u WHERE u.id = :usuarioId")
+    List<Grupo> listaGruposDeUsuario(@Param("usuarioId") Long usuarioId);
+    
 }
