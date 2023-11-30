@@ -2,9 +2,11 @@ package com.kaique.ifood.entities;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.stereotype.Service;
 
 import com.kaique.ifood.enuns.StatusPedido;
@@ -42,12 +44,22 @@ public class Pedido implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	private BigDecimal subtotal;
+	private BigDecimal subTotal;
 	private BigDecimal taxaFrete;
 	private BigDecimal valorTotal;
 	
 	@Enumerated(EnumType.STRING)
 	private StatusPedido statusPedido = StatusPedido.CRIADO;
+	
+	@CreationTimestamp
+	private OffsetDateTime dataCriacao;
+	private OffsetDateTime dataContirmacao;
+	private OffsetDateTime dataCancelamento;
+	private OffsetDateTime dataEntrega;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(nullable = false)
+	private FormaPagamento formaPagamento;
 	
 	@Embedded
 	private Endereco enderecoEntrega;
@@ -60,10 +72,14 @@ public class Pedido implements Serializable{
 	@JoinColumn(name =  "restaurante_id")
 	private Restaurante restaurante;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(nullable = false)
-	private FormaPagamento formaPagamento;
+	@ManyToOne
+	@JoinColumn(name =  "usuario_cliente_id")
+	private Usuario cliente;
 	
 	@OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL)
 	private List<ItemPedido> itens = new ArrayList<>();
+	
+	public void calcularValorTotal() {
+		getItens().forEach(ItemPedido::getPrecoTotal);
+	}
 }
