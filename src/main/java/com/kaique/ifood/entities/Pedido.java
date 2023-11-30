@@ -36,50 +36,62 @@ import lombok.NoArgsConstructor;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
 @Table(name = "tb_pedido")
-public class Pedido implements Serializable{
+public class Pedido implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@EqualsAndHashCode.Include
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 	private BigDecimal subTotal;
 	private BigDecimal taxaFrete;
 	private BigDecimal valorTotal;
-	
+
 	@Enumerated(EnumType.STRING)
 	private StatusPedido statusPedido = StatusPedido.CRIADO;
-	
+
 	@CreationTimestamp
 	private OffsetDateTime dataCriacao;
 	private OffsetDateTime dataContirmacao;
-	private OffsetDateTime dataCancelamento;
 	private OffsetDateTime dataEntrega;
-	
+	private OffsetDateTime dataCancelamento;
+
+	@Embedded
+	private Endereco enderecoEntrega;
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(nullable = false)
 	private FormaPagamento formaPagamento;
-	
-	@Embedded
-	private Endereco enderecoEntrega;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "usuario_id")
 	private Usuario usuarioCliente;
-	
+
 	@ManyToOne
-	@JoinColumn(name =  "restaurante_id")
+	@JoinColumn(name = "restaurante_id")
 	private Restaurante restaurante;
-	
+
 	@ManyToOne
-	@JoinColumn(name =  "usuario_cliente_id")
+	@JoinColumn(name = "usuario_cliente_id")
 	private Usuario cliente;
-	
+
+	/*
+	 * TODO : analisar melhor depois 
+	 * 
+	 * Quando você tem uma associação entre duas entidades e aplica CascadeType.ALL
+	 * a essa associação, significa que as operações de persistência, remoção,
+	 * atualização e recuperação de uma entidade serão automaticamente propagadas
+	 * para a entidade associada.
+	 */
 	@OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL)
 	private List<ItemPedido> itens = new ArrayList<>();
-	
+
 	public void calcularValorTotal() {
 		getItens().forEach(ItemPedido::getPrecoTotal);
+
+		this.subTotal = getItens().stream().map(item -> item.getPrecoTotal()).reduce(BigDecimal.ZERO, BigDecimal::add);
+
+		this.valorTotal = this.subTotal.add(this.taxaFrete);
+
 	}
 }
