@@ -33,6 +33,7 @@ import com.kaique.ifood.exception.FormaPagamentoJaExistenteException;
 import com.kaique.ifood.exception.FormaPagamentoNaoEncontradaException;
 import com.kaique.ifood.exception.GrupoNaoEncontradoException;
 import com.kaique.ifood.exception.NegocioException;
+import com.kaique.ifood.exception.PedidoNaoEncontradoException;
 import com.kaique.ifood.exception.PermissaoNaoEncontradaException;
 import com.kaique.ifood.exception.ProdutoNaoEncontradoException;
 import com.kaique.ifood.exception.SenhaInexistenteException;
@@ -286,6 +287,20 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 	
 	@ExceptionHandler(UsuarioNaoEncontradoException.class)
 	public ResponseEntity<?> trataUsuarioNaoEncontradoException(UsuarioNaoEncontradoException e , WebRequest request) {
+		
+		ApiErro erro = ApiErro.builder()
+				.timestamp(OffsetDateTime.now())
+				.Status(HttpStatus.NOT_FOUND.value())
+				.title(ProblemType.ENTIDADE_NAO_ENCONTRADA.getTitle())
+				.type(ProblemType.ENTIDADE_NAO_ENCONTRADA.getUrl())
+				.detail(e.getMessage())
+				.build();
+		
+		return handleExceptionInternal(e, erro ,new  HttpHeaders(), HttpStatus.NOT_FOUND , request);
+	}
+	
+	@ExceptionHandler(PedidoNaoEncontradoException.class)
+	public ResponseEntity<?> trataPedidoNaoEncontradoException(PedidoNaoEncontradoException e , WebRequest request) {
 		
 		ApiErro erro = ApiErro.builder()
 				.timestamp(OffsetDateTime.now())

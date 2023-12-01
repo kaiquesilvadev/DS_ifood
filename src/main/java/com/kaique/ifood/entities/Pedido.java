@@ -28,9 +28,10 @@ import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
-@Service
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
@@ -53,13 +54,14 @@ public class Pedido implements Serializable {
 
 	@CreationTimestamp
 	private OffsetDateTime dataCriacao;
-	private OffsetDateTime dataContirmacao;
+	private OffsetDateTime dataConfirmacao;
 	private OffsetDateTime dataEntrega;
 	private OffsetDateTime dataCancelamento;
 
 	@Embedded
 	private Endereco enderecoEntrega;
-	@ManyToOne(fetch = FetchType.LAZY)
+	
+	//@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(nullable = false)
 	private FormaPagamento formaPagamento;
 
@@ -71,19 +73,15 @@ public class Pedido implements Serializable {
 	@JoinColumn(name = "restaurante_id")
 	private Restaurante restaurante;
 
-	@ManyToOne
-	@JoinColumn(name = "usuario_cliente_id")
-	private Usuario cliente;
-
 	/*
-	 * TODO : analisar melhor depois 
+	 * TODO : analisar melhor depois
 	 * 
 	 * Quando você tem uma associação entre duas entidades e aplica CascadeType.ALL
 	 * a essa associação, significa que as operações de persistência, remoção,
 	 * atualização e recuperação de uma entidade serão automaticamente propagadas
 	 * para a entidade associada.
 	 */
-	@OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "pedido")
 	private List<ItemPedido> itens = new ArrayList<>();
 
 	public void calcularValorTotal() {
@@ -93,5 +91,9 @@ public class Pedido implements Serializable {
 
 		this.valorTotal = this.subTotal.add(this.taxaFrete);
 
+	}
+	
+	public void definirTaxaFrete() {
+		setTaxaFrete(getRestaurante().getTaxaFrete());
 	}
 }
