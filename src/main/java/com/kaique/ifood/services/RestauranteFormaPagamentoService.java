@@ -2,6 +2,7 @@ package com.kaique.ifood.services;
 
 import java.util.List;
 
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,10 +21,11 @@ public class RestauranteFormaPagamentoService {
 	@Autowired
 	private FormaPagamentoService fPService;
 
+	@Transactional
 	public List<FormaPagamento> ListaFormaPagamento(Long id) {
 
 		Restaurante restaurante = restauranteService.buscaPorId(id);
-
+		Hibernate.initialize(restaurante.getFormaPagamentos());
 		return restaurante.getFormaPagamentos();
 	}
 
