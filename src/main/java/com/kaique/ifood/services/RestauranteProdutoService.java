@@ -2,6 +2,7 @@ package com.kaique.ifood.services;
 
 import java.util.List;
 
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,8 +25,10 @@ public class RestauranteProdutoService {
 	@Autowired
 	private ProdutoDtoConversor conversor;
 
+	@Transactional
 	public List<Produto> lista(Long restauranteId) {
 		Restaurante restaurante = restauranteService.buscaPorId(restauranteId);
+		Hibernate.initialize(restaurante.getProdutos());
 		return restaurante.getProdutos();
 	}
 
