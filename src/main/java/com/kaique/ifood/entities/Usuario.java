@@ -43,7 +43,7 @@ public class Usuario implements Serializable {
 	@CreationTimestamp
 	private OffsetDateTime dataCadastro;
 
-	@ManyToMany(fetch = FetchType.EAGER)
+	@ManyToMany
 	@JoinTable(name = "tb_usuario_grupo", joinColumns = @JoinColumn(name = "usuario_id"), inverseJoinColumns = @JoinColumn(name = "grupo_id"))
 	private List<Grupo> grupos = new ArrayList<>();
 }

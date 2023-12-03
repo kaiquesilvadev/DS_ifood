@@ -35,7 +35,7 @@ public class Grupo implements Serializable {
 	private Long id;
 	private String nome;
 
-	@ManyToMany(fetch = FetchType.EAGER)
+	@ManyToMany
 	@JoinTable(name = "tb_grupo_permissao", joinColumns = @JoinColumn(name = "grupo_id"), inverseJoinColumns = @JoinColumn(name = "permissao_id"))
 	private List<Permissao> permissoes = new ArrayList<>();
 }

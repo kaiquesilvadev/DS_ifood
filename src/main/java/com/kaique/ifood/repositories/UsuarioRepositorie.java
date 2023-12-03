@@ -18,6 +18,14 @@ public interface UsuarioRepositorie extends JpaRepository<Usuario, Long>{
     
     Optional<Usuario> findByEmail(String email);
     
+    @Query("FROM Usuario u "
+    		+ "Left join fetch u.grupos ")
+    List<Usuario> findAll();
+    
+    @Query("SELECT u FROM Usuario u "
+    		+ "LEFT JOIN FETCH u.grupos WHERE u.id = :usuarioId")
+    Optional<Usuario> findById(@Param("usuarioId") Long usuarioId);
+    
     @Query("SELECT u.grupos FROM Usuario u WHERE u.id = :usuarioId")
     List<Grupo> listaGruposDeUsuario(@Param("usuarioId") Long usuarioId);
     
