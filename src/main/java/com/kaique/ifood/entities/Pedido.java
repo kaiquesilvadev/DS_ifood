@@ -60,9 +60,9 @@ public class Pedido implements Serializable {
 
 	@Embedded
 	private Endereco enderecoEntrega;
-	
-	//@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(nullable = false)
+
+	@ManyToOne
+	@JoinColumn(name = "forma_pagamento_id")
 	private FormaPagamento formaPagamento;
 
 	@ManyToOne
@@ -92,8 +92,9 @@ public class Pedido implements Serializable {
 		this.valorTotal = this.subTotal.add(this.taxaFrete);
 
 	}
-	
+
 	public void definirTaxaFrete() {
 		setTaxaFrete(getRestaurante().getTaxaFrete());
 	}
+
 }

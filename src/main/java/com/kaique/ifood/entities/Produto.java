@@ -37,11 +37,7 @@ public class Produto implements Serializable {
 	@NotBlank
 	private String nome;
 	private String descricao;
-
-	@NotNull
 	private BigDecimal preco;
-
-	@NotNull
 	private Boolean ativo = false;
 
 	@ManyToOne(fetch = FetchType.LAZY)

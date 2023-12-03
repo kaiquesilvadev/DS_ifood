@@ -9,7 +9,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kaique.ifood.dto.conversor.PedidoDtoConverso;
+import com.kaique.ifood.dto.conversor.PedidoResumoDtoConverso;
 import com.kaique.ifood.dto.responce.PedidoDtoResponce;
+import com.kaique.ifood.dto.responce.PedidoResumoDtoResponce;
 import com.kaique.ifood.services.PedidoServices;
 
 @RestController
@@ -20,11 +22,14 @@ public class PedidoControlle {
 	private PedidoServices services;
 	
 	@Autowired
+	private PedidoResumoDtoConverso conversoResumo;
+	
+	@Autowired
 	private PedidoDtoConverso converso;
 	
 	@GetMapping
-	public List<PedidoDtoResponce> lista() {
-		return converso.listaDto(services.lista());
+	public List<PedidoResumoDtoResponce> lista() {
+		return conversoResumo.listaDto(services.lista());
 	}
 	
 	@GetMapping("/{id}")

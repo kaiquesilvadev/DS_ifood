@@ -13,21 +13,18 @@ import com.kaique.ifood.entities.ItemPedido;
 import com.kaique.ifood.entities.Pedido;
 
 @Component
-public class PedidoDtoConverso {
+public class ItemPedidoDtoConverso {
 
 	@Autowired
 	private ModelMapper modelMapper;
 	
-	public void mapea() {
-		modelMapper.createTypeMap(ItemPedidoDtoResponce.class, ItemPedido.class)
-		.addMappings(mapper -> mapper.skip(ItemPedido::setId));
+
+	
+	public ItemPedidoDtoResponce convertePedido(ItemPedido item) {
+		return modelMapper.map( item , ItemPedidoDtoResponce.class);
 	}
 	
-	public PedidoDtoResponce convertePedido(Pedido pedido) {
-		return modelMapper.map(pedido , PedidoDtoResponce.class);
-	}
-	
-	public List<PedidoDtoResponce> listaDto(List<Pedido> lista) {
+	public List<ItemPedidoDtoResponce> listaDto(List<ItemPedido> lista) {
 		return lista.stream().map(Pedido -> convertePedido(Pedido)).collect(Collectors.toList());
 	}
 }

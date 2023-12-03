@@ -8,6 +8,7 @@ import java.util.List;
 import org.hibernate.annotations.CreationTimestamp;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -42,7 +43,7 @@ public class Usuario implements Serializable {
 	@CreationTimestamp
 	private OffsetDateTime dataCadastro;
 
-	@ManyToMany
+	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "tb_usuario_grupo", joinColumns = @JoinColumn(name = "usuario_id"), inverseJoinColumns = @JoinColumn(name = "grupo_id"))
 	private List<Grupo> grupos = new ArrayList<>();
 }
