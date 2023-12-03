@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.kaique.ifood.dto.conversor.RestauranteDtoConversor;
 import com.kaique.ifood.dto.request.RestaurantesDtoRequest;
+import com.kaique.ifood.dto.responce.RestauranteResumoDtoResponce;
 import com.kaique.ifood.entities.Restaurante;
 import com.kaique.ifood.services.RestauranteService;
 
@@ -29,9 +31,12 @@ public class RestauranteController {
 	@Autowired
 	private RestauranteService service;
 
+	@Autowired
+	private RestauranteDtoConversor conversor;
+
 	@GetMapping
-	public List<Restaurante> listar() {
-		return service.listar();
+	public List<RestauranteResumoDtoResponce> listar() {
+		return conversor.listaDto(service.listar());
 	}
 
 	@GetMapping("/{id}")
@@ -68,17 +73,18 @@ public class RestauranteController {
 	}
 
 	@PutMapping("/{restauranteId}")
-	public Restaurante atualiza(@PathVariable Long restauranteId,@Valid @RequestBody RestaurantesDtoRequest restaurante) {
+	public Restaurante atualiza(@PathVariable Long restauranteId,
+			@Valid @RequestBody RestaurantesDtoRequest restaurante) {
 		return service.atualiza(restauranteId, restaurante);
 	}
-	
+
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	@PutMapping("/{restauranteId}/ativa")
 	public void ativa(@PathVariable Long restauranteId) {
 		service.ativa(restauranteId);
-		
+
 	}
-	
+
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	@PutMapping("/{restauranteId}/desativa")
 	public void desativa(@PathVariable Long restauranteId) {

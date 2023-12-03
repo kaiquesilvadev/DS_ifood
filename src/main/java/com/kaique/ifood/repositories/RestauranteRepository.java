@@ -5,12 +5,17 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import org.springframework.data.jpa.repository.Query;
 
 import com.kaique.ifood.entities.Restaurante;
 
 public interface RestauranteRepository
 		extends JpaRepository<Restaurante, Long>, RestaurantesRepositoryQueries, JpaSpecificationExecutor<Restaurante> {
 
+	@Query("FROM Restaurante r left join fetch r.cozinha")
+	List<Restaurante> findAll();
+
+	
 	List<Restaurante> findByTaxaFreteBetween(BigDecimal taxaInicial, BigDecimal taxaFinal);
 
 	/*

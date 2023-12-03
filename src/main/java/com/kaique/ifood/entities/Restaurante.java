@@ -63,10 +63,10 @@ public class Restaurante implements Serializable {
 	@JoinColumn(name = "cozinha_id")
 	private Cozinha cozinha;
 
-	@OneToMany(mappedBy = "restaurante", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "restaurante")
 	private List<Produto> produtos = new ArrayList<>();
 
-	@ManyToMany(fetch = FetchType.EAGER)
+	@ManyToMany
 	@JoinTable(name = "tb_Restaurante_forma_pagamento", joinColumns = @JoinColumn(name = "restaurante_id"), inverseJoinColumns = @JoinColumn(name = "forma_pagamento_id"))
 	private List<FormaPagamento> formaPagamentos = new ArrayList<>();
 }
