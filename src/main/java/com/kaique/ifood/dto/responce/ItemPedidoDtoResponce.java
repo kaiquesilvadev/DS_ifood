@@ -2,9 +2,6 @@ package com.kaique.ifood.dto.responce;
 
 import java.math.BigDecimal;
 
-import com.kaique.ifood.dto.referencias.PedidoDtoRef;
-import com.kaique.ifood.dto.referencias.ProdutoDtoRef;
-
 import lombok.Getter;
 import lombok.Setter;
 

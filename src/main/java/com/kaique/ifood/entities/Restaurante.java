@@ -12,7 +12,6 @@ import org.hibernate.annotations.UpdateTimestamp;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -55,7 +54,7 @@ public class Restaurante implements Serializable {
 	@Column(columnDefinition = "datetime")
 	private OffsetDateTime dataAtualizacao;
 	private Boolean ativo = Boolean.TRUE;
-			
+
 	@Embedded
 	private Endereco endereco;
 

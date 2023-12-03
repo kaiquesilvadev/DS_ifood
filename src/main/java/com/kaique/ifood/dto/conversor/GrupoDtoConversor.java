@@ -6,7 +6,6 @@ import java.util.stream.Collectors;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
-import com.kaique.ifood.dto.referencias.GrupoDtoRef;
 import com.kaique.ifood.dto.request.GrupoDtoRequest;
 import com.kaique.ifood.entities.Grupo;
 

@@ -19,7 +19,6 @@ import com.kaique.ifood.dto.request.ProdutoDtoRequest;
 import com.kaique.ifood.dto.responce.ProdutoDtoResponce;
 import com.kaique.ifood.services.RestauranteProdutoService;
 
-import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 
 @RestController

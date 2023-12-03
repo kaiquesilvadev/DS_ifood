@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.kaique.ifood.dto.responce.ItemPedidoDtoResponce;
-import com.kaique.ifood.dto.responce.PedidoDtoResponce;
 import com.kaique.ifood.dto.responce.PedidoResumoDtoResponce;
 import com.kaique.ifood.entities.ItemPedido;
 import com.kaique.ifood.entities.Pedido;
