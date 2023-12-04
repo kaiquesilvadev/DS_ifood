@@ -7,6 +7,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.kaique.ifood.dto.request.PedidoDtoRequest;
 import com.kaique.ifood.dto.responce.ItemPedidoDtoResponce;
 import com.kaique.ifood.dto.responce.PedidoDtoResponce;
 import com.kaique.ifood.entities.ItemPedido;
@@ -25,6 +26,10 @@ public class PedidoDtoConverso {
 	
 	public PedidoDtoResponce convertePedido(Pedido pedido) {
 		return modelMapper.map(pedido , PedidoDtoResponce.class);
+	}
+	
+	public Pedido converteDto(PedidoDtoRequest dtoRequest) {
+		return modelMapper.map(dtoRequest , Pedido.class);
 	}
 	
 	public List<PedidoDtoResponce> listaDto(List<Pedido> lista) {

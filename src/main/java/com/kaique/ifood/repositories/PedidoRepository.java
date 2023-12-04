@@ -1,11 +1,13 @@
 package com.kaique.ifood.repositories;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import com.kaique.ifood.entities.Pedido;
+import com.kaique.ifood.entities.Restaurante;
 
 public interface PedidoRepository extends JpaRepository<Pedido, Long> {
 
@@ -26,4 +28,7 @@ public interface PedidoRepository extends JpaRepository<Pedido, Long> {
 	+ "LEFT JOIN p.usuarioCliente"
 	)
 	List<Pedido> findAll();
+	
+	
+	Optional<Pedido> validaRestaunteFP(Long restaunteId , Long formaPagamentoId);
 }

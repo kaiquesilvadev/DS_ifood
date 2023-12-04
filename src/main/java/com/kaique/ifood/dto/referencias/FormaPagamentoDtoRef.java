@@ -6,9 +6,8 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class RestauranteDtoRef {
+public class FormaPagamentoDtoRef {
 
 	@NotNull
 	private Long id;
-	private String nome;
 }
