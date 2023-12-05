@@ -30,11 +30,13 @@ import com.kaique.ifood.exception.EmailJaExistenteException;
 import com.kaique.ifood.exception.EntidadeEmUsoException;
 import com.kaique.ifood.exception.EntidadeNaoEncontradaException;
 import com.kaique.ifood.exception.FormaPagamentoJaExistenteException;
+import com.kaique.ifood.exception.FormaPagamentoNaoAssociadoException;
 import com.kaique.ifood.exception.FormaPagamentoNaoEncontradaException;
 import com.kaique.ifood.exception.GrupoNaoEncontradoException;
 import com.kaique.ifood.exception.NegocioException;
 import com.kaique.ifood.exception.PedidoNaoEncontradoException;
 import com.kaique.ifood.exception.PermissaoNaoEncontradaException;
+import com.kaique.ifood.exception.ProdutoNaoAssociadoException;
 import com.kaique.ifood.exception.ProdutoNaoEncontradoException;
 import com.kaique.ifood.exception.SenhaInexistenteException;
 import com.kaique.ifood.exception.UsuarioNaoEncontradoException;
@@ -355,6 +357,33 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 		return handleExceptionInternal(e, erro ,new  HttpHeaders(), HttpStatus.NOT_FOUND , request);
 	}
 	
+	@ExceptionHandler(ProdutoNaoAssociadoException.class)
+	public ResponseEntity<?> trataProdutoNaoAssociadoException(ProdutoNaoAssociadoException e , WebRequest request) {
+		
+		ApiErro erro = ApiErro.builder()
+				.timestamp(OffsetDateTime.now())
+				.Status(HttpStatus.BAD_REQUEST.value())
+				.title(ProblemType.ASSOCOACAO_INVALIDA.getTitle())
+				.type(ProblemType.ASSOCOACAO_INVALIDA.getUrl())
+				.detail(e.getMessage())
+				.build();
+		
+		return handleExceptionInternal(e, erro ,new  HttpHeaders(), HttpStatus.BAD_REQUEST , request);
+	}
+	
+	@ExceptionHandler(FormaPagamentoNaoAssociadoException.class)
+	public ResponseEntity<?> trataProdutoNaoAssociadoException(FormaPagamentoNaoAssociadoException e , WebRequest request) {
+		
+		ApiErro erro = ApiErro.builder()
+				.timestamp(OffsetDateTime.now())
+				.Status(HttpStatus.BAD_REQUEST.value())
+				.title(ProblemType.ASSOCOACAO_INVALIDA.getTitle())
+				.type(ProblemType.ASSOCOACAO_INVALIDA.getUrl())
+				.detail(e.getMessage())
+				.build();
+		
+		return handleExceptionInternal(e, erro ,new  HttpHeaders(), HttpStatus.BAD_REQUEST , request);
+	}
 	
 	@Override
 	protected ResponseEntity<Object> handleNoHandlerFoundException(NoHandlerFoundException ex, HttpHeaders headers,

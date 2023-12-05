@@ -10,6 +10,7 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import com.kaique.ifood.enuns.StatusPedido;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -78,7 +79,7 @@ public class Pedido implements Serializable {
 	 * atualização e recuperação de uma entidade serão automaticamente propagadas
 	 * para a entidade associada.
 	 */
-	@OneToMany(mappedBy = "pedido")
+	@OneToMany(mappedBy = "pedido" , cascade = CascadeType.ALL)
 	private List<ItemPedido> itens = new ArrayList<>();
 
 	public void calcularValorTotal() {

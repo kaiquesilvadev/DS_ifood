@@ -6,8 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.kaique.ifood.dto.referencias.RestauranteDtoRef;
-import com.kaique.ifood.entities.Endereco;
-import com.kaique.ifood.entities.FormaPagamento;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -25,10 +23,10 @@ public class PedidoDtoResponce {
 	private OffsetDateTime dataContirmacao;
 	private OffsetDateTime dataEntrega;
 	private OffsetDateTime dataCancelamento;
-	private Endereco enderecoEntrega;
-	private FormaPagamento formaPagamento;
+	private EnderecoDtoResponce enderecoEntrega;
+	private FormaPagamentoDtoResponce formaPagamento;
 	private RestauranteDtoRef restaurante;
-	private UsuarioDtoResponce cliente;
+	private UsuarioResumoDtoResponce usuarioCliente;
 	private List<ItemPedidoDtoResponce> itens = new ArrayList<>();
 
 }

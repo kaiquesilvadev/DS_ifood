@@ -11,4 +11,5 @@ public class RestauranteDtoRef {
 	@NotNull
 	private Long id;
 	private String nome;
+	private String cozinhaNome;
 }
