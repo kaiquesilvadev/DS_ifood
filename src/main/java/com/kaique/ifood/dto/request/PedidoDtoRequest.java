@@ -27,6 +27,7 @@ public class PedidoDtoRequest {
 	@NotNull
 	private EnderecoDtoRequest enderecoEntrega;
 	
+	@Valid
 	@NotNull
 	@Size(min = 1)
 	private List<ItemPedidoDtoRequest> itens;

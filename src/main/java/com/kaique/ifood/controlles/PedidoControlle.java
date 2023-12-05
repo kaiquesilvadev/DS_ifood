@@ -44,6 +44,6 @@ public class PedidoControlle {
 
 	@PostMapping
 	public PedidoDtoResponce lista(@Valid @RequestBody PedidoDtoRequest dtoRequest) {
-		return converso.convertePedido(services.adiciona(dtoRequest));
+		return converso.convertePedido(services.criarPedido(dtoRequest));
 	}
 }

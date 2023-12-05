@@ -15,6 +15,7 @@ import com.kaique.ifood.exception.FormaPagamentoNaoAssociadoException;
 import com.kaique.ifood.exception.FormaPagamentoNaoEncontradaException;
 import com.kaique.ifood.exception.NegocioException;
 import com.kaique.ifood.exception.PedidoNaoEncontradoException;
+import com.kaique.ifood.exception.ProdutoNaoEncontradoException;
 import com.kaique.ifood.exception.RestauranteNaoEncontradaException;
 import com.kaique.ifood.repositories.PedidoRepository;
 import com.kaique.ifood.repositories.RestauranteRepository;
@@ -32,10 +33,10 @@ public class PedidoServices {
 
 	@Autowired
 	private RestauranteService restauranteService;
-	
+
 	@Autowired
 	private ProdutoService produtoService;
-	
+
 	@Autowired
 	private RestauranteRepository restauranteRepository;
 
@@ -44,7 +45,7 @@ public class PedidoServices {
 
 	@Autowired
 	private CidadeService cidadeService;
-	
+
 	@Autowired
 	private UsuarioService usuarioService;
 
@@ -60,15 +61,16 @@ public class PedidoServices {
 	}
 
 	@Transactional
-	public Pedido adiciona(PedidoDtoRequest dtoRequest) {
-	    Pedido pedido = converso.converteDto(dtoRequest);
-		Hibernate.initialize(pedido);
+	public Pedido criarPedido(PedidoDtoRequest dtoRequest) {
+		Pedido pedido = converso.converteDto(dtoRequest);
 		
-		//TODO : esse usuário e temporário ate eu fazer validação , lembrar de tirar depois
-		//pedido.setUsuarioCliente(usuarioService.buscarPorId(1L));
-		
+		// TODO : esse usuário e temporário ate eu fazer validação por token, lembrar de tirar
+		pedido.setUsuarioCliente(usuarioService.buscarPorId(1L));
+
 		validaPedido(pedido);
 		validaItens(pedido);
+		pedido.definirTaxaFrete();
+		pedido.calcularValorTotal();
 		return repository.save(pedido);
 	}
 
@@ -81,7 +83,8 @@ public class PedidoServices {
 			restauranteService.buscaPorId(idRestaurante);
 			fPService.buscaPorId(idFormaPagamento);
 			cidadeService.buscaPorId(idCidade);
-			restauranteRepository.validaRestauranteFP(pedido.getRestaurante().getId(), pedido.getFormaPagamento().getId())
+			restauranteRepository
+					.validaRestauranteFP(pedido.getRestaurante().getId(), pedido.getFormaPagamento().getId())
 					.orElseThrow(() -> new FormaPagamentoNaoAssociadoException(idRestaurante, idFormaPagamento));
 
 		} catch (FormaPagamentoNaoEncontradaException | RestauranteNaoEncontradaException
@@ -91,13 +94,18 @@ public class PedidoServices {
 	}
 
 	private void validaItens(Pedido pedido) {
-		long idRestaurante = pedido.getRestaurante().getId();
-		pedido.getItens().forEach(itens -> {
-			Produto produto = produtoService.buscaIdEmRestaurante(idRestaurante, itens.getProduto().getId());
-			itens.setPedido(pedido);
-			itens.setProduto(produto);
-			itens.setPrecoUnitario(produto.getPreco());
-		});
+		try {
+			long idRestaurante = pedido.getRestaurante().getId();
+			pedido.getItens().forEach(itens -> {
+				Produto produto = produtoService.buscaIdEmRestaurante(idRestaurante, itens.getProduto().getId());
+				itens.setPedido(pedido);
+				itens.setProduto(produto);
+				itens.setPrecoUnitario(produto.getPreco());
+			});
+		} catch (ProdutoNaoEncontradoException e) {
+			throw new NegocioException(e.getMessage());
+		}
+		
 
 	}
 

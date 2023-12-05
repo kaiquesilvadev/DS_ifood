@@ -79,20 +79,26 @@ public class Pedido implements Serializable {
 	 * atualização e recuperação de uma entidade serão automaticamente propagadas
 	 * para a entidade associada.
 	 */
-	@OneToMany(mappedBy = "pedido" , cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL)
 	private List<ItemPedido> itens = new ArrayList<>();
 
 	public void calcularValorTotal() {
-		getItens().forEach(ItemPedido::getPrecoTotal);
 
 		this.subTotal = getItens().stream().map(item -> item.getPrecoTotal()).reduce(BigDecimal.ZERO, BigDecimal::add);
 
+		System.out.println("passou no teste");
 		this.valorTotal = this.subTotal.add(this.taxaFrete);
 
 	}
 
 	public void definirTaxaFrete() {
-		setTaxaFrete(getRestaurante().getTaxaFrete());
+		BigDecimal taxa = getRestaurante().getTaxaFrete();
+
+		if (taxa != null)
+			setTaxaFrete(taxa);
+		else
+			setTaxaFrete(BigDecimal.ZERO);
+
 	}
 
 }

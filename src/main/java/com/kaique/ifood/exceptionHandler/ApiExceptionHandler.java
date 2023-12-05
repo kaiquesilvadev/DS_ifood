@@ -178,7 +178,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 
 		ApiErro erro = ApiErro.builder()
 				.timestamp(OffsetDateTime.now())
-				.Status(HttpStatus.CONFLICT.value())
+				.Status(HttpStatus.BAD_REQUEST.value())
 				.type(ProblemType.NEGOCIO.getUrl())
 				.title(ProblemType.NEGOCIO.getTitle())
 				.detail(e.getMessage())
