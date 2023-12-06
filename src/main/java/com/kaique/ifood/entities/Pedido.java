@@ -100,5 +100,13 @@ public class Pedido implements Serializable {
 			setTaxaFrete(BigDecimal.ZERO);
 
 	}
+	
+	public void confirmacao(Pedido pedido) {
+		
+		pedido.setStatusPedido(StatusPedido.CONFIRMADO);
+		pedido.setDataConfirmacao(OffsetDateTime.now());
+		
+	}
+	
 
 }

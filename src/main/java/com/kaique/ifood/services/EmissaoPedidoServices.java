@@ -23,7 +23,7 @@ import com.kaique.ifood.repositories.RestauranteRepository;
 import jakarta.transaction.Transactional;
 
 @Service
-public class PedidoServices {
+public class EmissaoPedidoServices {
 
 	@Autowired
 	private PedidoRepository repository;
@@ -54,7 +54,7 @@ public class PedidoServices {
 	}
 
 	@Transactional
-	public Pedido buscaPorid(Long id) {
+	public Pedido buscaPorId(Long id) {
 		Pedido pedido = repository.findById(id).orElseThrow(() -> new PedidoNaoEncontradoException(id));
 		Hibernate.initialize(pedido.getItens());
 		return pedido;
