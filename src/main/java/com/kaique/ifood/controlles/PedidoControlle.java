@@ -60,4 +60,10 @@ public class PedidoControlle {
 	public void confirmaPedido(@PathVariable Long pedidoId) {
 		fluxoPedidoService.confirado(pedidoId);
 	}
+	
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	@PutMapping("/{pedidoId}/entregue")
+	public void pedidoEntregue(@PathVariable Long pedidoId) {
+		fluxoPedidoService.entregue(pedidoId);
+	}
 }

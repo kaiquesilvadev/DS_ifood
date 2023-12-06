@@ -25,4 +25,15 @@ public class FluxoPedidoService {
 		
 		pedido.confirmacao(pedido);
 	}
+	
+	@Transactional
+	public void entregue(Long pedidoId) {
+		Pedido pedido = pedidoServices.buscaPorId(pedidoId);
+		
+		if(!pedido.getStatusPedido().equals(StatusPedido.CONFIRMADO)) {
+			throw new ViolacaoStatusPedidoException(pedido.getStatusPedido() , StatusPedido.ENTREGUE , pedido.getId());
+		}
+		
+		pedido.entregue(pedido);
+	}
 }
