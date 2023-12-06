@@ -9,6 +9,7 @@ import java.util.List;
 import org.hibernate.annotations.CreationTimestamp;
 
 import com.kaique.ifood.enuns.StatusPedido;
+import com.kaique.ifood.exception.ViolacaoStatusPedidoException;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Embedded;
@@ -101,18 +102,29 @@ public class Pedido implements Serializable {
 
 	}
 
-	public void confirmacao(Pedido pedido) {
-		pedido.setStatusPedido(StatusPedido.CONFIRMADO);
-		pedido.setDataConfirmacao(OffsetDateTime.now());
+	public void statusConfirmado() {
+		setStatus(StatusPedido.CONFIRMADO);
+		setDataConfirmacao(OffsetDateTime.now());
 	}
 	
-	public void entregue(Pedido pedido) {
-		pedido.setStatusPedido(StatusPedido.ENTREGUE);
-		pedido.setDataEntrega(OffsetDateTime.now());
+	public void stausEntregue() {
+		setStatus(StatusPedido.ENTREGUE);
+		setDataEntrega(OffsetDateTime.now());
 	}
-
-	public void cancelado(Pedido pedido) {
-		pedido.setStatusPedido(StatusPedido.CANCELADO);
-		pedido.setDataCancelamento(OffsetDateTime.now());
+	
+	public void stausCancelado() {
+		setStatus(StatusPedido.CANCELADO);
+		setDataCancelamento(OffsetDateTime.now());
+	}
+	
+	/*
+	 * É private para que apenas seja chamado dentro da classe, como a entidade é rica, as tratativas ficam nela mesma.
+	 */
+	private void setStatus(StatusPedido novoStatus) {
+		if (!getStatusPedido().podeAlterarPara(novoStatus)) {
+			throw new ViolacaoStatusPedidoException( getStatusPedido() , novoStatus);
+		}
+		
+		this.statusPedido = novoStatus;
 	}
 }

@@ -9,7 +9,7 @@ public class ViolacaoStatusPedidoException extends NegocioException{
 		super(msg);
 	}
 	
-	public ViolacaoStatusPedidoException(StatusPedido atual , StatusPedido troca , Long id) {
-		this(String.format("Não é possível alterar o status do pedido com ID '%d' de '%s' para '%s'.", id, atual, troca));
+	public ViolacaoStatusPedidoException(StatusPedido atual , StatusPedido troca ) {
+		this(String.format("Não é possível alterar o status '%s' para '%s'.",  atual, troca));
 	}
 }
