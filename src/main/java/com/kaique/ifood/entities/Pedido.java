@@ -108,7 +108,11 @@ public class Pedido implements Serializable {
 	
 	public void entregue(Pedido pedido) {
 		pedido.setStatusPedido(StatusPedido.ENTREGUE);
-		pedido.setDataConfirmacao(OffsetDateTime.now());
+		pedido.setDataEntrega(OffsetDateTime.now());
 	}
 
+	public void cancelado(Pedido pedido) {
+		pedido.setStatusPedido(StatusPedido.CANCELADO);
+		pedido.setDataCancelamento(OffsetDateTime.now());
+	}
 }

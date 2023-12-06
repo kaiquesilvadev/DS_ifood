@@ -36,4 +36,15 @@ public class FluxoPedidoService {
 		
 		pedido.entregue(pedido);
 	}
+	
+	@Transactional
+	public void cancelado(Long pedidoId) {
+		Pedido pedido = pedidoServices.buscaPorId(pedidoId);
+		
+		if(pedido.getStatusPedido().equals(StatusPedido.ENTREGUE)) {
+			throw new ViolacaoStatusPedidoException(pedido.getStatusPedido() , StatusPedido.CANCELADO , pedido.getId());
+		}
+		
+		pedido.cancelado(pedido);
+	}
 }
