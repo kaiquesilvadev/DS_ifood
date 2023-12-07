@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -22,6 +23,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -43,7 +45,7 @@ public class Pedido implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-
+	private String codigo;
 	private BigDecimal subTotal;
 	private BigDecimal taxaFrete;
 	private BigDecimal valorTotal;
@@ -106,25 +108,37 @@ public class Pedido implements Serializable {
 		setStatus(StatusPedido.CONFIRMADO);
 		setDataConfirmacao(OffsetDateTime.now());
 	}
-	
+
 	public void stausEntregue() {
 		setStatus(StatusPedido.ENTREGUE);
 		setDataEntrega(OffsetDateTime.now());
 	}
-	
+
 	public void stausCancelado() {
 		setStatus(StatusPedido.CANCELADO);
 		setDataCancelamento(OffsetDateTime.now());
 	}
-	
+
 	/*
-	 * É private para que apenas seja chamado dentro da classe, como a entidade é rica, as tratativas ficam nela mesma.
+	 * É private para que apenas seja chamado dentro da classe, como a entidade é
+	 * rica, as tratativas ficam nela mesma.
 	 */
 	private void setStatus(StatusPedido novoStatus) {
 		if (!getStatusPedido().podeAlterarPara(novoStatus)) {
-			throw new ViolacaoStatusPedidoException( getStatusPedido() , novoStatus);
+			throw new ViolacaoStatusPedidoException(getStatusPedido(), novoStatus);
 		}
-		
+
 		this.statusPedido = novoStatus;
+	}
+
+	/*
+	 * @PrePersist: Essa anotação é usada em JPA (Java Persistence API) para indicar
+	 * que um método deve ser executado antes de uma entidade ser persistida (ou
+	 * seja, antes de ser inserida no banco de dados).
+	 */
+
+	@PrePersist
+	private void geraCodigo() {
+		setCodigo(UUID.randomUUID().toString()); // gera um código unico no banco de dados 
 	}
 }

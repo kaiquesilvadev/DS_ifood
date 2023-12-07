@@ -44,9 +44,9 @@ public class PedidoControlle {
 		return conversoResumo.listaDto(services.lista());
 	}
 
-	@GetMapping("/{id}")
-	public PedidoDtoResponce lista(@PathVariable Long id) {
-		return converso.convertePedido(services.buscaPorId(id));
+	@GetMapping("/{codigo}")
+	public PedidoDtoResponce lista(@PathVariable String codigo) {
+		return converso.convertePedido(services.buscaPorCodigo(codigo));
 	}
 
 	@ResponseStatus(HttpStatus.CREATED)
@@ -56,20 +56,20 @@ public class PedidoControlle {
 	}
 	
 	@ResponseStatus(HttpStatus.NO_CONTENT)
-	@PutMapping("/{pedidoId}/confirmacao")
-	public void confirmaPedido(@PathVariable Long pedidoId) {
-		fluxoPedidoService.confirado(pedidoId);
+	@PutMapping("/{codigo}/confirmacao")
+	public void confirmaPedido(@PathVariable String codigo) {
+		fluxoPedidoService.confirado(codigo);
 	}
 	
 	@ResponseStatus(HttpStatus.NO_CONTENT)
-	@PutMapping("/{pedidoId}/entregue")
-	public void pedidoEntregue(@PathVariable Long pedidoId) {
-		fluxoPedidoService.entregue(pedidoId);
+	@PutMapping("/{codigo}/entregue")
+	public void pedidoEntregue(@PathVariable String codigo) {
+		fluxoPedidoService.entregue(codigo);
 	}
 	
 	@ResponseStatus(HttpStatus.NO_CONTENT)
-	@PutMapping("/{pedidoId}/cancelamento")
-	public void pedidoCancelado(@PathVariable Long pedidoId) {
-		fluxoPedidoService.cancelado(pedidoId);
+	@PutMapping("/{codigo}/cancelamento")
+	public void pedidoCancelado(@PathVariable String codigo) {
+		fluxoPedidoService.cancelado(codigo);
 	}
 }

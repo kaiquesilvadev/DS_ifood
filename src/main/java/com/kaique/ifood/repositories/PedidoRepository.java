@@ -5,11 +5,12 @@ import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 
 import com.kaique.ifood.entities.Pedido;
 
 public interface PedidoRepository extends JpaRepository<Pedido, Long> {
+
+	Optional<Pedido> findByCodigo(String codigo);
 
 	/*
 	 * join fetch no jpql serve para que apenas uma consulta seja feita retornando
@@ -21,7 +22,8 @@ public interface PedidoRepository extends JpaRepository<Pedido, Long> {
 
 	@Query("FROM Pedido p " 
 			+ "join fetch p.enderecoEntrega e " 
-			+ "join fetch e.cidade " + "join fetch p.restaurante r "
+			+ "join fetch e.cidade " 
+			+ "join fetch p.restaurante r "
 			+ "LEFT join fetch r.cozinha " 
 			+ "LEFT join fetch r.formaPagamentos " 
 			+ "LEFT JOIN p.usuarioCliente")

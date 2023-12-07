@@ -54,8 +54,8 @@ public class EmissaoPedidoServices {
 	}
 
 	@Transactional
-	public Pedido buscaPorId(Long id) {
-		Pedido pedido = repository.findById(id).orElseThrow(() -> new PedidoNaoEncontradoException(id));
+	public Pedido buscaPorCodigo(String codigo) {
+		Pedido pedido = repository.findByCodigo(codigo).orElseThrow(() -> new PedidoNaoEncontradoException(codigo));
 		Hibernate.initialize(pedido.getItens());
 		return pedido;
 	}
@@ -63,8 +63,9 @@ public class EmissaoPedidoServices {
 	@Transactional
 	public Pedido criarPedido(PedidoDtoRequest dtoRequest) {
 		Pedido pedido = converso.converteDto(dtoRequest);
-		
-		// TODO : esse usuário e temporário ate eu fazer validação por token, lembrar de tirar
+
+		// TODO : esse usuário e temporário ate eu fazer validação por token, lembrar de
+		// tirar
 		pedido.setUsuarioCliente(usuarioService.buscarPorId(1L));
 
 		validaPedido(pedido);
@@ -105,7 +106,6 @@ public class EmissaoPedidoServices {
 		} catch (ProdutoNaoEncontradoException e) {
 			throw new NegocioException(e.getMessage());
 		}
-		
 
 	}
 

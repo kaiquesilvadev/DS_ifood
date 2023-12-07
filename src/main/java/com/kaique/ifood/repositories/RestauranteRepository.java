@@ -9,7 +9,6 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import com.kaique.ifood.entities.Pedido;
 import com.kaique.ifood.entities.Restaurante;
 
 public interface RestauranteRepository
