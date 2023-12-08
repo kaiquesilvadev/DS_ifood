@@ -5,6 +5,8 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.kaique.ifood.dto.conversor.RestauranteDtoConversor;
@@ -26,8 +28,8 @@ public class RestauranteService {
 	@Autowired
 	private RestauranteDtoConversor conversor;
 
-	public List<Restaurante> listar() {
-		return repository.findAll();
+	public Page<Restaurante> listar(Pageable pageable) {
+		return repository.findAll(pageable);
 	}
 
 	public Restaurante buscaPorId(Long id) {

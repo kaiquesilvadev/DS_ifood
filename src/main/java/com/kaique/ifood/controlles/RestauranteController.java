@@ -4,6 +4,9 @@ import java.math.BigDecimal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,8 +38,10 @@ public class RestauranteController {
 	private RestauranteDtoConversor conversor;
 
 	@GetMapping
-	public List<RestauranteResumoDtoResponce> listar() {
-		return conversor.listaDto(service.listar());
+	public Page<RestauranteResumoDtoResponce> listar(Pageable pageable) {
+		Page<Restaurante> pageRestaurante = service.listar(pageable);
+	  	List<RestauranteResumoDtoResponce> restaurante = conversor.listaDto(pageRestaurante.getContent());
+	  	return new PageImpl<>(restaurante, pageable , pageRestaurante.getTotalElements());
 	}
 
 	@GetMapping("/{id}")
