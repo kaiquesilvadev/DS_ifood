@@ -3,6 +3,9 @@ package com.kaique.ifood.controlles;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,6 +21,7 @@ import com.kaique.ifood.dto.conversor.PedidoResumoDtoConverso;
 import com.kaique.ifood.dto.request.PedidoDtoRequest;
 import com.kaique.ifood.dto.responce.PedidoDtoResponce;
 import com.kaique.ifood.dto.responce.PedidoResumoDtoResponce;
+import com.kaique.ifood.entities.Pedido;
 import com.kaique.ifood.services.EmissaoPedidoServices;
 import com.kaique.ifood.services.FluxoPedidoService;
 
@@ -40,8 +44,10 @@ public class PedidoControlle {
 	private PedidoDtoConverso converso;
 
 	@GetMapping
-	public List<PedidoResumoDtoResponce> lista() {
-		return conversoResumo.listaDto(services.lista());
+	public Page<PedidoResumoDtoResponce> lista(Pageable pageable) {
+		Page<Pedido> page = services.lista(pageable);
+		List<PedidoResumoDtoResponce> DtoResponce = conversoResumo.listaDto(page.getContent());
+		return new PageImpl<PedidoResumoDtoResponce>(DtoResponce, pageable, page.getTotalElements());
 	}
 
 	@GetMapping("/{codigo}")
