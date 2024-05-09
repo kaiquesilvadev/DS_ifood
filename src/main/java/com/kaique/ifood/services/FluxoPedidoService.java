@@ -14,7 +14,7 @@ public class FluxoPedidoService {
 	private EmissaoPedidoServices pedidoServices;
 	
 	@Transactional
-	public void confirado(String codigo) {
+	public void confirmado(String codigo) {
 		Pedido pedido = pedidoServices.buscaPorCodigo(codigo);
 		pedido.statusConfirmado();
 	}

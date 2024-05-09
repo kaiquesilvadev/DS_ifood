@@ -64,7 +64,7 @@ public class PedidoControlle {
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	@PutMapping("/{codigo}/confirmacao")
 	public void confirmaPedido(@PathVariable String codigo) {
-		fluxoPedidoService.confirado(codigo);
+		fluxoPedidoService.confirmado(codigo);
 	}
 	
 	@ResponseStatus(HttpStatus.NO_CONTENT)
