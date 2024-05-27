@@ -85,4 +85,38 @@ public class FluxoPedidoServiceTest {
 
         assertTrue(pedidoExistente.getStatusPedido() == StatusPedido.ENTREGUE);
     }
+    
+    @Test
+    public void canceladoDeveLancarExceptionQuandoTentarCancelarUmPedidoJaEntregue() {
+        
+    	  pedidoExistente = PedidoMockFactory.createMockPedido();
+    	  pedidoExistente.statusConfirmado();
+          pedidoExistente.stausEntregue();
+          Mockito.when(emissaoPedidoServices.buscaPorCodigo(codigoExistente)).thenReturn(pedidoExistente);
+    	
+        assertThrows(ViolacaoStatusPedidoException.class, () -> {
+        	fluxoPedidoService.cancelado(codigoExistente);
+        });
+    }
+    
+    @Test
+    public void canceladoDeveMudarStatusParaCanceladoQuandoPedidoForCriado() {
+        
+    	  pedidoExistente = PedidoMockFactory.createMockPedido();
+          Mockito.when(emissaoPedidoServices.buscaPorCodigo(codigoExistente)).thenReturn(pedidoExistente);
+          fluxoPedidoService.cancelado(codigoExistente);
+          
+          assertTrue(pedidoExistente.getStatusPedido() == StatusPedido.CANCELADO);
+    }
+
+    @Test
+    public void canceladoDeveMudarStatusParaCanceladoQuandoPedidoForConfirmado() {
+        
+    	  pedidoExistente = PedidoMockFactory.createMockPedido();
+    	  pedidoExistente.statusConfirmado();
+          Mockito.when(emissaoPedidoServices.buscaPorCodigo(codigoExistente)).thenReturn(pedidoExistente);
+          fluxoPedidoService.cancelado(codigoExistente);
+          
+          assertTrue(pedidoExistente.getStatusPedido() == StatusPedido.CANCELADO);
+    }
 }
