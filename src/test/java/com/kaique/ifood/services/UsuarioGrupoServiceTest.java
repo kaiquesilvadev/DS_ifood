@@ -1,5 +1,6 @@
 package com.kaique.ifood.services;
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.ArrayList;
@@ -64,5 +65,13 @@ public class UsuarioGrupoServiceTest {
 		assertThrows(UsuarioNaoEncontradoException.class, () -> {
 			serviceTest.ListaGrupos(idUserInexistente);
 		});
+	}
+	
+	@Test
+	public void ListaGruposDeveRetornaLIstadeGrupoQuandoidForExistente() {
+
+		    List<Grupo> ListGrupos = serviceTest.ListaGrupos(idExistenteDeUser);
+		    
+		    assertNotNull(ListGrupos);
 	}
 }
