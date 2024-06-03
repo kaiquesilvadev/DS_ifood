@@ -22,7 +22,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
-@Table(name = "tb_itens_pedidos")
+@Table(name = "tb_itens_pedido")
 public class ItemPedido implements Serializable{
 	private static final long serialVersionUID = 1L;
 
