@@ -29,4 +29,7 @@ public interface UsuarioRepositorie extends JpaRepository<Usuario, Long>{
     @Query("SELECT u.grupos FROM Usuario u WHERE u.id = :usuarioId")
     List<Grupo> listaGruposDeUsuario(@Param("usuarioId") Long usuarioId);
     
+    @Query("SELECT u FROM Usuario u JOIN FETCH u.grupos WHERE u.email =:email")
+	Usuario validaEmail(String email);
+    
 }

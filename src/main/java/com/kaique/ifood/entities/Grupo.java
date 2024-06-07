@@ -1,8 +1,9 @@
 package com.kaique.ifood.entities;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.springframework.security.core.GrantedAuthority;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -25,7 +26,7 @@ import lombok.Setter;
 @Setter
 @Entity
 @Table(name = "tb_grupo")
-public class Grupo implements Serializable {
+public class Grupo  implements GrantedAuthority{
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -37,4 +38,9 @@ public class Grupo implements Serializable {
 	@ManyToMany
 	@JoinTable(name = "tb_grupo_permissao", joinColumns = @JoinColumn(name = "grupo_id"), inverseJoinColumns = @JoinColumn(name = "permissao_id"))
 	private List<Permissao> permissoes = new ArrayList<>();
+
+	@Override
+	public String getAuthority() {
+		return nome;
+	}
 }
