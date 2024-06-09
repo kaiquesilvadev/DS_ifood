@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.kaique.ifood.dto.conversor.EstadoDtoConversor;
 import com.kaique.ifood.dto.request.EstadoDtoRequest;
+import com.kaique.ifood.dto.responce.EstadoDtoResponce;
 import com.kaique.ifood.entities.Estado;
 import com.kaique.ifood.services.EstadoService;
 
@@ -26,26 +28,30 @@ public class EstadoController {
 
 	@Autowired
 	private EstadoService service;
+	
+	@Autowired
+	private EstadoDtoConversor conversor;
+
 
 	@GetMapping
-	public List<Estado> listar() {
-		return service.listar();
+	public List<EstadoDtoResponce> listar() {
+		return conversor.listaDto(service.listar());
 	}
 
 	@GetMapping("/{id}")
-	public Estado buscaPorId(@PathVariable Long id) {
-		return service.buscaPorId(id);
+	public EstadoDtoResponce buscaPorId(@PathVariable Long id) {
+		return conversor.conversorEntety(service.buscaPorId(id));
 	}
 
 	@ResponseStatus(HttpStatus.CREATED)
 	@PostMapping
-	public Estado adiciona(@Valid @RequestBody EstadoDtoRequest estado) {
-		return service.adiciona(estado);
+	public EstadoDtoResponce adiciona(@Valid @RequestBody EstadoDtoRequest estado) {
+		return conversor.conversorEntety(service.adiciona(estado));
 	}
 
 	@PutMapping("/{estadiId}")
-	public Estado atualiza(@PathVariable Long estadiId,@Valid @RequestBody EstadoDtoRequest estado) {
-		return service.atualiza(estadiId, estado);
+	public EstadoDtoResponce atualiza(@PathVariable Long estadiId,@Valid @RequestBody EstadoDtoRequest estado) {
+		return conversor.conversorEntety(service.atualiza(estadiId, estado));
 	}
 
 	@ResponseStatus(HttpStatus.NO_CONTENT)
