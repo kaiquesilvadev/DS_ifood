@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.kaique.ifood.dto.conversor.CozinhaDtoConversor;
 import com.kaique.ifood.dto.request.CozinhaDtoRequest;
+import com.kaique.ifood.dto.responce.CozinhaDtoResponce;
 import com.kaique.ifood.entities.Cozinha;
 import com.kaique.ifood.services.CozinhaService;
 
@@ -26,10 +28,13 @@ public class CozinhaController {
 
 	@Autowired
 	private CozinhaService service;
+	
+	@Autowired
+	private CozinhaDtoConversor Conversor;
 
 	@GetMapping
-	public List<Cozinha> listar() {
-		return service.listar();
+	public List<CozinhaDtoResponce> listar() {
+		return Conversor.listaDto(service.listar());
 	}
 
 	/*
@@ -43,24 +48,24 @@ public class CozinhaController {
 	 */
 
 	@GetMapping("/{id}")
-	public Cozinha buscaPorId(@PathVariable Long id) {
-		return service.buscaPorId(id);
+	public CozinhaDtoResponce buscaPorId(@PathVariable Long id) {
+		return Conversor.converteEntity(service.buscaPorId(id));
 	}
 
 	@GetMapping("/buscarPorNome/{nome}")
-	public List<Cozinha> buscarPorNome(String nome) {
-		return service.buscarPorNome(nome);
+	public List<CozinhaDtoResponce> buscarPorNome(String nome) {
+		return Conversor.listaDto(service.buscarPorNome(nome));
 	}
 
 	@ResponseStatus(HttpStatus.CREATED)
 	@PostMapping
-	public Cozinha adiciona(@Valid @RequestBody CozinhaDtoRequest cozinha) {
-		return service.adiciona(cozinha);
+	public CozinhaDtoResponce adiciona(@Valid @RequestBody CozinhaDtoRequest cozinha) {
+		return Conversor.converteEntity(service.adiciona(cozinha));
 	}
 
 	@PutMapping("/{cozinhaId}")
-	public Cozinha atualiza(@PathVariable Long cozinhaId, @Valid @RequestBody CozinhaDtoRequest cozinha) {
-		return service.atualiza(cozinhaId, cozinha);
+	public CozinhaDtoResponce atualiza(@PathVariable Long cozinhaId, @Valid @RequestBody CozinhaDtoRequest cozinha) {
+		return Conversor.converteEntity(service.atualiza(cozinhaId, cozinha));
 	}
 
 	@DeleteMapping("/{id}")

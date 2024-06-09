@@ -38,7 +38,7 @@ public class CozinhaService {
 
 	@Transactional
 	public Cozinha adiciona(CozinhaDtoRequest Cozinha) {
-		Cozinha novaCozinha = Conversor.converteDtopara(Cozinha);
+		Cozinha novaCozinha = Conversor.converteDto(Cozinha);
 		return repository.save(novaCozinha);
 	}
 
