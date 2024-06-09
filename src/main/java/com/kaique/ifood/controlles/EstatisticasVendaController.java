@@ -1,6 +1,5 @@
 package com.kaique.ifood.controlles;
 
-import java.awt.PageAttributes.MediaType;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;

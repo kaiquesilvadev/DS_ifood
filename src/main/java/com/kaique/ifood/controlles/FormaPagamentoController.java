@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.kaique.ifood.dto.conversor.FormaPagamentoDtoConversor;
 import com.kaique.ifood.dto.request.FormaPagamentoDtoRequest;
+import com.kaique.ifood.dto.responce.FormaPagamentoDtoResponce;
 import com.kaique.ifood.entities.FormaPagamento;
 import com.kaique.ifood.services.FormaPagamentoService;
 
@@ -26,26 +28,29 @@ public class FormaPagamentoController {
 
 	@Autowired
 	private FormaPagamentoService service;
+	
+	@Autowired
+	private FormaPagamentoDtoConversor conversor;
 
 	@GetMapping
-	public List<FormaPagamento> lista() {
-		return service.lista();
+	public List<FormaPagamentoDtoResponce> lista() {
+		return conversor.listaDto(service.lista());
 	}
 
 	@GetMapping("/{id}")
-	public FormaPagamento buscaPorId(@PathVariable Long id) {
-		return service.buscaPorId(id);
+	public FormaPagamentoDtoResponce buscaPorId(@PathVariable Long id) {
+		return conversor.ConversorEntity(service.buscaPorId(id));
 	}
 
 	@ResponseStatus(HttpStatus.CREATED)
 	@PostMapping
-	public FormaPagamento adiciona(@Valid @RequestBody FormaPagamentoDtoRequest formaPagamento) {
-		return service.adiciona(formaPagamento);
+	public FormaPagamentoDtoResponce adiciona(@Valid @RequestBody FormaPagamentoDtoRequest formaPagamento) {
+		return conversor.ConversorEntity(service.adiciona(formaPagamento));
 	}
 
 	@PutMapping("/{id}")
-	public FormaPagamento atualiza(@Valid @RequestBody FormaPagamentoDtoRequest formaPagamento, @PathVariable Long id) {
-		return service.atualiza(formaPagamento, id);
+	public FormaPagamentoDtoResponce atualiza(@Valid @RequestBody FormaPagamentoDtoRequest formaPagamento, @PathVariable Long id) {
+		return conversor.ConversorEntity(service.atualiza(formaPagamento, id));
 	}
 
 	@ResponseStatus(HttpStatus.NO_CONTENT)
