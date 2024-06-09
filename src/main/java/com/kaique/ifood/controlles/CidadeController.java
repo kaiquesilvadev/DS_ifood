@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.kaique.ifood.dto.conversor.CidadeDtoConversor;
 import com.kaique.ifood.dto.request.CidadeDtoRequest;
+import com.kaique.ifood.dto.responce.CidadeResponce;
 import com.kaique.ifood.entities.Cidade;
 import com.kaique.ifood.services.CidadeService;
 
@@ -26,27 +28,30 @@ public class CidadeController {
 
 	@Autowired
 	private CidadeService service;
+	
+	@Autowired
+	private CidadeDtoConversor conversor;
 
 	@ResponseStatus(HttpStatus.OK)
 	@GetMapping
-	public List<Cidade> listar() {
-		return service.listar();
+	public List<CidadeResponce> listar() {
+		return conversor.ConverteListEntity(service.listar()) ;
 	}
 
 	@GetMapping("/{id}")
-	public Cidade buscaPorId(@PathVariable Long id) {
-		return service.buscaPorId(id);
+	public CidadeResponce buscaPorId(@PathVariable Long id) {
+		return conversor.converteEntity(service.buscaPorId(id));
 	}
 
 	@ResponseStatus(HttpStatus.CREATED)
 	@PostMapping
-	public Cidade adiciona(@Valid @RequestBody CidadeDtoRequest cidade) {
-		return service.adiciona(cidade);
+	public CidadeResponce adiciona(@Valid @RequestBody CidadeDtoRequest cidade) {
+		return conversor.converteEntity(service.adiciona(cidade));
 	}
 
 	@PutMapping("/{cidadeId}")
-	public Cidade atualiza(@PathVariable Long cidadeId, @Valid @RequestBody CidadeDtoRequest cidade) {
-		return service.atualiza(cidadeId, cidade);
+	public CidadeResponce atualiza(@PathVariable Long cidadeId, @Valid @RequestBody CidadeDtoRequest cidade) {
+		return conversor.converteEntity(service.atualiza(cidadeId, cidade));
 	}
 
 	@ResponseStatus(HttpStatus.NO_CONTENT)
