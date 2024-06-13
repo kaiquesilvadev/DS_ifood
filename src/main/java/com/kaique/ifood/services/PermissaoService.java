@@ -34,7 +34,7 @@ public class PermissaoService {
 
 	@Transactional
 	public Permissao adiciona(PermissaoDtoRequest dtoRequest) {
-		Permissao permissao = conversor.converDto(dtoRequest);
+		Permissao permissao = conversor.converteDto(dtoRequest);
 		return repository.save(permissao);
 	}
 

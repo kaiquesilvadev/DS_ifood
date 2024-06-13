@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.kaique.ifood.dto.conversor.GrupoDtoConversor;
 import com.kaique.ifood.dto.request.GrupoDtoRequest;
 import com.kaique.ifood.entities.Grupo;
 import com.kaique.ifood.services.GrupoService;
@@ -26,6 +27,9 @@ public class GrupoController {
 
 	@Autowired
 	private GrupoService service;
+	
+	@Autowired
+	private GrupoDtoConversor conversor;
 	
 	@GetMapping
 	public List<Grupo> List() {

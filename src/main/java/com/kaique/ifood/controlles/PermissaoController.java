@@ -14,8 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.kaique.ifood.dto.conversor.PermissaodtoConversor;
 import com.kaique.ifood.dto.request.PermissaoDtoRequest;
-import com.kaique.ifood.entities.Permissao;
+import com.kaique.ifood.dto.responce.PermissaoDtoResponce;
 import com.kaique.ifood.services.PermissaoService;
 
 import jakarta.validation.Valid;
@@ -26,26 +27,29 @@ public class PermissaoController {
 
 	@Autowired
 	private PermissaoService service;
+	
+	@Autowired
+	private PermissaodtoConversor conversor;
 
 	@GetMapping
-	public List<Permissao> lista() {
-		return service.lista();
+	public List<PermissaoDtoResponce> lista() {
+		return conversor.listaDto(service.lista());
 	}
 
 	@GetMapping("/{id}")
-	public Permissao lista(@PathVariable Long id) {
-		return service.buscaPorId(id);
+	public PermissaoDtoResponce lista(@PathVariable Long id) {
+		return conversor.converteEntity(service.buscaPorId(id));
 	}
 
 	@ResponseStatus(HttpStatus.CREATED)
 	@PostMapping
-	public Permissao adiciona(@Valid @RequestBody PermissaoDtoRequest dtoRequest) {
-		return service.adiciona(dtoRequest);
+	public PermissaoDtoResponce adiciona(@Valid @RequestBody PermissaoDtoRequest dtoRequest) {
+		return conversor.converteEntity(service.adiciona(dtoRequest));
 	}
 
 	@PutMapping("/{id}")
-	public Permissao atualiza(@Valid @RequestBody PermissaoDtoRequest dtoRequest, @PathVariable Long id) {
-		return service.atualiza(dtoRequest, id);
+	public PermissaoDtoResponce atualiza(@Valid @RequestBody PermissaoDtoRequest dtoRequest, @PathVariable Long id) {
+		return conversor.converteEntity(service.atualiza(dtoRequest, id));
 	}
 
 	@ResponseStatus(HttpStatus.NO_CONTENT)
