@@ -7,6 +7,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
 import com.kaique.ifood.dto.request.RestaurantesDtoRequest;
+import com.kaique.ifood.dto.responce.RestauranteDtoResponce;
 import com.kaique.ifood.dto.responce.RestauranteResumoDtoResponce;
 import com.kaique.ifood.entities.Cozinha;
 import com.kaique.ifood.entities.Restaurante;
@@ -30,6 +31,10 @@ public class RestauranteDtoConversor {
 	public RestauranteResumoDtoResponce converteResumo(Restaurante restaurante) {
 		return modelMapper.map(restaurante, RestauranteResumoDtoResponce.class);
 	}
+	
+	public RestauranteDtoResponce converteEntity(Restaurante restaurante) {
+		return modelMapper.map(restaurante, RestauranteDtoResponce.class);
+	}
 
 	/*
 	 * Copia as propriadades do DTO para a Entidade, é mais indicado do que o
@@ -46,7 +51,11 @@ public class RestauranteDtoConversor {
 		modelMapper.map(dtoRequest, restaurante);
 	}
 
-	public List<RestauranteResumoDtoResponce> listaDto(List<Restaurante> lista) {
+	public List<RestauranteResumoDtoResponce> listaDtoResumo(List<Restaurante> lista) {
 		return lista.stream().map(restaunte -> converteResumo(restaunte)).collect(Collectors.toList());
+	}
+	
+	public List<RestauranteDtoResponce> listaDtoEmtity(List<Restaurante> lista) {
+		return lista.stream().map(restaunte -> converteEntity(restaunte)).collect(Collectors.toList());
 	}
 }

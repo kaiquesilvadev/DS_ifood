@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.kaique.ifood.dto.conversor.RestauranteDtoConversor;
 import com.kaique.ifood.dto.request.RestaurantesDtoRequest;
+import com.kaique.ifood.dto.responce.RestauranteDtoResponce;
 import com.kaique.ifood.dto.responce.RestauranteResumoDtoResponce;
 import com.kaique.ifood.entities.Restaurante;
 import com.kaique.ifood.services.RestauranteService;
@@ -40,18 +41,18 @@ public class RestauranteController {
 	@GetMapping
 	public Page<RestauranteResumoDtoResponce> listar(Pageable pageable) {
 		Page<Restaurante> pageRestaurante = service.listar(pageable);
-	  	List<RestauranteResumoDtoResponce> restaurante = conversor.listaDto(pageRestaurante.getContent());
+	  	List<RestauranteResumoDtoResponce> restaurante = conversor.listaDtoResumo(pageRestaurante.getContent());
 	  	return new PageImpl<>(restaurante, pageable , pageRestaurante.getTotalElements());
 	}
 
 	@GetMapping("/{id}")
-	public Restaurante buscaPorId(@PathVariable Long id) {
-		return service.buscaPorId(id);
+	public RestauranteDtoResponce buscaPorId(@PathVariable Long id) {
+		return  conversor.converteEntity(service.buscaPorId(id));
 	}
 
 	@GetMapping("/filtroTaxa/por-taxa-frete")
-	public List<Restaurante> filtraPorTaxas(BigDecimal taxaInicial, @RequestParam BigDecimal taxaFinal) {
-		return service.filtraPorTaxas(taxaInicial, taxaFinal);
+	public List<RestauranteDtoResponce> filtraPorTaxas(BigDecimal taxaInicial, @RequestParam BigDecimal taxaFinal) {
+		return conversor.listaDtoEmtity(service.filtraPorTaxas(taxaInicial, taxaFinal));
 	}
 
 	/*
@@ -61,26 +62,26 @@ public class RestauranteController {
 	 */
 
 	@GetMapping("/filtra/por-nome-e-frete")
-	public List<Restaurante> buscaRTTPorNomeFrete(String nome, @RequestParam BigDecimal taxaFreteInicia,
+	public List<RestauranteDtoResponce> buscaRTTPorNomeFrete(String nome, @RequestParam BigDecimal taxaFreteInicia,
 			BigDecimal taxaFreteFinal) {
-		return service.buscaRTTPorNomeFrete(nome, taxaFreteInicia, taxaFreteFinal);
+		return conversor.listaDtoEmtity(service.buscaRTTPorNomeFrete(nome, taxaFreteInicia, taxaFreteFinal));
 	}
 
 	@GetMapping("/filtra/com-frete-gratis")
-	public List<Restaurante> restaurantesComFreteGratis(String nome) {
-		return service.restaurantesComFreteGratis(nome);
+	public List<RestauranteDtoResponce> restaurantesComFreteGratis(String nome) {
+		return conversor.listaDtoEmtity(service.restaurantesComFreteGratis(nome));
 	}
 
 	@ResponseStatus(HttpStatus.CREATED)
 	@PostMapping
-	public Restaurante adiciona(@Valid @RequestBody RestaurantesDtoRequest restauranteDto) {
-		return service.adiciona(restauranteDto);
+	public RestauranteDtoResponce adiciona(@Valid @RequestBody RestaurantesDtoRequest restauranteDto) {
+		return conversor.converteEntity(service.adiciona(restauranteDto));
 	}
 
 	@PutMapping("/{restauranteId}")
-	public Restaurante atualiza(@PathVariable Long restauranteId,
+	public RestauranteDtoResponce atualiza(@PathVariable Long restauranteId,
 			@Valid @RequestBody RestaurantesDtoRequest restaurante) {
-		return service.atualiza(restauranteId, restaurante);
+		return conversor.converteEntity(service.atualiza(restauranteId, restaurante));
 	}
 
 	@ResponseStatus(HttpStatus.NO_CONTENT)
