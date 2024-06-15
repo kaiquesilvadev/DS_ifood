@@ -5,6 +5,8 @@ import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.hateoas.RepresentationModel;
+
 import com.kaique.ifood.dto.referencias.RestauranteDtoRef;
 
 import lombok.Getter;
@@ -12,7 +14,8 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class PedidoDtoResponce {
+public class PedidoDtoResponce extends RepresentationModel<PedidoResumoDtoResponce> {
+
 
 	private String codigo;
 	private BigDecimal subTotal;

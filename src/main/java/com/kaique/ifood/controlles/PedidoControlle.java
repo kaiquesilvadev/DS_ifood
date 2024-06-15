@@ -51,13 +51,13 @@ public class PedidoControlle {
 	}
 
 	@GetMapping("/{codigo}")
-	public PedidoDtoResponce lista(@PathVariable String codigo) {
+	public PedidoDtoResponce buscaPorCodigo(@PathVariable String codigo) {
 		return converso.convertePedido(services.buscaPorCodigo(codigo));
 	}
 
 	@ResponseStatus(HttpStatus.CREATED)
 	@PostMapping
-	public PedidoDtoResponce lista(@Valid @RequestBody PedidoDtoRequest dtoRequest) {
+	public PedidoDtoResponce criarPedido(@Valid @RequestBody PedidoDtoRequest dtoRequest) {
 		return converso.convertePedido(services.criarPedido(dtoRequest));
 	}
 	
