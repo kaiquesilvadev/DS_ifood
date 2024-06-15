@@ -11,11 +11,13 @@ import org.springframework.hateoas.UriTemplate;
 import org.springframework.stereotype.Component;
 
 import com.kaique.ifood.controlles.CidadeController;
+import com.kaique.ifood.controlles.EstadoController;
 import com.kaique.ifood.controlles.FormaPagamentoController;
 import com.kaique.ifood.controlles.PedidoControlle;
 import com.kaique.ifood.controlles.RestauranteController;
 import com.kaique.ifood.controlles.RestauranteProdutoController;
 import com.kaique.ifood.controlles.UsuarioController;
+import com.kaique.ifood.dto.responce.EstadoDtoResponce;
 import com.kaique.ifood.dto.responce.PedidoDtoResponce;
 import com.kaique.ifood.dto.responce.PedidoResumoDtoResponce;
 import com.kaique.ifood.entities.Pedido;
@@ -89,5 +91,17 @@ public class LinkManager {
 	        });
 
 	        return pedidoDTO;
+	    }
+	  
+	  public EstadoDtoResponce linkToEstado(EstadoDtoResponce estadoDTO) {
+
+	        Link linkBuscarPorId = linkTo(methodOn(EstadoController.class).buscaPorId(estadoDTO.getId())).withSelfRel();
+	        Link linkListar = linkTo(methodOn(EstadoController.class).listar()).withRel("lista");
+
+	        estadoDTO.add(linkBuscarPorId);
+	        estadoDTO.add(linkListar);
+
+	        return estadoDTO;
+
 	    }
 	}
