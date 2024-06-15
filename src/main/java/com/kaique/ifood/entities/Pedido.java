@@ -141,4 +141,18 @@ public class Pedido implements Serializable {
 	private void geraCodigo() {
 		setCodigo(UUID.randomUUID().toString()); // gera um código unico no banco de dados 
 	}
+	
+
+	public Boolean podeSerConfirmado() {
+		return getStatusPedido().podeAlterarPara(StatusPedido.CONFIRMADO);
+	}
+
+	public Boolean podeSerEntregue() {
+		return getStatusPedido().podeAlterarPara(StatusPedido.ENTREGUE);
+	}
+
+	public Boolean podeSerCancelado() {
+		return getStatusPedido().podeAlterarPara(StatusPedido.CANCELADO);
+	}
+
 }

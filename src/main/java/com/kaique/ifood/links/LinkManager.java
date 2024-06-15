@@ -10,9 +10,13 @@ import org.springframework.hateoas.TemplateVariables;
 import org.springframework.hateoas.UriTemplate;
 import org.springframework.stereotype.Component;
 
+import com.kaique.ifood.controlles.CidadeController;
+import com.kaique.ifood.controlles.FormaPagamentoController;
 import com.kaique.ifood.controlles.PedidoControlle;
 import com.kaique.ifood.controlles.RestauranteController;
+import com.kaique.ifood.controlles.RestauranteProdutoController;
 import com.kaique.ifood.controlles.UsuarioController;
+import com.kaique.ifood.dto.responce.PedidoDtoResponce;
 import com.kaique.ifood.dto.responce.PedidoResumoDtoResponce;
 import com.kaique.ifood.entities.Pedido;
 
@@ -56,5 +60,34 @@ public class LinkManager {
 
 	        return pedidoResumoDto;
 
+	    }
+	  
+	  public PedidoDtoResponce linkToPedido(PedidoDtoResponce pedidoDTO, Pedido pedido) {
+	        // Pedido
+	        var linkBuscarPorId = linkTo(methodOn(PedidoControlle.class).buscaPorCodigo(pedido.getCodigo())).withSelfRel();
+
+	        // Usuario
+	        var linkUsuario = linkTo(methodOn(UsuarioController.class).buscaPorId(pedido.getUsuarioCliente().getId())).withSelfRel();
+
+	        // Cidade
+	        var linkCidade = linkTo(methodOn(CidadeController.class).buscaPorId(pedido.getEnderecoEntrega().getCidade().getId())).withSelfRel();
+
+	        // Restaurante
+	        var linkRestaurante = linkTo(methodOn(RestauranteController.class).buscaPorId(pedido.getRestaurante().getId())).withSelfRel();
+
+	        // Forma Pagamento
+	        var linkFormaPagamento = linkTo(methodOn(FormaPagamentoController.class).buscaPorId(pedido.getFormaPagamento().getId())).withSelfRel();
+
+	        pedidoDTO.add(linkBuscarPorId);
+	        pedidoDTO.getUsuarioCliente().add(linkUsuario);
+	        pedidoDTO.getEnderecoEntrega().add(linkCidade);
+	        pedidoDTO.getRestaurante().add(linkRestaurante);
+	        pedidoDTO.getFormaPagamento().add(linkFormaPagamento);
+
+	        pedidoDTO.getItens().forEach(itemPedidoDTO -> {
+	            itemPedidoDTO.add(linkTo(methodOn(RestauranteProdutoController.class).buscaidEmRestaurante(pedidoDTO.getRestaurante().getId(), itemPedidoDTO.getProdutoId())).withSelfRel());
+	        });
+
+	        return pedidoDTO;
 	    }
 	}
