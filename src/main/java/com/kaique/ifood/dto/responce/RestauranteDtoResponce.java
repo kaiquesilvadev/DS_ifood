@@ -5,12 +5,14 @@ import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.hateoas.RepresentationModel;
+
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class RestauranteDtoResponce {
+public class RestauranteDtoResponce extends RepresentationModel<RestauranteDtoResponce> {
 
 	private Long id;
 	private String nome;

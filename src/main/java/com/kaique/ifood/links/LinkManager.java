@@ -20,7 +20,9 @@ import com.kaique.ifood.controlles.UsuarioController;
 import com.kaique.ifood.dto.responce.EstadoDtoResponce;
 import com.kaique.ifood.dto.responce.PedidoDtoResponce;
 import com.kaique.ifood.dto.responce.PedidoResumoDtoResponce;
+import com.kaique.ifood.dto.responce.RestauranteDtoResponce;
 import com.kaique.ifood.entities.Pedido;
+import com.kaique.ifood.entities.Restaurante;
 
 import lombok.var;
 
@@ -103,5 +105,15 @@ public class LinkManager {
 
 	        return estadoDTO;
 
+	    }
+	  
+	   public RestauranteDtoResponce linkToRestaurante(RestauranteDtoResponce restauranteDTO, Restaurante restaurante) {
+	        var linkBuscarPorId = linkTo(methodOn(RestauranteController.class).buscaPorId(restaurante.getId())).withSelfRel();
+	        var linkListar = linkTo(methodOn(RestauranteController.class).listar(null)).withRel("listar");
+
+	        restauranteDTO.add(linkBuscarPorId);
+	        restauranteDTO.add(linkListar);
+
+	        return restauranteDTO;
 	    }
 	}

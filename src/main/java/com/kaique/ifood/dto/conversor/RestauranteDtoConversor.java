@@ -4,22 +4,32 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.server.mvc.RepresentationModelAssemblerSupport;
 import org.springframework.stereotype.Component;
 
+import com.kaique.ifood.controlles.RestauranteController;
 import com.kaique.ifood.dto.request.RestaurantesDtoRequest;
 import com.kaique.ifood.dto.responce.RestauranteDtoResponce;
 import com.kaique.ifood.dto.responce.RestauranteResumoDtoResponce;
 import com.kaique.ifood.entities.Cozinha;
 import com.kaique.ifood.entities.Restaurante;
+import com.kaique.ifood.links.LinkManager;
 
-/*
- * Classe que converte Entidades para DTO
- */
 
 @Component
-public class RestauranteDtoConversor {
+public class RestauranteDtoConversor extends RepresentationModelAssemblerSupport<Restaurante, RestauranteDtoResponce> {
 
-	private ModelMapper modelMapper = new ModelMapper();
+	@Autowired
+	private ModelMapper modelMapper;
+	
+	@Autowired
+	private LinkManager linkManager;
+
+	public RestauranteDtoConversor() {
+		super(RestauranteController.class, RestauranteDtoResponce.class);
+		// TODO Auto-generated constructor stub
+	}
 
 	/*
 	 * Recebe um DTO e instancia uma entidade à partir desse DTO.
@@ -56,6 +66,13 @@ public class RestauranteDtoConversor {
 	}
 	
 	public List<RestauranteDtoResponce> listaDtoEmtity(List<Restaurante> lista) {
-		return lista.stream().map(restaunte -> converteEntity(restaunte)).collect(Collectors.toList());
+		return lista.stream().map(restaunte -> toModel(restaunte)).collect(Collectors.toList());
+	}
+
+	@Override
+	public RestauranteDtoResponce toModel(Restaurante entity) {
+		var restauranteRetornoDTO = modelMapper.map(entity, RestauranteDtoResponce.class);
+		restauranteRetornoDTO = linkManager.linkToRestaurante(restauranteRetornoDTO, entity);
+		return restauranteRetornoDTO;
 	}
 }
