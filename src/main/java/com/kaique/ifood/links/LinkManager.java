@@ -17,10 +17,12 @@ import com.kaique.ifood.controlles.PedidoControlle;
 import com.kaique.ifood.controlles.RestauranteController;
 import com.kaique.ifood.controlles.RestauranteProdutoController;
 import com.kaique.ifood.controlles.UsuarioController;
+import com.kaique.ifood.controlles.UsuarioGrupoController;
 import com.kaique.ifood.dto.responce.EstadoDtoResponce;
 import com.kaique.ifood.dto.responce.PedidoDtoResponce;
 import com.kaique.ifood.dto.responce.PedidoResumoDtoResponce;
 import com.kaique.ifood.dto.responce.RestauranteDtoResponce;
+import com.kaique.ifood.dto.responce.UsuarioDtoResponce;
 import com.kaique.ifood.entities.Pedido;
 import com.kaique.ifood.entities.Restaurante;
 
@@ -115,5 +117,17 @@ public class LinkManager {
 	        restauranteDTO.add(linkListar);
 
 	        return restauranteDTO;
+	    }
+	   
+	   public UsuarioDtoResponce linkToUsuario(UsuarioDtoResponce usuarioDTO) {
+	        Link linkBuscarPorId = linkTo(methodOn(UsuarioController.class).buscaPorId(usuarioDTO.getId())).withSelfRel();
+	        Link linkListar = linkTo(methodOn(UsuarioController.class).list()).withRel("lista");
+	        Link linkGrupos = linkTo(methodOn(UsuarioGrupoController.class).ListaGrupo(usuarioDTO.getId())).withSelfRel();
+
+	        usuarioDTO.add(linkBuscarPorId);
+	        usuarioDTO.add(linkListar);
+	        usuarioDTO.add(linkGrupos);
+
+	        return usuarioDTO;
 	    }
 	}
