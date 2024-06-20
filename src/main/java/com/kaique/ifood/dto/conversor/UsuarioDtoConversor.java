@@ -11,9 +11,7 @@ import org.springframework.stereotype.Component;
 import com.kaique.ifood.controlles.UsuarioController;
 import com.kaique.ifood.dto.request.AtualizaUsuarioDtoRequest;
 import com.kaique.ifood.dto.request.UsuarioDtoRequest;
-import com.kaique.ifood.dto.responce.PedidoDtoResponce;
 import com.kaique.ifood.dto.responce.UsuarioDtoResponce;
-import com.kaique.ifood.entities.Pedido;
 import com.kaique.ifood.entities.Usuario;
 import com.kaique.ifood.links.LinkManager;
 
