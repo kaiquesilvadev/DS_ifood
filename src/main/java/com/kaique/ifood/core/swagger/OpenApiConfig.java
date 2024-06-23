@@ -12,7 +12,7 @@ import io.swagger.v3.oas.models.info.License;
 
 @OpenAPIDefinition
 @Configuration
-@SecurityScheme(name = "bearerAuth", type = SecuritySchemeType.HTTP, scheme = "bearer")
+//@SecurityScheme(name = "bearerAuth", type = SecuritySchemeType.HTTP, scheme = "bearer")
 public class OpenApiConfig {
 
     @Bean

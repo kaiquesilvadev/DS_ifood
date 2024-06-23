@@ -14,17 +14,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.kaique.ifood.documentation.CidadeOpenAPI;
 import com.kaique.ifood.dto.conversor.CidadeDtoConversor;
 import com.kaique.ifood.dto.request.CidadeDtoRequest;
 import com.kaique.ifood.dto.responce.CidadeResponce;
 import com.kaique.ifood.entities.Cidade;
 import com.kaique.ifood.services.CidadeService;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 
+@Tag(name = "Cidades", description = "Gerencia as cidades")
 @RestController
 @RequestMapping("/cidades")
-public class CidadeController {
+public class CidadeController implements CidadeOpenAPI{
 
 	@Autowired
 	private CidadeService service;
@@ -38,22 +41,26 @@ public class CidadeController {
 		return conversor.ConverteListEntity(service.listar()) ;
 	}
 
+	@Override
 	@GetMapping("/{id}")
-	public CidadeResponce buscaPorId(@PathVariable Long id) {
+	public CidadeResponce buscarPorId(@PathVariable Long id) {
 		return conversor.converteEntity(service.buscaPorId(id));
 	}
 
+	@Override
 	@ResponseStatus(HttpStatus.CREATED)
 	@PostMapping
 	public CidadeResponce adiciona(@Valid @RequestBody CidadeDtoRequest cidade) {
 		return conversor.converteEntity(service.adiciona(cidade));
 	}
 
+	@Override
 	@PutMapping("/{cidadeId}")
 	public CidadeResponce atualiza(@PathVariable Long cidadeId, @Valid @RequestBody CidadeDtoRequest cidade) {
 		return conversor.converteEntity(service.atualiza(cidadeId, cidade));
 	}
 
+	@Override
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	@DeleteMapping("/{id}")
 	public void deletar(@PathVariable Long id) {

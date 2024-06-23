@@ -76,7 +76,7 @@ public class LinkManager {
 	        var linkUsuario = linkTo(methodOn(UsuarioController.class).buscaPorId(pedido.getUsuarioCliente().getId())).withSelfRel();
 
 	        // Cidade
-	        var linkCidade = linkTo(methodOn(CidadeController.class).buscaPorId(pedido.getEnderecoEntrega().getCidade().getId())).withSelfRel();
+	        var linkCidade = linkTo(methodOn(CidadeController.class).buscarPorId(pedido.getEnderecoEntrega().getCidade().getId())).withSelfRel();
 
 	        // Restaurante
 	        var linkRestaurante = linkTo(methodOn(RestauranteController.class).buscaPorId(pedido.getRestaurante().getId())).withSelfRel();
