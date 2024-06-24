@@ -3,7 +3,6 @@ package com.kaique.ifood.controlles;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,7 +18,6 @@ import com.kaique.ifood.documentation.CozinhaOpenAPI;
 import com.kaique.ifood.dto.conversor.CozinhaDtoConversor;
 import com.kaique.ifood.dto.request.CozinhaDtoRequest;
 import com.kaique.ifood.dto.responce.CozinhaDtoResponce;
-import com.kaique.ifood.entities.Cozinha;
 import com.kaique.ifood.services.CozinhaService;
 
 import jakarta.validation.Valid;
