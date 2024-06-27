@@ -14,16 +14,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.kaique.ifood.documentation.GrupoOpenAPI;
 import com.kaique.ifood.dto.conversor.GrupoDtoConversor;
 import com.kaique.ifood.dto.request.GrupoDtoRequest;
-import com.kaique.ifood.entities.Grupo;
+import com.kaique.ifood.dto.responce.GrupoDtoResconse;
 import com.kaique.ifood.services.GrupoService;
 
 import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/grupos")
-public class GrupoController {
+public class GrupoController implements  GrupoOpenAPI{
 
 	@Autowired
 	private GrupoService service;
@@ -31,40 +32,48 @@ public class GrupoController {
 	@Autowired
 	private GrupoDtoConversor conversor;
 	
+	@Override
 	@GetMapping
-	public List<Grupo> List() {
-		return service.lista();
+	public List<GrupoDtoResconse> listar() {
+		return conversor.lista(service.lista());
 	}
 	
+	@Override
 	@GetMapping("/{id}")
-	public Grupo buscaPorId(@PathVariable Long id) {
-		return service.buscaPorId(id);
+	public GrupoDtoResconse buscaPorId(@PathVariable Long id) {
+		return conversor.converteGrupo(service.buscaPorId(id));
 	}
 	
+	@Override
 	@ResponseStatus(HttpStatus.CREATED)
 	@PostMapping
-	public Grupo adiciona(@Valid @RequestBody GrupoDtoRequest dto) {
-		return service.adiciona(dto);
+	public GrupoDtoResconse adiciona(@Valid @RequestBody GrupoDtoRequest dto) {
+		return conversor.converteGrupo(service.adiciona(dto));
 	}
 	
-	@PostMapping("/{grupoId}/permissoes/{permissaoId}")
-	public Grupo atualiza(@PathVariable Long grupoId , @PathVariable Long permissaoId) {
-		return service.referencia(grupoId, permissaoId);
-	}
-	
+	@Override
 	@PutMapping("/{id}")
-	public Grupo atualiza(@Valid @RequestBody GrupoDtoRequest dto , @PathVariable Long id) {
-		return service.atualiza(dto, id);
+	public GrupoDtoResconse atualiza(@PathVariable Long id , @Valid @RequestBody GrupoDtoRequest dto ) {
+		return conversor.converteGrupo(service.atualiza(dto, id));
 	}
 	
+	@Override
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	@DeleteMapping("/{id}")
 	public void deleta(@PathVariable Long id) {
 		service.deleta(id);
 	}
 	
+	@Override
 	@DeleteMapping("/{grupoId}/permissoes/{permissaoId}")
-	public Grupo removerPermissao(@PathVariable Long grupoId , @PathVariable Long permissaoId) {
-		return service.removerPermissao(grupoId, permissaoId);
+	public GrupoDtoResconse removerPermissao(@PathVariable Long grupoId , @PathVariable Long permissaoId) {
+		return conversor.converteGrupo(service.removerPermissao(grupoId, permissaoId));
 	}
+	
+	@Override
+	@PostMapping("/{grupoId}/permissoes/{permissaoId}")
+	public GrupoDtoResconse adicionaPermissao(@PathVariable Long grupoId , @PathVariable Long permissaoId) {
+		return conversor.converteGrupo(service.adicionaPermissao(grupoId, permissaoId));
+	}
+	
 }

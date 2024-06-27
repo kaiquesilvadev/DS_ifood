@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.kaique.ifood.dto.conversor.GrupoDtoConversor;
 import com.kaique.ifood.dto.conversor.UsuarioDtoConversor;
-import com.kaique.ifood.dto.request.GrupoDtoRequest;
+import com.kaique.ifood.dto.responce.GrupoDtoResconse;
 import com.kaique.ifood.dto.responce.UsuarioDtoResponce;
 import com.kaique.ifood.services.UsuarioGrupoService;
 
@@ -30,8 +30,8 @@ public class UsuarioGrupoController {
 	private GrupoDtoConversor conversorGrupo;
 	
 	@GetMapping
-	public List<GrupoDtoRequest> ListaGrupo(@PathVariable Long usuarioId) {
-		return conversorGrupo.listaDto(service.ListaGrupos(usuarioId));
+	public List<GrupoDtoResconse> ListaGrupo(@PathVariable Long usuarioId) {
+		return conversorGrupo.lista(service.ListaGrupos(usuarioId));
 	}
 
 	@PostMapping("/{grupoId}")

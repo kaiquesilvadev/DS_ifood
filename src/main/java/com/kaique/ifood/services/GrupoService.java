@@ -41,7 +41,7 @@ public class GrupoService {
 	}
 	
 	@Transactional
-	public Grupo referencia(Long grupoId, Long permissaoId) {
+	public Grupo adicionaPermissao(Long grupoId, Long permissaoId) {
 		Grupo grupo = buscaPorId(grupoId);
 		Permissao permissao = permissaoService.buscaPorId(permissaoId);
 		grupo.getPermissoes().add(permissao);
