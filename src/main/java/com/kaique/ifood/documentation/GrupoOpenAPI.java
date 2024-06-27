@@ -2,8 +2,6 @@ package com.kaique.ifood.documentation;
 
 import java.util.List;
 
-import org.springframework.web.bind.annotation.PathVariable;
-
 import com.kaique.ifood.dto.request.GrupoDtoRequest;
 import com.kaique.ifood.dto.responce.GrupoDtoResconse;
 import com.kaique.ifood.exceptionHandler.ApiErro;
@@ -61,7 +59,6 @@ public interface GrupoOpenAPI {
     void deleta(
             @Parameter(description = "ID", example = "1") Long id
     );
-    
     
     @Operation(summary = "remove grupo por id de grupo e permissão")
     @ApiResponses({

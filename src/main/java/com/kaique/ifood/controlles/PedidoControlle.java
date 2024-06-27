@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.kaique.ifood.documentation.PedidoOpenAPI;
 import com.kaique.ifood.dto.conversor.PedidoDtoConverso;
 import com.kaique.ifood.dto.conversor.PedidoResumoDtoConverso;
 import com.kaique.ifood.dto.request.PedidoDtoRequest;
@@ -29,7 +30,7 @@ import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/pedidos")
-public class PedidoControlle {
+public class PedidoControlle implements PedidoOpenAPI{
 
 	@Autowired
 	private EmissaoPedidoServices services;
@@ -43,6 +44,7 @@ public class PedidoControlle {
 	@Autowired
 	private PedidoDtoConverso converso;
 
+	@Override
 	@GetMapping
 	public Page<PedidoResumoDtoResponce> lista(Pageable pageable) {
 		Page<Pedido> page = services.lista(pageable);
@@ -50,29 +52,34 @@ public class PedidoControlle {
 		return new PageImpl<PedidoResumoDtoResponce>(DtoResponce, pageable, page.getTotalElements());
 	}
 
+	@Override
 	@GetMapping("/{codigo}")
 	public PedidoDtoResponce buscaPorCodigo(@PathVariable String codigo) {
 		return converso.convertePedido(services.buscaPorCodigo(codigo));
 	}
 
+	@Override
 	@ResponseStatus(HttpStatus.CREATED)
 	@PostMapping
 	public PedidoDtoResponce criarPedido(@Valid @RequestBody PedidoDtoRequest dtoRequest) {
 		return converso.convertePedido(services.criarPedido(dtoRequest));
 	}
 	
+	@Override
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	@PutMapping("/{codigo}/confirmacao")
 	public void confirmaPedido(@PathVariable String codigo) {
 		fluxoPedidoService.confirmado(codigo);
 	}
 	
+	@Override
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	@PutMapping("/{codigo}/entregue")
 	public void pedidoEntregue(@PathVariable String codigo) {
 		fluxoPedidoService.entregue(codigo);
 	}
 	
+	@Override
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	@PutMapping("/{codigo}/cancelamento")
 	public void pedidoCancelado(@PathVariable String codigo) {

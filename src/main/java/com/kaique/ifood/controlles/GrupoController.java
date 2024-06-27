@@ -24,56 +24,55 @@ import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/grupos")
-public class GrupoController implements  GrupoOpenAPI{
+public class GrupoController implements GrupoOpenAPI{
 
 	@Autowired
 	private GrupoService service;
-	
+
 	@Autowired
 	private GrupoDtoConversor conversor;
-	
+
 	@Override
 	@GetMapping
 	public List<GrupoDtoResconse> listar() {
 		return conversor.lista(service.lista());
 	}
-	
+
 	@Override
 	@GetMapping("/{id}")
 	public GrupoDtoResconse buscaPorId(@PathVariable Long id) {
 		return conversor.converteGrupo(service.buscaPorId(id));
 	}
-	
+
 	@Override
 	@ResponseStatus(HttpStatus.CREATED)
 	@PostMapping
 	public GrupoDtoResconse adiciona(@Valid @RequestBody GrupoDtoRequest dto) {
 		return conversor.converteGrupo(service.adiciona(dto));
 	}
-	
+
 	@Override
 	@PutMapping("/{id}")
 	public GrupoDtoResconse atualiza(@PathVariable Long id , @Valid @RequestBody GrupoDtoRequest dto ) {
 		return conversor.converteGrupo(service.atualiza(dto, id));
 	}
-	
+
 	@Override
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	@DeleteMapping("/{id}")
 	public void deleta(@PathVariable Long id) {
 		service.deleta(id);
 	}
-	
+
 	@Override
 	@DeleteMapping("/{grupoId}/permissoes/{permissaoId}")
 	public GrupoDtoResconse removerPermissao(@PathVariable Long grupoId , @PathVariable Long permissaoId) {
 		return conversor.converteGrupo(service.removerPermissao(grupoId, permissaoId));
 	}
-	
-	@Override
+
+	@Override 
 	@PostMapping("/{grupoId}/permissoes/{permissaoId}")
 	public GrupoDtoResconse adicionaPermissao(@PathVariable Long grupoId , @PathVariable Long permissaoId) {
 		return conversor.converteGrupo(service.adicionaPermissao(grupoId, permissaoId));
 	}
-	
 }
