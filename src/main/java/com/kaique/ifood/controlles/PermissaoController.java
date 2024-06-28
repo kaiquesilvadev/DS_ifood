@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.kaique.ifood.documentation.PermissaoOpenAPI;
 import com.kaique.ifood.dto.conversor.PermissaodtoConversor;
 import com.kaique.ifood.dto.request.PermissaoDtoRequest;
 import com.kaique.ifood.dto.responce.PermissaoDtoResponce;
@@ -23,7 +24,7 @@ import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/permissoes")
-public class PermissaoController {
+public class PermissaoController implements PermissaoOpenAPI{
 
 	@Autowired
 	private PermissaoService service;
@@ -31,27 +32,32 @@ public class PermissaoController {
 	@Autowired
 	private PermissaodtoConversor conversor;
 
+	@Override
 	@GetMapping
 	public List<PermissaoDtoResponce> lista() {
 		return conversor.listaDto(service.lista());
 	}
 
+	@Override
 	@GetMapping("/{id}")
-	public PermissaoDtoResponce lista(@PathVariable Long id) {
+	public PermissaoDtoResponce buscaPorId(@PathVariable Long id) {
 		return conversor.converteEntity(service.buscaPorId(id));
 	}
 
+	@Override
 	@ResponseStatus(HttpStatus.CREATED)
 	@PostMapping
 	public PermissaoDtoResponce adiciona(@Valid @RequestBody PermissaoDtoRequest dtoRequest) {
 		return conversor.converteEntity(service.adiciona(dtoRequest));
 	}
 
+	@Override
 	@PutMapping("/{id}")
 	public PermissaoDtoResponce atualiza(@Valid @RequestBody PermissaoDtoRequest dtoRequest, @PathVariable Long id) {
 		return conversor.converteEntity(service.atualiza(dtoRequest, id));
 	}
 
+	@Override
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	@DeleteMapping("/{id}")
 	public void deleta(@PathVariable Long id) {
