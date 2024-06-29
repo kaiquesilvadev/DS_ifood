@@ -22,8 +22,6 @@ public interface CozinhaOpenAPI {
 
     @Operation(summary = "Lista os registros por nome")
     @ApiResponses({
-            @ApiResponse(responseCode = "400", description = "Parametro passado inválido", 
-                         content = @Content(schema = @Schema(implementation = ApiErro.class))),
             @ApiResponse(responseCode = "404", description = "Não encontrado", 
                          content = @Content(schema = @Schema(implementation = ApiErro.class)))
     })
@@ -31,15 +29,17 @@ public interface CozinhaOpenAPI {
 
     @Operation(summary = "Busca por ID")
     @ApiResponses({
-            @ApiResponse(responseCode = "400", description = "Parametro passado inválido", 
-                         content = @Content(schema = @Schema(implementation = ApiErro.class))),
             @ApiResponse(responseCode = "404", description = "Não encontrado", 
                          content = @Content(schema = @Schema(implementation = ApiErro.class)))
     })
     CozinhaDtoResponce buscaPorId(@Parameter(description = "ID", example = "1") Long id);
 
     @Operation(summary = "Cadastra um novo registro")
-    @ApiResponse(responseCode = "201", description = "Criado com sucesso")
+    @ApiResponses({
+        @ApiResponse(responseCode = "201", description = "Criado com sucesso") ,
+        @ApiResponse(responseCode = "404", description = "Não encontrado", 
+                     content = @Content(schema = @Schema(implementation = ApiErro.class)))
+    })
     CozinhaDtoResponce adiciona(CozinhaDtoRequest dto);
 
     @Operation(summary = "Atualiza um registro por ID")

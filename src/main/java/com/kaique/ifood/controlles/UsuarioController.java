@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.kaique.ifood.documentation.UsuarioOpenAPI;
 import com.kaique.ifood.dto.conversor.UsuarioDtoConversor;
 import com.kaique.ifood.dto.request.AtualizaSenhaDtoRequest;
 import com.kaique.ifood.dto.request.AtualizaUsuarioDtoRequest;
@@ -25,7 +26,7 @@ import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/usuarios")
-public class UsuarioController {
+public class UsuarioController implements UsuarioOpenAPI{
 
 	@Autowired
 	private UsuarioService service;
@@ -33,34 +34,40 @@ public class UsuarioController {
 	@Autowired
 	private UsuarioDtoConversor conversor;
 
+	@Override
 	@GetMapping
 	public List<UsuarioDtoResponce> list() {
 		return service.lista();
 	}
 
+	@Override
 	@GetMapping("/{id}")
 	public UsuarioDtoResponce buscaPorId(@PathVariable Long id) {
 		return conversor.converteUsuario(service.buscarPorId(id));
 	}
 
+	@Override
 	@ResponseStatus(HttpStatus.CREATED)
 	@PostMapping
 	public UsuarioDtoResponce adiciona(@Valid @RequestBody UsuarioDtoRequest dtoRequest) {
 		return conversor.converteUsuario(service.adiciona(dtoRequest));
 	}
 
+	@Override
 	@PutMapping("{id}")
 	public UsuarioDtoResponce atualizaUsuario(@Valid @RequestBody AtualizaUsuarioDtoRequest dtoRequest,
 			@PathVariable Long id) {
 		return conversor.converteUsuario(service.atualizaUsuario(dtoRequest, id));
 	}
 
+	@Override
 	@ResponseStatus(value = HttpStatus.NO_CONTENT)
 	@PutMapping("{id}/atualizar-senha")
 	public void atualizaSenha(@Valid @RequestBody AtualizaSenhaDtoRequest dtoRequest, @PathVariable Long id) {
 		service.atualizaSenha(dtoRequest, id);
 	}
 
+	@Override
 	@DeleteMapping("{id}")
 	public void deletar(@PathVariable Long id) {
 		service.deleta(id);
