@@ -91,7 +91,7 @@ public class LinkManager {
 	        pedidoDTO.getFormaPagamento().add(linkFormaPagamento);
 
 	        pedidoDTO.getItens().forEach(itemPedidoDTO -> {
-	            itemPedidoDTO.add(linkTo(methodOn(RestauranteProdutoController.class).buscaidEmRestaurante(pedidoDTO.getRestaurante().getId(), itemPedidoDTO.getProdutoId())).withSelfRel());
+	            itemPedidoDTO.add(linkTo(methodOn(RestauranteProdutoController.class).buscaIdDeProdutoEmRestaurante(pedidoDTO.getRestaurante().getId(), itemPedidoDTO.getProdutoId())).withSelfRel());
 	        });
 
 	        return pedidoDTO;
