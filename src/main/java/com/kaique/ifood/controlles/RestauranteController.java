@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.kaique.ifood.documentation.RestauranteOpenAPI;
 import com.kaique.ifood.dto.conversor.RestauranteDtoConversor;
 import com.kaique.ifood.dto.request.RestaurantesDtoRequest;
 import com.kaique.ifood.dto.responce.RestauranteDtoResponce;
@@ -30,7 +31,7 @@ import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/restaurantes")
-public class RestauranteController {
+public class RestauranteController implements RestauranteOpenAPI{
 
 	@Autowired
 	private RestauranteService service;
@@ -38,6 +39,7 @@ public class RestauranteController {
 	@Autowired
 	private RestauranteDtoConversor conversor;
 
+	@Override
 	@GetMapping
 	public Page<RestauranteResumoDtoResponce> listar(Pageable pageable) {
 		Page<Restaurante> pageRestaurante = service.listar(pageable);
@@ -45,11 +47,13 @@ public class RestauranteController {
 	  	return new PageImpl<>(restaurante, pageable , pageRestaurante.getTotalElements());
 	}
 
+	@Override
 	@GetMapping("/{id}")
 	public RestauranteDtoResponce buscaPorId(@PathVariable Long id) {
 		return  conversor.converteEntity(service.buscaPorId(id));
 	}
 
+	@Override
 	@GetMapping("/filtroTaxa/por-taxa-frete")
 	public List<RestauranteDtoResponce> filtraPorTaxas(BigDecimal taxaInicial, @RequestParam BigDecimal taxaFinal) {
 		return conversor.listaDtoEmtity(service.filtraPorTaxas(taxaInicial, taxaFinal));
@@ -61,29 +65,34 @@ public class RestauranteController {
 	 * ResponseEntity.ok().body(service.buscaPorNomeEIdDeCozinha(nome, id)); }
 	 */
 
+	@Override
 	@GetMapping("/filtra/por-nome-e-frete")
 	public List<RestauranteDtoResponce> buscaRTTPorNomeFrete(String nome, @RequestParam BigDecimal taxaFreteInicia,
 			BigDecimal taxaFreteFinal) {
 		return conversor.listaDtoEmtity(service.buscaRTTPorNomeFrete(nome, taxaFreteInicia, taxaFreteFinal));
 	}
 
+	@Override
 	@GetMapping("/filtra/com-frete-gratis")
 	public List<RestauranteDtoResponce> restaurantesComFreteGratis(String nome) {
 		return conversor.listaDtoEmtity(service.restaurantesComFreteGratis(nome));
 	}
 
+	@Override
 	@ResponseStatus(HttpStatus.CREATED)
 	@PostMapping
 	public RestauranteDtoResponce adiciona(@Valid @RequestBody RestaurantesDtoRequest restauranteDto) {
 		return conversor.converteEntity(service.adiciona(restauranteDto));
 	}
 
+	@Override
 	@PutMapping("/{restauranteId}")
 	public RestauranteDtoResponce atualiza(@PathVariable Long restauranteId,
 			@Valid @RequestBody RestaurantesDtoRequest restaurante) {
 		return conversor.converteEntity(service.atualiza(restauranteId, restaurante));
 	}
 
+	@Override
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	@PutMapping("/{restauranteId}/ativa")
 	public void ativa(@PathVariable Long restauranteId) {
@@ -91,12 +100,14 @@ public class RestauranteController {
 
 	}
 
+	@Override
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	@PutMapping("/{restauranteId}/desativa")
 	public void desativa(@PathVariable Long restauranteId) {
 		service.desativa(restauranteId);
 	}
 
+	@Override
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	@DeleteMapping("/{id}")
 	public void deletar(@PathVariable Long id) {
