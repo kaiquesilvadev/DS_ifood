@@ -2,62 +2,51 @@ package com.kaique.ifood.documentation;
 
 import java.util.List;
 
-import com.kaique.ifood.dto.request.CozinhaDtoRequest;
-import com.kaique.ifood.dto.responce.CozinhaDtoResponce;
+import com.kaique.ifood.dto.request.EstadoDtoRequest;
+import com.kaique.ifood.dto.responce.EstadoDtoResponce;
 import com.kaique.ifood.exceptionHandler.ApiErro;
 
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
-@Tag(name = "Cozinhas", description = "Gerenciamento de cozinhas")
-public interface CozinhaOpenAPI {
+@Tag(name = "Estado", description = "Gerenciamento de Estado")
+public interface EstadoOpenAPI {
 
     @Operation(summary = "Lista os registros")
-    List<CozinhaDtoResponce> listar();
-
-    @Operation(summary = "Lista os registros por nome")
-    @ApiResponses({
-            @ApiResponse(responseCode = "404", description = "Não encontrado", 
-                         content = @Content(schema = @Schema(implementation = ApiErro.class)))
-    })
-    List<CozinhaDtoResponce> buscarPorNome(String nome);
-
+	public List<EstadoDtoResponce> listar() ;
+    
     @Operation(summary = "Busca por ID")
     @ApiResponses({
             @ApiResponse(responseCode = "404", description = "Não encontrado", 
                          content = @Content(schema = @Schema(implementation = ApiErro.class)))
     })
-    CozinhaDtoResponce buscaPorId(@Parameter(description = "ID", example = "1") Long id);
-
+	public EstadoDtoResponce buscaPorId(Long id) ;
+    
     @Operation(summary = "Cadastra um novo registro")
     @ApiResponses({
-    		@ApiResponse(responseCode = "201", description = "Criado com sucesso") ,
+        	@ApiResponse(responseCode = "201", description = "Criado com sucesso") ,
         	@ApiResponse(responseCode = "404", description = "Não encontrado", 
-                     content = @Content(schema = @Schema(implementation = ApiErro.class)))
+                     	content = @Content(schema = @Schema(implementation = ApiErro.class)))
     })
-    CozinhaDtoResponce adiciona(CozinhaDtoRequest dto);
-
+	public EstadoDtoResponce adiciona(EstadoDtoRequest estado) ;
+    
     @Operation(summary = "Atualiza um registro por ID")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Atualizado com sucesso"),
             @ApiResponse(responseCode = "404", description = "Não encontrado com o id", 
                          content = @Content(schema = @Schema(implementation = ApiErro.class)))
     })
-    CozinhaDtoResponce atualiza(
-            @Parameter(description = "ID", example = "1") Long id,
-            @Parameter(description = "Representação de um registro atualizado") CozinhaDtoRequest dto
-    );
-
+	public EstadoDtoResponce atualiza(Long estadiId,  EstadoDtoRequest estado) ;
+    
     @Operation(summary = "Exclui um registro por ID")
     @ApiResponses({
             @ApiResponse(responseCode = "204", description = "Excluído com sucesso"),
             @ApiResponse(responseCode = "404", description = "Não encontrado com o id", 
                          content = @Content(schema = @Schema(implementation = ApiErro.class)))
     })
-    void deletar(@Parameter(description = "ID", example = "1") Long id);
+	public void deletar(Long id) ;
 }

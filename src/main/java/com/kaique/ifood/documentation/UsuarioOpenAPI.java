@@ -2,8 +2,6 @@ package com.kaique.ifood.documentation;
 
 import java.util.List;
 
-import org.springframework.web.bind.annotation.GetMapping;
-
 import com.kaique.ifood.dto.request.AtualizaSenhaDtoRequest;
 import com.kaique.ifood.dto.request.AtualizaUsuarioDtoRequest;
 import com.kaique.ifood.dto.request.UsuarioDtoRequest;
