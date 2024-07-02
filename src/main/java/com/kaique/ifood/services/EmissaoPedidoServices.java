@@ -1,7 +1,5 @@
 package com.kaique.ifood.services;
 
-import java.util.List;
-
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -47,15 +45,14 @@ public class EmissaoPedidoServices {
 
 	@Autowired
 	private CidadeService cidadeService;
-
+	
 	@Autowired
-	private UsuarioService usuarioService;
+	private UserSecurityService securityService;
 
 	public Page<Pedido> lista(Pageable pageable) {
 		return repository.findAll(pageable);
 	}
 
-	@Transactional
 	public Pedido buscaPorCodigo(String codigo) {
 		Pedido pedido = repository.findByCodigo(codigo).orElseThrow(() -> new PedidoNaoEncontradoException(codigo));
 		Hibernate.initialize(pedido.getItens());
@@ -65,10 +62,7 @@ public class EmissaoPedidoServices {
 	@Transactional
 	public Pedido criarPedido(PedidoDtoRequest dtoRequest) {
 		Pedido pedido = converso.converteDto(dtoRequest);
-
-		// TODO : esse usuário e temporário ate eu fazer validação por token, lembrar de
-		// tirar
-		pedido.setUsuarioCliente(usuarioService.buscarPorId(1L));
+		pedido.setUsuarioCliente(securityService.authenticated());
 
 		validaPedido(pedido);
 		validaItens(pedido);
