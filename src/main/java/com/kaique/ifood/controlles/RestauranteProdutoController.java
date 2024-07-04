@@ -23,7 +23,7 @@ import com.kaique.ifood.services.RestauranteProdutoService;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/restaurante/{restauranteId}/produtos")
+@RequestMapping("v1/restaurante/{restauranteId}/produtos")
 public class RestauranteProdutoController implements RestauranteProdutoOpenAPI{
 
 	@Autowired

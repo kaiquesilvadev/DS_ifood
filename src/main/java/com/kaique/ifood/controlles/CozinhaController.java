@@ -23,7 +23,7 @@ import com.kaique.ifood.services.CozinhaService;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/cozinhas")
+@RequestMapping("v1/cozinhas")
 public class CozinhaController implements CozinhaOpenAPI{
 
 	@Autowired

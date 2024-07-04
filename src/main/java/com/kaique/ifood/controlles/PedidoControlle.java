@@ -29,7 +29,7 @@ import com.kaique.ifood.services.FluxoPedidoService;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/pedidos")
+@RequestMapping("v1/pedidos")
 public class PedidoControlle implements PedidoOpenAPI{
 
 	@Autowired

@@ -18,7 +18,7 @@ import com.kaique.ifood.dto.responce.FormaPagamentoDtoResponce;
 import com.kaique.ifood.services.RestauranteFormaPagamentoService;
 
 @RestController
-@RequestMapping("/restaurante/{restauranteId}/formaPagamentos")
+@RequestMapping("v1/restaurante/{restauranteId}/formaPagamentos")
 public class RestauranteFormaPagamentoController implements RestauranteFormaPagamentoOpenAPI{
 
 	@Autowired

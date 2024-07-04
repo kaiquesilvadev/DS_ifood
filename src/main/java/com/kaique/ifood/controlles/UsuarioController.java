@@ -25,7 +25,7 @@ import com.kaique.ifood.services.UsuarioService;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/usuarios")
+@RequestMapping("v1/usuarios")
 public class UsuarioController implements UsuarioOpenAPI{
 
 	@Autowired

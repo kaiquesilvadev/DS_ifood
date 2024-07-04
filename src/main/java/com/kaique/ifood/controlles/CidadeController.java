@@ -26,7 +26,7 @@ import jakarta.validation.Valid;
 
 @Tag(name = "Cidades", description = "Gerencia as cidades")
 @RestController
-@RequestMapping("/cidades")
+@RequestMapping("v1/cidades")
 public class CidadeController implements CidadeOpenAPI{
 
 	@Autowired

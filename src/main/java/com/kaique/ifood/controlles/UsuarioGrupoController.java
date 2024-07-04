@@ -18,7 +18,7 @@ import com.kaique.ifood.dto.responce.UsuarioDtoResponce;
 import com.kaique.ifood.services.UsuarioGrupoService;
 
 @RestController
-@RequestMapping("/usuario/{usuarioId}/grupos")
+@RequestMapping("v1/usuario/{usuarioId}/grupos")
 public class UsuarioGrupoController implements UsuarioGrupoOpenAPI{
 
 	@Autowired

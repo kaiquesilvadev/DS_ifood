@@ -14,7 +14,7 @@ import com.kaique.ifood.dto.responce.VendaDiaria;
 import com.kaique.ifood.services.VendaConsultasService;
 
 @RestController
-@RequestMapping(path = "/estatisticas")
+@RequestMapping(path = "v1/estatisticas")
 public class EstatisticasVendaController implements EstatisticasVendaOpenAPI{
 
 	@Autowired

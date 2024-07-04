@@ -30,7 +30,7 @@ import com.kaique.ifood.services.RestauranteService;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/restaurantes")
+@RequestMapping("v1/restaurantes")
 public class RestauranteController implements RestauranteOpenAPI{
 
 	@Autowired

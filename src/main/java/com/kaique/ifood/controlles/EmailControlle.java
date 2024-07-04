@@ -14,7 +14,7 @@ import com.kaique.ifood.services.EmailService;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/emails")
+@RequestMapping("v1/emails")
 public class EmailControlle {
 
 	@Autowired

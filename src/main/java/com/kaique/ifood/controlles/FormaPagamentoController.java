@@ -23,7 +23,7 @@ import com.kaique.ifood.services.FormaPagamentoService;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/formaPagamentos")
+@RequestMapping("v1/formaPagamentos")
 public class FormaPagamentoController implements FormaPagamentoOpenAPI{
 
 	@Autowired

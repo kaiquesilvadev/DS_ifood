@@ -23,7 +23,7 @@ import com.kaique.ifood.services.PermissaoService;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/permissoes")
+@RequestMapping("v1/permissoes")
 public class PermissaoController implements PermissaoOpenAPI{
 
 	@Autowired

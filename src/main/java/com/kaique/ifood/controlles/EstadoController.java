@@ -23,7 +23,7 @@ import com.kaique.ifood.services.EstadoService;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/estados")
+@RequestMapping("v1/estados")
 public class EstadoController implements EstadoOpenAPI{
 
 	@Autowired
