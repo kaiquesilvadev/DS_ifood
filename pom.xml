@@ -108,6 +108,11 @@
 			<version>2.1.0</version>
 		</dependency>
 		
+		<dependency> <!-- envia emails usando o sendgrid -->
+			<groupId>com.sendgrid</groupId>
+			<artifactId>sendgrid-java</artifactId>
+		</dependency>
+		
 	</dependencies>
 
 	<build>

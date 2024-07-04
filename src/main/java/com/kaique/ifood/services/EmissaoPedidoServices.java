@@ -102,7 +102,5 @@ public class EmissaoPedidoServices {
 		} catch (ProdutoNaoEncontradoException e) {
 			throw new NegocioException(e.getMessage());
 		}
-
 	}
-
 }
