@@ -1,5 +1,6 @@
 package com.kaique.ifood.controlles;
 
+import java.net.URL;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,8 +14,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.kaique.ifood.documentation.PedidoOpenAPI;
 import com.kaique.ifood.dto.conversor.PedidoDtoConverso;
@@ -25,6 +28,7 @@ import com.kaique.ifood.dto.responce.PedidoResumoDtoResponce;
 import com.kaique.ifood.entities.Pedido;
 import com.kaique.ifood.services.EmissaoPedidoServices;
 import com.kaique.ifood.services.FluxoPedidoService;
+import com.kaique.ifood.services.S3Service;
 
 import jakarta.validation.Valid;
 
@@ -43,6 +47,10 @@ public class PedidoControlle implements PedidoOpenAPI{
 
 	@Autowired
 	private PedidoDtoConverso converso;
+	
+	@Autowired
+	private S3Service s3Service;
+
 
 	@Override
 	@GetMapping
@@ -64,6 +72,11 @@ public class PedidoControlle implements PedidoOpenAPI{
 	public PedidoDtoResponce criarPedido(@Valid @RequestBody PedidoDtoRequest dtoRequest) {
 		return converso.convertePedido(services.criarPedido(dtoRequest));
 	}
+	
+	@PostMapping("/upload")
+    public URL uploadFile(@RequestParam("imagem") MultipartFile file) {
+	 return s3Service.uploadFile(file);
+ }
 	
 	@Override
 	@ResponseStatus(HttpStatus.NO_CONTENT)
