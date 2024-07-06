@@ -8,6 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -81,12 +82,14 @@ public class RestauranteController implements RestauranteOpenAPI{
 	@Override
 	@ResponseStatus(HttpStatus.CREATED)
 	@PostMapping
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
 	public RestauranteDtoResponce adiciona(@Valid @RequestBody RestaurantesDtoRequest restauranteDto) {
 		return conversor.converteEntity(service.adiciona(restauranteDto));
 	}
 
 	@Override
 	@PutMapping("/{restauranteId}")
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
 	public RestauranteDtoResponce atualiza(@PathVariable Long restauranteId,
 			@Valid @RequestBody RestaurantesDtoRequest restaurante) {
 		return conversor.converteEntity(service.atualiza(restauranteId, restaurante));
@@ -95,6 +98,7 @@ public class RestauranteController implements RestauranteOpenAPI{
 	@Override
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	@PutMapping("/{restauranteId}/ativa")
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
 	public void ativa(@PathVariable Long restauranteId) {
 		service.ativa(restauranteId);
 
@@ -103,6 +107,7 @@ public class RestauranteController implements RestauranteOpenAPI{
 	@Override
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	@PutMapping("/{restauranteId}/desativa")
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
 	public void desativa(@PathVariable Long restauranteId) {
 		service.desativa(restauranteId);
 	}
@@ -110,6 +115,7 @@ public class RestauranteController implements RestauranteOpenAPI{
 	@Override
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	@DeleteMapping("/{id}")
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
 	public void deletar(@PathVariable Long id) {
 		service.deletar(id);
 	}

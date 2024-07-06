@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -47,12 +48,14 @@ public class FormaPagamentoController implements FormaPagamentoOpenAPI{
 	@Override
 	@ResponseStatus(HttpStatus.CREATED)
 	@PostMapping
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
 	public FormaPagamentoDtoResponce adiciona(@Valid @RequestBody FormaPagamentoDtoRequest formaPagamento) {
 		return conversor.ConversorEntity(service.adiciona(formaPagamento));
 	}
 
 	@Override
 	@PutMapping("/{id}")
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
 	public FormaPagamentoDtoResponce atualiza(@Valid @RequestBody FormaPagamentoDtoRequest formaPagamento, @PathVariable Long id) {
 		return conversor.ConversorEntity(service.atualiza(formaPagamento, id));
 	}
@@ -60,6 +63,7 @@ public class FormaPagamentoController implements FormaPagamentoOpenAPI{
 	@Override
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	@DeleteMapping("/{id}")
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
 	public void deletar(@PathVariable Long id) {
 		service.deletar(id);
 	}

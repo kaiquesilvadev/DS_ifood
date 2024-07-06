@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -46,12 +47,14 @@ public class RestauranteProdutoController implements RestauranteProdutoOpenAPI{
 
 	@Override
 	@ResponseStatus(HttpStatus.CREATED)
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
 	@PostMapping
 	public ProdutoDtoResponce adiciona(@PathVariable Long restauranteId, @Valid @RequestBody ProdutoDtoRequest dtoRequest) {
 		return conversor.converteProduto(service.adiciona(dtoRequest, restauranteId));
 	}
 
 	@Override
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
 	@PutMapping("/{produtoId}")
 	public ProdutoDtoResponce atualizar(@Valid @RequestBody ProdutoDtoRequest dtoRequest , @PathVariable Long restauranteId, @PathVariable Long produtoId) {
 		return conversor.converteProduto(service.atualizar(dtoRequest, restauranteId, produtoId));
@@ -59,6 +62,7 @@ public class RestauranteProdutoController implements RestauranteProdutoOpenAPI{
 
 	@Override
 	@ResponseStatus(HttpStatus.NO_CONTENT)
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
 	@PutMapping("/{produtoId}/ativa")
 	public void ativaProduto(@PathVariable Long restauranteId, @PathVariable Long produtoId) {
 		service.ativarProduto(restauranteId, produtoId);
@@ -66,6 +70,7 @@ public class RestauranteProdutoController implements RestauranteProdutoOpenAPI{
 
 	@Override
 	@ResponseStatus(HttpStatus.NO_CONTENT)
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
 	@PutMapping("/{produtoId}/desativa")
 	public void desativaProduto(@PathVariable Long restauranteId, @PathVariable Long produtoId) {
 		service.desativaProduto(restauranteId, produtoId);
@@ -73,6 +78,7 @@ public class RestauranteProdutoController implements RestauranteProdutoOpenAPI{
 
 	@Override
 	@ResponseStatus(HttpStatus.NO_CONTENT)
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
 	@DeleteMapping("/{produtoId}")
 	public void deletaProduto(@PathVariable Long restauranteId, @PathVariable Long produtoId) {
 		service.deletaProduto(restauranteId, produtoId);

@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,7 +19,6 @@ import com.kaique.ifood.documentation.CidadeOpenAPI;
 import com.kaique.ifood.dto.conversor.CidadeDtoConversor;
 import com.kaique.ifood.dto.request.CidadeDtoRequest;
 import com.kaique.ifood.dto.responce.CidadeResponce;
-import com.kaique.ifood.entities.Cidade;
 import com.kaique.ifood.services.CidadeService;
 
 import io.swagger.v3.oas.annotations.tags.Tag;

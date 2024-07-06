@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -33,6 +34,7 @@ public class PermissaoController implements PermissaoOpenAPI{
 	private PermissaodtoConversor conversor;
 
 	@Override
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
 	@GetMapping
 	public List<PermissaoDtoResponce> lista() {
 		return conversor.listaDto(service.lista());
@@ -46,18 +48,21 @@ public class PermissaoController implements PermissaoOpenAPI{
 
 	@Override
 	@ResponseStatus(HttpStatus.CREATED)
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
 	@PostMapping
 	public PermissaoDtoResponce adiciona(@Valid @RequestBody PermissaoDtoRequest dtoRequest) {
 		return conversor.converteEntity(service.adiciona(dtoRequest));
 	}
 
 	@Override
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
 	@PutMapping("/{id}")
 	public PermissaoDtoResponce atualiza(@Valid @RequestBody PermissaoDtoRequest dtoRequest, @PathVariable Long id) {
 		return conversor.converteEntity(service.atualiza(dtoRequest, id));
 	}
 
 	@Override
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	@DeleteMapping("/{id}")
 	public void deleta(@PathVariable Long id) {
