@@ -8,24 +8,24 @@ Este projeto é um mini sistema baseado no iFood e tem como objetivo me ajudar  
 
 ### técnicas e tecnologias
 
-1.1.  Spring e Injeção de Dependências
-1.2.  JPA e Hibernate
-1.3.  REST com Spring
-1.4.  Tratamento e modelagem de erros da API
-1.5.  Validações com Bean Validation
-1.6.  Explorando mais do JPA e Hibernate
-1.8.  Testes unitario
-1.9.  Boas práticas e técnicas para APIs
-1.10. Modelagem avançada e implementação da API
-1.11. Modelagem de projeções, pesquisas e relatórios
-1.12. Upload e download de arquivos
-1.13. E-mails transacionais e Domain Events
-1.14. Documentação da API com OpenAPI, Swagger UI e SpringFox
-1.15. Discoverability e HATEOAS A Glória do REST
-1.16. Evoluindo e versionando a API
-1.17. Logging
-1.18. Segurança com Spring Security e OAuth2
-1.19. OAuth2 avançado com JWT e controle de acesso
+- 1.1  Spring e Injeção de Dependências
+- 1.2  JPA e Hibernate
+- 1.3  REST com Spring
+- 1.4  Tratamento e modelagem de erros da API
+- 1.5  Validações com Bean Validation
+- 1.6  Explorando mais do JPA e Hibernate
+- 1.8  Testes unitario
+- 1.9  Boas práticas e técnicas para APIs
+- 1.10 Modelagem avançada e implementação da API
+- 1.11 Modelagem de projeções, pesquisas e relatórios
+- 1.12 Upload e download de arquivos
+- 1.13 E-mails transacionais e Domain Events
+- 1.14 Documentação da API com OpenAPI, Swagger UI e SpringFox
+- 1.15 Discoverability e HATEOAS A Glória do REST
+- 1.16 Evoluindo e versionando a API
+- 1.17 Logging
+- 1.18 Segurança com Spring Security e OAuth2
+- 1.19 OAuth2 avançado com JWT e controle de acesso
 
 #### 1.1. Spring e Injeção de Dependências
 
