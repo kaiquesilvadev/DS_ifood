@@ -27,19 +27,19 @@ Este projeto é um mini sistema baseado no iFood e tem como objetivo me ajudar  
 1.18. Segurança com Spring Security e OAuth2
 1.19. OAuth2 avançado com JWT e controle de acesso
 
-**1.1 Spring e Injeção de Dependências
+**1.1. Spring e Injeção de Dependências
 
 Spring é um framework popular para desenvolvimento de aplicações Java. Uma de suas principais funcionalidades é a Injeção de Dependências (DI - Dependency Injection).
 
 A DI é um padrão de design que promove a inversão de controle (IoC). Em vez de criar dependências diretamente, os objetos recebem essas dependências de uma entidade externa. No Spring, isso é gerenciado pelo contêiner de IoC.
 
-**1.1.0 Os benefícios da DI incluem:
+**1.1.0. Os benefícios da DI incluem:
 
 - Facilidade de Teste: Permite substituir dependências por mocks.
 - Flexibilidade: Facilita a troca de implementações.
 - Manutenção: Reduz o acoplamento, tornando o código mais modular.
 
-**1.9 Boas práticas e técnicas para APIs**
+**1.9. Boas práticas e técnicas para APIs**
 
 @Transactional: Essa anotação do sprint (org.springframework.transaction.annotation.Transactional) faz com que seja aberta uma transação na base de dados sempre que um método que manipula dados for chamado, a implementação do Spring Data JPA que é a classe SimpleJpaRepository já tem as operações como save, delete, update marcadas com @Transactional, porém como boa prática é interessante marcar os métodos dos nossos services que manipulam dados na base também, assim garantimos que não haja inconstência nos dados caso dê algúm problema e uma das operações e precise ser feito um rollback.
 Com a anotação, é aberta uma transação no momento da chamada do método no service por exemplo, e não apenas quando for para o repository, o spring data JPA gerencia essas transações e executa na base de dados de acordo com a fila de gerenciamento de transações que ele cria.
