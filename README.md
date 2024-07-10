@@ -78,6 +78,27 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 }
 	
 ```
+#### 1.5 Validações com Bean Validation
+
+Bean Validation, integrado ao Spring, facilita a validação de dados de entrada. Você usa anotações para definir regras de validação diretamente nas classes do modelo. Aqui está um exemplo curto:
+
+> exemplo de uso 
+```java
+@Getter
+@Setter
+public class CidadeDtoRequest {
+
+    // Garante que o campo não seja nulo, vazio ou composto apenas de espaços em branco.
+    @NotBlank
+    private String nome;
+    
+    // Garante que o objeto 'estado' não seja nulo e também valida suas propriedades.
+    @Valid
+    @NotNull
+    private EstadoDtoRef estado;
+ }
+```
+
 #### 1.9 Boas práticas e técnicas para APIs**
 
 @Transactional: Essa anotação do sprint (org.springframework.transaction.annotation.Transactional) faz com que seja aberta uma transação na base de dados sempre que um método que manipula dados for chamado, a implementação do Spring Data JPA que é a classe SimpleJpaRepository já tem as operações como save, delete, update marcadas com @Transactional, porém como boa prática é interessante marcar os métodos dos nossos services que manipulam dados na base também, assim garantimos que não haja inconstência nos dados caso dê algúm problema e uma das operações e precise ser feito um rollback.
