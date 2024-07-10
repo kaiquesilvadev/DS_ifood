@@ -99,6 +99,23 @@ public class CidadeDtoRequest {
  }
 ```
 
+#### 1.6  Explorando mais do JPA e Hibernate
+join fetch no jpql serve para que apenas uma consulta seja feita retornando todos os relacionamentos de uma só vez, ao contrário da consulta sem o fetch que faz vários selects separadamente.
+
+> Exemplo de output sem o join fetch em get /pedidos
+![](/img/getPedidosSemJoinFetch.png)
+
+
+> Exemplo de output com join fetch em jpql.
+```java
+	@Query("from Pedido pedido "  
+     + "join fetch pedido.usuarioCliente "
+		 + "join fetch pedido.restaurante restaurante "
+		 + "join fetch restaurante.cozinha ")
+	List<Pedido> buscarTodosResumido();
+```
+![](/img/getPedidosComJoinFetch.png)
+
 #### 1.9 Boas práticas e técnicas para APIs**
 
 @Transactional: Essa anotação do sprint (org.springframework.transaction.annotation.Transactional) faz com que seja aberta uma transação na base de dados sempre que um método que manipula dados for chamado, a implementação do Spring Data JPA que é a classe SimpleJpaRepository já tem as operações como save, delete, update marcadas com @Transactional, porém como boa prática é interessante marcar os métodos dos nossos services que manipulam dados na base também, assim garantimos que não haja inconstência nos dados caso dê algúm problema e uma das operações e precise ser feito um rollback.
