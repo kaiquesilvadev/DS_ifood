@@ -39,6 +39,18 @@ A DI é um padrão de design que promove a inversão de controle (IoC). Em vez d
 - Flexibilidade: Facilita a troca de implementações.
 - Manutenção: Reduz o acoplamento, tornando o código mais modular.
 
+#### 1.2  JPA e Hibernate
+
+JPA (Java Persistence API) é uma especificação da Java EE que define como os dados devem ser persistidos em bancos de dados relacionais. Ele oferece uma interface padrão para mapeamento objeto-relacional (ORM), permitindo que desenvolvedores trabalhem com dados de forma orientada a objetos, sem precisar escrever código SQL diretamente.
+
+Hibernate é uma implementação popular do JPA. Ele fornece um framework robusto para ORM, facilitando a manipulação de dados em Java. O Hibernate cuida automaticamente das tarefas de persistência e recuperação de dados do banco de dados, além de fornecer recursos adicionais, como cache de segundo nível, lazy loading e suporte a consultas HQL (Hibernate Query Language).
+
+Em resumo, JPA é a especificação e o Hibernate é uma das implementações dessa especificação, que facilita a interação com bancos de dados em aplicações Java.
+
+#### 1.3  REST com Spring
+
+REST com Spring permite criar APIs web que utilizam HTTP para comunicação. Usando anotações como @RestController, @GetMapping, @PostMapping, entre outras, você define endpoints que manipulam solicitações HTTP. Spring Boot simplifica a configuração e execução da aplicação, facilitando a criação de serviços RESTful de forma rápida e eficiente.
+
 #### 1.9 Boas práticas e técnicas para APIs**
 
 @Transactional: Essa anotação do sprint (org.springframework.transaction.annotation.Transactional) faz com que seja aberta uma transação na base de dados sempre que um método que manipula dados for chamado, a implementação do Spring Data JPA que é a classe SimpleJpaRepository já tem as operações como save, delete, update marcadas com @Transactional, porém como boa prática é interessante marcar os métodos dos nossos services que manipulam dados na base também, assim garantimos que não haja inconstência nos dados caso dê algúm problema e uma das operações e precise ser feito um rollback.
