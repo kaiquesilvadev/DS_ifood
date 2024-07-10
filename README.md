@@ -51,6 +51,33 @@ Em resumo, JPA é a especificação e o Hibernate é uma das implementações de
 
 REST com Spring permite criar APIs web que utilizam HTTP para comunicação. Usando anotações como @RestController, @GetMapping, @PostMapping, entre outras, você define endpoints que manipulam solicitações HTTP. Spring Boot simplifica a configuração e execução da aplicação, facilitando a criação de serviços RESTful de forma rápida e eficiente.
 
+#### 1.4  Tratamento e modelagem de erros da API
+
+Para tratar e modelar erros em uma API REST com Spring, você pode usar @ControllerAdvice para centralizar o tratamento de exceções, criando respostas de erro padronizadas. Crie exceções personalizadas para diferentes tipos de erros e use uma classe de resposta de erro para formatar as mensagens de erro. Isso garante que a API retorne respostas de erro consistentes e informativas.
+
+> exemplo de uso 
+
+```java
+@ControllerAdvice
+public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
+
+	@ExceptionHandler(Exception.class)
+	public ResponseEntity<?> trataException(Exception ex , WebRequest request) {
+		
+		ApiErro erro =  ApiErro.builder()
+				.timestamp(OffsetDateTime.now())
+				.Status(HttpStatus.INTERNAL_SERVER_ERROR.value())
+				.type(ProblemType.ERRO_DE_SISTEMA.getUrl())
+				.title(ProblemType.ERRO_DE_SISTEMA.getTitle())
+				.detail("Desculpe, encontramos um problema inesperado em nosso sistema. Por favor, tente novamente e, "
+						+ "se o erro persistir, entre em contato com o nosso suporte técnico para obter assistência.")
+				.build();
+		
+		return handleExceptionInternal(ex, erro , new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR, request);
+	}
+}
+	
+```
 #### 1.9 Boas práticas e técnicas para APIs**
 
 @Transactional: Essa anotação do sprint (org.springframework.transaction.annotation.Transactional) faz com que seja aberta uma transação na base de dados sempre que um método que manipula dados for chamado, a implementação do Spring Data JPA que é a classe SimpleJpaRepository já tem as operações como save, delete, update marcadas com @Transactional, porém como boa prática é interessante marcar os métodos dos nossos services que manipulam dados na base também, assim garantimos que não haja inconstência nos dados caso dê algúm problema e uma das operações e precise ser feito um rollback.
