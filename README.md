@@ -285,7 +285,7 @@ Cada abordagem tem suas vantagens e desvantagens, e a escolha depende das necess
 
 Spring Security e OAuth2 são tecnologias amplamente utilizadas para garantir a segurança de APIs e aplicações web. Aqui está uma explicação breve sobre cada um e como eles se relacionam:
 
-*Spring Security*
+> *Spring Security*
 
 
 **Spring Security** é um framework poderoso e altamente configurável para autenticação e autorização em aplicações Java. Ele fornece uma camada de segurança robusta que pode ser integrada facilmente em aplicações Spring, oferecendo recursos como:
@@ -298,7 +298,7 @@ Spring Security e OAuth2 são tecnologias amplamente utilizadas para garantir a 
   
 - **Integração com Spring:** Facilidade de integração com o ecossistema Spring, aproveitando conceitos como Injeção de Dependência (Dependency Injection) e configuração via anotações.
 
-*OAuth2*
+> *OAuth2*
 
 **OAuth2** é um protocolo de autorização que permite que usuários concedam acesso limitado a recursos em um serviço HTTP para outro aplicativo sem compartilhar suas credenciais diretamente. Ele é usado principalmente para delegação de autorização e é amplamente adotado para autenticação de API, incluindo:
 
@@ -310,8 +310,8 @@ Spring Security e OAuth2 são tecnologias amplamente utilizadas para garantir a 
   
 - **Centralização de Autorização:** Permite que os usuários controlem o acesso a seus próprios recursos sem compartilhar senhas diretamente com terceiros.
 
-*Relação entre Spring Security e OAuth2*
+> *Relação entre Spring Security e OAuth2*
 
 Spring Security pode ser configurado para integrar e suportar o OAuth2, fornecendo um mecanismo robusto para implementar fluxos de autenticação e autorização baseados em OAuth2 em suas aplicações Spring. Combinados, eles permitem que aplicações forneçam um controle granular sobre quem pode acessar quais recursos, enquanto também garantem a segurança dos dados e operações.
 ![](img/Oauth2FluxoSolicitacao.png)
-m resumo, Spring Security lida com a autenticação e autorização dentro da aplicação, enquanto OAuth2 é utilizado para delegar e gerenciar autorizações entre aplicações de forma segura e padronizada.
+Em resumo, Spring Security lida com a autenticação e autorização dentro da aplicação, enquanto OAuth2 é utilizado para delegar e gerenciar autorizações entre aplicações de forma segura e padronizada.
