@@ -22,7 +22,6 @@ Este projeto é um mini sistema baseado no iFood e tem como objetivo me ajudar  
 - 1.12 Documentação da API com OpenAPI, Swagger
 - 1.13 Discoverability e HATEOAS A Glória do REST
 - 1.14 Evoluindo e versionando a API
-- 1.15 Logging
 - 1.16 Segurança com Spring Security e OAuth2
 - 1.17 OAuth2 avançado com JWT e controle de acesso
 
@@ -282,4 +281,37 @@ O versionamento de API (API versioning) refere-se à prática de gerenciar e con
 
 Cada abordagem tem suas vantagens e desvantagens, e a escolha depende das necessidades específicas do projeto e das melhores práticas adotadas pela equipe de desenvolvimento.
 
+#### 1.16 Segurança com Spring Security e OAuth2
 
+Spring Security e OAuth2 são tecnologias amplamente utilizadas para garantir a segurança de APIs e aplicações web. Aqui está uma explicação breve sobre cada um e como eles se relacionam:
+
+*Spring Security*
+
+
+**Spring Security** é um framework poderoso e altamente configurável para autenticação e autorização em aplicações Java. Ele fornece uma camada de segurança robusta que pode ser integrada facilmente em aplicações Spring, oferecendo recursos como:
+
+- **Autenticação:** Gerenciamento de autenticação de usuários através de diferentes métodos como formulários de login, autenticação baseada em token, autenticação por LDAP, etc.
+  
+- **Autorização:** Controle de acesso baseado em papéis (roles) ou permissões (permissions), permitindo definir quem pode acessar quais recursos da aplicação.
+  
+- **Proteção contra ataques:** Prevenção contra ataques comuns como Cross-Site Request Forgery (CSRF), Cross-Site Scripting (XSS), etc.
+  
+- **Integração com Spring:** Facilidade de integração com o ecossistema Spring, aproveitando conceitos como Injeção de Dependência (Dependency Injection) e configuração via anotações.
+
+*OAuth2*
+
+**OAuth2** é um protocolo de autorização que permite que usuários concedam acesso limitado a recursos em um serviço HTTP para outro aplicativo sem compartilhar suas credenciais diretamente. Ele é usado principalmente para delegação de autorização e é amplamente adotado para autenticação de API, incluindo:
+
+- **Fluxo de Autorização:** Define diferentes fluxos de autorização (**authorization grant types**) para diferentes cenários de uso, como Authorization Code Grant, Implicit Grant, Client Credentials Grant, etc.
+ 
+- **Tokens de Acesso:** Utiliza tokens de acesso (**Access Tokens**) para autorizar solicitações subsequentes aos recursos protegidos.
+  
+- **Segurança e Escalabilidade:** Projetado para ser seguro, escalável e adequado para integração com diferentes tipos de clientes (**aplicações web, mobile, IoT, etc.**).
+  
+- **Centralização de Autorização:** Permite que os usuários controlem o acesso a seus próprios recursos sem compartilhar senhas diretamente com terceiros.
+
+*Relação entre Spring Security e OAuth2*
+
+Spring Security pode ser configurado para integrar e suportar o OAuth2, fornecendo um mecanismo robusto para implementar fluxos de autenticação e autorização baseados em OAuth2 em suas aplicações Spring. Combinados, eles permitem que aplicações forneçam um controle granular sobre quem pode acessar quais recursos, enquanto também garantem a segurança dos dados e operações.
+![](img/Oauth2FluxoSolicitacao.png)
+m resumo, Spring Security lida com a autenticação e autorização dentro da aplicação, enquanto OAuth2 é utilizado para delegar e gerenciar autorizações entre aplicações de forma segura e padronizada.
