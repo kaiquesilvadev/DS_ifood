@@ -312,6 +312,9 @@ Spring Security e OAuth2 são tecnologias amplamente utilizadas para garantir a 
 
 > *Relação entre Spring Security e OAuth2*
 
+Spring Security pode ser configurado para integrar e suportar o OAuth2, fornecendo um mecanismo robusto para implementar fluxos de autenticação e autorização baseados em OAuth2 em suas aplicações Spring. Combinados, eles permitem que aplicações forneçam um controle granular sobre quem pode acessar quais recursos, enquanto também garantem a segurança dos dados e operações.
+![](img/Oauth2FluxoSolicitacao.png)
+Em resumo, Spring Security lida com a autenticação e autorização dentro da aplicação, enquanto OAuth2 é utilizado para delegar e gerenciar autorizações entre aplicações de forma segura e padronizada.
 
 
 ## 2 Pré-requisitos
@@ -343,7 +346,3 @@ s3.region=${DSCATALOG_BUCKET_REGION:sa-east-1}
 
 # Configuração SendGrid
 spring.sendgrid.api-key=${SENDGRID_API_KEY}
-
-Spring Security pode ser configurado para integrar e suportar o OAuth2, fornecendo um mecanismo robusto para implementar fluxos de autenticação e autorização baseados em OAuth2 em suas aplicações Spring. Combinados, eles permitem que aplicações forneçam um controle granular sobre quem pode acessar quais recursos, enquanto também garantem a segurança dos dados e operações.
-![](img/Oauth2FluxoSolicitacao.png)
-Em resumo, Spring Security lida com a autenticação e autorização dentro da aplicação, enquanto OAuth2 é utilizado para delegar e gerenciar autorizações entre aplicações de forma segura e padronizada.
