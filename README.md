@@ -155,6 +155,7 @@ public class FluxoPedidoServiceTest {
 }
 ```
 > **explicação**.
+
 O teste confirmadoDeveConfirmarPedidoQueTenhaCodigoExistente verifica se o método confirmado da classe FluxoPedidoService confirma corretamente um pedido existente com base em seu código. Aqui está uma explicação curta do teste:
 
 - 1.7.1 Setup (setup method): Configura o ambiente de teste, inicializando variáveis e mockando o comportamento do serviço emissaoPedidoServices. O método buscaPorCodigo retorna um pedido existente para o código codigoExistente e lança uma exceção PedidoNaoEncontradoException para o código codigoInexistente.
