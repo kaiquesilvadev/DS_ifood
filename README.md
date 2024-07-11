@@ -384,6 +384,8 @@ Antes de começar, certifique-se de ter os seguintes pré-requisitos:
 
 - **STS - Spring Tool Suite:** Embora não seja obrigatório, o uso do Spring Tool Suite (STS) pode facilitar o desenvolvimento de aplicativos Spring Boot. Você pode baixar o STS em [https://spring.io/tools](https://spring.io/tools).
 
+- **Ferramenta de Versionamento de Código:** É necessário utilizar uma ferramenta para versionar o código, como o Git. Instale o Git no seu sistema e configure-o. Você pode baixar o Git em [https://git-scm.com/](https://git-scm.com/).
+
 - **Conta na AWS:** Você precisará de uma conta na AWS para acessar os serviços da Amazon, como o S3. Crie uma conta na AWS se ainda não tiver uma.
 
 - **Chave de Acesso AWS S3:** Gere uma chave de acesso e uma chave secreta na AWS para usar o serviço S3. Você pode seguir as instruções em [Gerar Chaves de Acesso](https://docs.aws.amazon.com/pt_br/IAM/latest/UserGuide/id_credentials_access-keys.html) para criar essas chaves.
