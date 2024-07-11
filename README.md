@@ -267,4 +267,19 @@ recursos para que possam ser navegados através da api root "/".
 
 Hypermedia são recursos que adicionam links para outros recursos, como no exemplo do a href em HTML.  
 Também existem formatos para recursos de hypermedia no Spring, como por exemplo o Hypertext Application Language HAL  
-[documentação](https://stateless.group/hal_specification.html)   
+[documentação](https://stateless.group/hal_specification.html)
+
+#### 1.14 Evoluindo e versionando a API
+
+O versionamento de API (API versioning) refere-se à prática de gerenciar e controlar diferentes versões de uma API oferecida por um serviço ou aplicação. Isso é feito para garantir compatibilidade entre diferentes clientes que consomem a API, enquanto permite que a API evolua ao longo do tempo com novos recursos, correções de bugs e melhorias.
+
+> Existem várias abordagens para versionar APIs:
+
+- 1.14.1 **URL-based Versioning:** Inclui a versão diretamente na URL da API, por exemplo, **/api/v1/resource** e **/api/v2/resource.** É simples de implementar e entender, mas pode poluir a URL.
+- 1.14.2 **Header-based Versioning:** A versão é especificada no cabeçalho da requisição HTTP (por exemplo, **Accept** ou **Custom** headers). Isso mantém a URL limpa, mas requer suporte explícito nos clientes para interpretar o cabeçalho de versão.
+- 1.14.3 **Query Parameter-based Versioning:** A versão é passada como um parâmetro de consulta na URL, como **/api/resource?version=1.** É simples de implementar, mas pode ter problemas de cache e não é tão comumente utilizado.
+- 1.14.3 **Media Type-based Versioning (Content Negotiation):** A versão é determinada pelo tipo de mídia especificado na requisição (**Content-Type** e **Accept headers**). Isso permite negociação automática da versão da API, mas pode ser complexo de implementar e gerenciar.
+
+Cada abordagem tem suas vantagens e desvantagens, e a escolha depende das necessidades específicas do projeto e das melhores práticas adotadas pela equipe de desenvolvimento.
+
+
