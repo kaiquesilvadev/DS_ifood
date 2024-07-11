@@ -18,8 +18,8 @@ Este projeto é um mini sistema baseado no iFood e tem como objetivo me ajudar  
 - 1.8  Boas práticas e técnicas para APIs
 - 1.9  Modelagem avançada e implementação da API
 - 1.10 Upload e download de arquivos
-- 1.11 E-mails transacionais e Domain Events
-- 1.12 Documentação da API com OpenAPI, Swagger UI e SpringFox
+- 1.11 E-mails transacionais
+- 1.12 Documentação da API com OpenAPI, Swagger
 - 1.13 Discoverability e HATEOAS A Glória do REST
 - 1.14 Evoluindo e versionando a API
 - 1.15 Logging
@@ -243,3 +243,28 @@ Método de callback do JPA, é executado em alguns eventos do ciclo de vida das 
 #### 1.10 Upload e download de arquivos
 
 Amazon S3 é o serviço de armazenamento de arquivos da amazon IAM é o serviço de gerenciador de usuários e acessos. Para acessar os arquivos no S3 é preciso associar às permissões de segurança e criar as chaves de acesso. A Amazon disponbiliza uma SDK java para gerenciamento do serviço S3, para adicionar essa SDK basta incluir as dependências dela no pom do projeto, ficam disponíveis no maven
+
+#### 1.11 E-mails transacionais
+
+**E-mails Transacionais:** São e-mails automáticos enviados como resposta a uma ação específica do usuário, como confirmações de pedidos, redefinições de senha ou atualizações de conta. Eles são projetados para serem altamente relevantes e oportunos, geralmente disparados por eventos específicos dentro de um sistema.
+
+#### 1.12 Documentação da API com OpenAPI, Swagger 
+
+Dosumentação com Open API 2 
+Spring Fox gera o JSON da com as definições da API  
+Swagger UI gera a renderização da documentação através do JSON em um HTML  
+O que o swagger-ui faz é uma requisição no endpoint /v2/api-docs gera o JSON e através desse JSON renderiza o HTML visualmente para a documentação da API  
+A configuração @Import(BeanValidatorPluginsConfiguration.class) que valida as anotações do javax validation e coloca um * vermelho na frente  
+só funciona quando a propriedade não é anotada com o @ApiModelProperty, porque o @ApiModelProperty já tem um required false por default, nesse caso  
+ele sobrescreve a configuração, para essas propriedades anotadas é preciso setar o required true manualmente
+
+#### 1.13 Discoverability e HATEOAS A Glória do REST
+
+HATEOAS Hypertext As The Engine Of Application State
+Discoverability é a capacidade que a API tem de deixar que o consumidor acesse os recursos sem necessáriamente conhecer os endpoints, criando links entre os  
+recursos para que possam ser navegados através da api root "/".  
+![](/img/discoverabilityExemplo1.png)
+
+Hypermedia são recursos que adicionam links para outros recursos, como no exemplo do a href em HTML.  
+Também existem formatos para recursos de hypermedia no Spring, como por exemplo o Hypertext Application Language HAL  
+[documentação](https://stateless.group/hal_specification.html)   
