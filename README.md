@@ -316,6 +316,63 @@ Spring Security pode ser configurado para integrar e suportar o OAuth2, fornecen
 ![](img/Oauth2FluxoSolicitacao.png)
 Em resumo, Spring Security lida com a autenticação e autorização dentro da aplicação, enquanto OAuth2 é utilizado para delegar e gerenciar autorizações entre aplicações de forma segura e padronizada.
 
+#### 1.17 OAuth2 avançado com JWT e controle de acesso
+
+OAuth2 é um protocolo de autorização que permite que aplicações obtenham acesso limitado a recursos de um servidor HTTP em nome de um proprietário de recurso. O JWT (JSON Web Token) é um padrão aberto que define uma forma compacta e autossuficiente para transmitir informações com segurança entre as partes como um objeto JSON. Integrar OAuth2 com JWT pode proporcionar um mecanismo seguro e eficiente para autenticação e autorização.
+
+> Como Funciona
+
+**1.17.1 Autenticação e Emissão de Token**
+
+- O cliente solicita um token de acesso enviando suas credenciais ao servidor de autenticação.
+- O servidor de autenticação verifica as credenciais e, se válidas, emite um JWT.
+- O JWT contém informações (claims) sobre o usuário e a autorização, e é assinado digitalmente para garantir sua integridade.
+
+**1.17.2 Uso do Token**
+
+- O cliente envia o JWT com cada requisição ao servidor de recursos.
+- O servidor de recursos valida o JWT verificando a assinatura e a validade do token.
+- Se o JWT for válido, o servidor de recursos concede acesso aos recursos solicitados com base nas informações contidas no token.
+
+**1.17.3 Controle de Acesso Baseado em Roles**
+
+> Controle de Acesso Baseado em Roles
+
+
+Anotando Métodos ou Controladores com **@PreAuthorize**
+Para aplicar controle de acesso baseado em roles, você pode usar a anotação **@PreAuthorize** nos seus métodos de controlador. Esta anotação permite que você especifique expressões de segurança complexas baseadas nas roles ou permissões do usuário autenticado.
+
+> Por exemplo:
+
+- **@PreAuthorize("hasRole('ADMIN')")** permite o acesso ao método apenas para usuários com a role ADMIN.
+- **@PreAuthorize("hasRole('USER')")** permite o acesso ao método apenas para usuários com a role USER.
+
+```java
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+public class MyController {
+
+    @GetMapping("/admin")
+    @PreAuthorize("hasRole('ADMIN')")
+    public String adminAccess() {
+        return "Access granted to admin!";
+    }
+
+    @GetMapping("/user")
+    @PreAuthorize("hasRole('USER')")
+    public String userAccess() {
+        return "Access granted to user!";
+    }
+}
+```
+Neste exemplo acima:
+
+- O método adminAccess só pode ser acessado por usuários que possuem a role ADMIN.
+- O método userAccess só pode ser acessado por usuários que possuem a role USER.
+
 
 ## 2 Pré-requisitos
 
