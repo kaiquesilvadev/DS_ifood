@@ -312,6 +312,38 @@ Spring Security e OAuth2 são tecnologias amplamente utilizadas para garantir a 
 
 > *Relação entre Spring Security e OAuth2*
 
+
+
+## 2 Pré-requisitos
+
+Antes de começar, certifique-se de ter os seguintes pré-requisitos:
+
+- **Conhecimento básico de Spring Boot:** É recomendado ter familiaridade com o framework Spring Boot para entender melhor os exemplos e os conceitos abordados neste projeto.
+
+- **JDK 17:** É necessário ter o JDK 17 instalado no seu sistema. Certifique-se de configurar corretamente as variáveis de ambiente `JAVA_HOME` e incluir o JDK no `PATH`.
+
+- **STS - Spring Tool Suite:** Embora não seja obrigatório, o uso do Spring Tool Suite (STS) pode facilitar o desenvolvimento de aplicativos Spring Boot. Você pode baixar o STS em [https://spring.io/tools](https://spring.io/tools).
+
+- **Conta na AWS:** Você precisará de uma conta na AWS para acessar os serviços da Amazon, como o S3. Crie uma conta na AWS se ainda não tiver uma.
+
+- **Chave de Acesso AWS S3:** Gere uma chave de acesso e uma chave secreta na AWS para usar o serviço S3. Você pode seguir as instruções em [Gerar Chaves de Acesso](https://docs.aws.amazon.com/pt_br/IAM/latest/UserGuide/id_credentials_access-keys.html) para criar essas chaves.
+
+- **Conta no SendGrid:** Crie uma conta no SendGrid para enviar emails através do seu aplicativo Spring Boot. Você pode se inscrever em [SendGrid](https://sendgrid.com/).
+
+- **Chave API do SendGrid:** Gere uma chave API no SendGrid para autenticar seu aplicativo. Siga as instruções em [Criar Chave API](https://docs.sendgrid.com/ui/account-and-settings/api-keys) para gerar a chave.
+
+Depois de gerar as chaves, você deve configurá-las no seu arquivo `application.properties` ou `application.yml` da seguinte forma:
+
+```properties
+# Configurações AWS S3
+aws.access_key_id=${AWS_KEY:empty}
+aws.secret_access_key=${AWS_SECRET:empty}
+s3.bucket=${DSCATALOG_BUCKET_NAME:empty}
+s3.region=${DSCATALOG_BUCKET_REGION:sa-east-1}
+
+# Configuração SendGrid
+spring.sendgrid.api-key=${SENDGRID_API_KEY}
+
 Spring Security pode ser configurado para integrar e suportar o OAuth2, fornecendo um mecanismo robusto para implementar fluxos de autenticação e autorização baseados em OAuth2 em suas aplicações Spring. Combinados, eles permitem que aplicações forneçam um controle granular sobre quem pode acessar quais recursos, enquanto também garantem a segurança dos dados e operações.
 ![](img/Oauth2FluxoSolicitacao.png)
 Em resumo, Spring Security lida com a autenticação e autorização dentro da aplicação, enquanto OAuth2 é utilizado para delegar e gerenciar autorizações entre aplicações de forma segura e padronizada.
