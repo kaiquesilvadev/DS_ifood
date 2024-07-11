@@ -17,15 +17,14 @@ Este projeto é um mini sistema baseado no iFood e tem como objetivo me ajudar  
 - 1.7  Testes unitario
 - 1.8  Boas práticas e técnicas para APIs
 - 1.9  Modelagem avançada e implementação da API
-- 1.10 Modelagem de projeções, pesquisas e relatórios
-- 1.11 Upload e download de arquivos
-- 1.12 E-mails transacionais e Domain Events
-- 1.13 Documentação da API com OpenAPI, Swagger UI e SpringFox
-- 1.14 Discoverability e HATEOAS A Glória do REST
-- 1.15 Evoluindo e versionando a API
-- 1.16 Logging
-- 1.17 Segurança com Spring Security e OAuth2
-- 1.18 OAuth2 avançado com JWT e controle de acesso
+- 1.10 Upload e download de arquivos
+- 1.11 E-mails transacionais e Domain Events
+- 1.12 Documentação da API com OpenAPI, Swagger UI e SpringFox
+- 1.13 Discoverability e HATEOAS A Glória do REST
+- 1.14 Evoluindo e versionando a API
+- 1.15 Logging
+- 1.16 Segurança com Spring Security e OAuth2
+- 1.17 OAuth2 avançado com JWT e controle de acesso
 
 #### 1.1. Spring e Injeção de Dependências
 
@@ -214,3 +213,33 @@ SnakeCase - Usa todas as palavras em minúsculo com separação por underline ex
 No spring o padrão é lowerCammelCase, caso queira ser alterado basta adicionar em application.properties
 spring.jackson.property-naming-strategy=SNAKE_CASE, porém é recomendado manter o padrão do spring pois é 
 o mais comun utilizado com JSON.
+
+#### 1.9  Modelagem avançada e implementação da API
+
+Recurso de granularidade grossa é quando no retorno do JSON existem vários objetos aninnhados no mesmo recurso, como por exemplo, Restaurante e Endereços.
+Recurso de granularidade fina é quando cada recurso representa uma parte, por exemplo um recurso /restaurates/1 retorna apenas os dados do restaurante e outro sub-recurso /restaurantes/1/endereco retorna apenas o endereco do restaurante, assim dividos cada um em um recurso.
+
+Chatty API é uma API modelada com granularidade fina, seria Chatty (Tagarela) pelo fato de termos que fazer várias chamadas em recursos e sub-recursos nessa API.
+
+Chunky API é uma API modelada com granulairdade grossa, Chunky (Pedaço Grande), nesse caso o consumidor da API faz todas as operações em uma única requisição, exemplo ao criar o restaurante já vai com o endereço junto no POST.
+
+Os recursos da nossa API não necessáriamente precisam seguir os nomes dos domínios, podemos ter por exemplo um recurso chamado POST /notificacoes-restaurantes e nesse recurso passarmos um payload com um título e uma mensagem, não necessáriamente armazenando essas notificações na base, pode ser um envio de e-mail para todos os restaurantes por exemplo, e nesse caso não termos uma entidade Notificacao.
+
+Toda vez que tem alguma alteração em uma transação com @Transactional, o JPA faz a sincronização com o banco de dados, mesmo antes do repository.save, caso não aconteça nenhuma exception na transação, ao final é feito o commit e as alterações salvas na base, mesmo sem o save do repository, se ocorrer exception é feito um rollback.
+Para que o JPA não gerencie é preciso usar o método detach.
+
+Singleton Resource é o recurso único, por exemplo quando é feita uma requisição REST em /pedidos/1
+
+@OneToMany por default é Lazy
+@ManyToOne por default é eager
+
+cascade = CascadeType.ALL é usado para que o que for alterado em uma entidade se propague para a entidade relacionada, como por exemplo ao salvar um pedido, colocar o cascade nos itens para que os itens sejam salvos também.
+
+Entidade Rica: Possui métodos de negócio com lógicas específicas também, como por exemplo a entidade Pedido que possui os métodos para os cálculos dos valores, transição de pedido, etc...
+Entidade Anemica: Não tem nenhum método de negócio implementado.
+
+Método de callback do JPA, é executado em alguns eventos do ciclo de vida das entidades um dos eventos é o @PrePersist, ele vai fazer com que antes de persistir a entidade esse método seja executado, como no exemplo usado em Pedido gerarCodigo().
+
+#### 1.10 Upload e download de arquivos
+
+Amazon S3 é o serviço de armazenamento de arquivos da amazon IAM é o serviço de gerenciador de usuários e acessos. Para acessar os arquivos no S3 é preciso associar às permissões de segurança e criar as chaves de acesso. A Amazon disponbiliza uma SDK java para gerenciamento do serviço S3, para adicionar essa SDK basta incluir as dependências dela no pom do projeto, ficam disponíveis no maven
