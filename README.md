@@ -405,3 +405,48 @@ s3.region=${DSCATALOG_BUCKET_REGION:sa-east-1}
 
 # Configuração SendGrid
 spring.sendgrid.api-key=${SENDGRID_API_KEY}
+```
+## 3 Como Baixar e Configurar o Projeto
+
+Siga os passos abaixo para baixar e configurar o projeto em seu ambiente local:
+
+1. **Instalar o Git:**
+   Se você ainda não tem o Git instalado, baixe e instale-o a partir do site oficial: [https://git-scm.com/](https://git-scm.com/).
+
+2. **Clonar o Repositório:**
+   Abra o terminal ou prompt de comando e execute o seguinte comando para clonar o repositório do projeto:
+```bash
+   git clone https://github.com/kaiquesilvadev/DS_ifood.git
+```
+
+3. **Acessar o Diretório do Projeto:**
+ ```bash
+cd DS_ifood
+```
+4.  **Configurar as Variáveis de Ambiente:**
+
+Abra o arquivo **application.properties** ou **application.yml** localizado em src/main/resources.
+Adicione as seguintes configurações da AWS e SendGrid, substituindo os valores com as chaves que você gerou anteriormente:
+```properties
+# Configurações AWS S3
+aws.access_key_id=${AWS_KEY:empty}
+aws.secret_access_key=${AWS_SECRET:empty}
+s3.bucket=${DSCATALOG_BUCKET_NAME:empty}
+s3.region=${DSCATALOG_BUCKET_REGION:sa-east-1}
+
+# Configuração SendGrid
+spring.sendgrid.api-key=${SENDGRID_API_KEY}
+```
+
+5. **Importar e Executar o Projeto:**
+
+- Abra o Spring Tool Suite (STS).
+- Selecione File > Import.
+- Escolha Maven > Existing Maven Projects e clique em Next.
+- Navegue até o diretório onde você clonou o projeto (DS_ifood) e clique em Finish.
+- No STS, clique com o botão direito do mouse no projeto e selecione Run As > Spring Boot App.
+
+O projeto será iniciado e você poderá acessar o aplicativo conforme configurado. Certifique-se de ter todos os pré-requisitos instalados e configurados antes de iniciar o projeto.
+
+
+6. 
