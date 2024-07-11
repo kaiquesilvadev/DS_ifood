@@ -16,7 +16,7 @@ Este projeto é um mini sistema baseado no iFood e tem como objetivo me ajudar  
 - 1.6  Explorando mais do JPA e Hibernate
 - 1.7  Testes unitario
 - 1.8  Boas práticas e técnicas para APIs
-- 1.9 Modelagem avançada e implementação da API
+- 1.9  Modelagem avançada e implementação da API
 - 1.10 Modelagem de projeções, pesquisas e relatórios
 - 1.11 Upload e download de arquivos
 - 1.12 E-mails transacionais e Domain Events
@@ -164,7 +164,7 @@ O teste confirmadoDeveConfirmarPedidoQueTenhaCodigoExistente verifica se o méto
 
 O objetivo é garantir que o método confirmado da classe FluxoPedidoService corretamente confirma o status de um pedido existente quando o código é válido.
 
-#### 1.9 Boas práticas e técnicas para APIs**
+#### 1.8  Boas práticas e técnicas para APIs
 
 @Transactional: Essa anotação do sprint (org.springframework.transaction.annotation.Transactional) faz com que seja aberta uma transação na base de dados sempre que um método que manipula dados for chamado, a implementação do Spring Data JPA que é a classe SimpleJpaRepository já tem as operações como save, delete, update marcadas com @Transactional, porém como boa prática é interessante marcar os métodos dos nossos services que manipulam dados na base também, assim garantimos que não haja inconstência nos dados caso dê algúm problema e uma das operações e precise ser feito um rollback.
 Com a anotação, é aberta uma transação no momento da chamada do método no service por exemplo, e não apenas quando for para o repository, o spring data JPA gerencia essas transações e executa na base de dados de acordo com a fila de gerenciamento de transações que ele cria.
@@ -179,3 +179,36 @@ TimeZone é o fuso horário utilizado em cada região do globo terrestre de acor
 UTC é a referência de horário principal de onde todas as demais regiões do mundo se baseiam, coincide com o GMT.
 GMT é a TimeZone da linha principal do mundo (Prime Meridian ou Meridiano de Greenwich), é onde se inicia o TimeZone com 0, países que ficam à esqueda (Oeste) tem seus TimeZone's diminuídos em horas e países à direita (Leste) tem seus TimeZone's acrescidos em horas.
 ![](/img/WorldTimes.png)
+
+1 - Usar ISO-8601 para formatar data/hora, é um padrão bem definido de representação de datas e horas, evitando problemas principalmente quando existem TimeZones diferentes envolvidos na API. 
+ex: 2020-11-05T06:40:30Z, com o Z no final significa que está exatamente no UTC, sem nenhum offset, também pode ser especificado com o offset do UTC 2020-11-05T06:41:15-03:00 (nesse caso seria o horário seis e quarenta e um usando como referência o offset de Brasilia que é menos três horas).
+2 - A API deve aceitar qualquer TimeZone de entrada e converter para o TimeZone que ela está usando.
+3 - Armazene Data Hora sempre em UTC sem nenhum offset.
+4 - Retone a Data Hora em UTC, caso o consumidor queira mostrar em um TimeZone específico ele retorna no front.
+5 - Não inclua horário se não for necessário, é permitido armazenar apenas data.
+O trabalho de calcular o TimeZone geralmente é do Frontend, a api deve salvar e retornar sempre em UTC.
+
+DTO - Data Transfer Object, é o padrão usado para representação dos recursos, para que fique separado das classes de domínio.
+Eu posso ter mais de um DTO para representar o mesmo recurso, por exemplo, caso nesse projeto eu queira retornar um Restaurante com dados resumidos, posso criar um DTO de retorno específico para isso e um completo.
+
+@Bean - Quando é injetado algum componente que não faz parte do Spring, é preciso criar uma classe de configuração e uma instância com as anotações do spring, para que fiquem disponíveis sempre que o projeto inicia, como no caso do ModelMapper.
+
+Funcionamento do ModelMapper - Ele transforma todas as propriedades das classes em tokens, depois compara os tokens de origem e destino, seguindo as regras 1 - Os nomes de tokens de origem precisam ser iguais aos tokens de destino, 2 - Não importa a ordem em que os tokens estejam. 3 - O nome da propriedade de origem, deve ter ao menos um token de correspondência.
+Explicado na aula 11.15. Entendendo a estratégia padrão do ModelMapper para correspondência de propriedades
+
+~~~
+<!-- http://modelmapper.org/downloads/ -->  
+<dependency>   
+	<groupId>org.modelmapper</groupId>  
+	<artifactId>modelmapper</artifactId>  
+	<version>2.3.0</version> <!-- como o parent não tem o modelmapper, preciso especificar a versão  -->  
+</dependency>  
+~~~
+
+Após importar as dependências é preciso criar a classe de configuração ModelMapperBean.
+
+
+SnakeCase - Usa todas as palavras em minúsculo com separação por underline ex: valor_de_frete.
+No spring o padrão é lowerCammelCase, caso queira ser alterado basta adicionar em application.properties
+spring.jackson.property-naming-strategy=SNAKE_CASE, porém é recomendado manter o padrão do spring pois é 
+o mais comun utilizado com JSON.
