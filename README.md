@@ -180,21 +180,23 @@ UTC é a referência de horário principal de onde todas as demais regiões do m
 GMT é a TimeZone da linha principal do mundo (Prime Meridian ou Meridiano de Greenwich), é onde se inicia o TimeZone com 0, países que ficam à esqueda (Oeste) tem seus TimeZone's diminuídos em horas e países à direita (Leste) tem seus TimeZone's acrescidos em horas.
 ![](/img/WorldTimes.png)
 
-1 - Usar ISO-8601 para formatar data/hora, é um padrão bem definido de representação de datas e horas, evitando problemas principalmente quando existem TimeZones diferentes envolvidos na API. 
+1.8.1 - Usar ISO-8601 para formatar data/hora, é um padrão bem definido de representação de datas e horas, evitando problemas principalmente quando existem TimeZones diferentes envolvidos na API. 
 ex: 2020-11-05T06:40:30Z, com o Z no final significa que está exatamente no UTC, sem nenhum offset, também pode ser especificado com o offset do UTC 2020-11-05T06:41:15-03:00 (nesse caso seria o horário seis e quarenta e um usando como referência o offset de Brasilia que é menos três horas).
-2 - A API deve aceitar qualquer TimeZone de entrada e converter para o TimeZone que ela está usando.
-3 - Armazene Data Hora sempre em UTC sem nenhum offset.
-4 - Retone a Data Hora em UTC, caso o consumidor queira mostrar em um TimeZone específico ele retorna no front.
-5 - Não inclua horário se não for necessário, é permitido armazenar apenas data.
+1.8.2 - A API deve aceitar qualquer TimeZone de entrada e converter para o TimeZone que ela está usando.
+1.8.3 - Armazene Data Hora sempre em UTC sem nenhum offset.
+1.8.4 - Retone a Data Hora em UTC, caso o consumidor queira mostrar em um TimeZone específico ele retorna no front.
+1.8.5 - Não inclua horário se não for necessário, é permitido armazenar apenas data.
 O trabalho de calcular o TimeZone geralmente é do Frontend, a api deve salvar e retornar sempre em UTC.
 
-DTO - Data Transfer Object, é o padrão usado para representação dos recursos, para que fique separado das classes de domínio.
+1.8.6 DTO - Data Transfer Object, é o padrão usado para representação dos recursos, para que fique separado das classes de domínio.
 Eu posso ter mais de um DTO para representar o mesmo recurso, por exemplo, caso nesse projeto eu queira retornar um Restaurante com dados resumidos, posso criar um DTO de retorno específico para isso e um completo.
 
-@Bean - Quando é injetado algum componente que não faz parte do Spring, é preciso criar uma classe de configuração e uma instância com as anotações do spring, para que fiquem disponíveis sempre que o projeto inicia, como no caso do ModelMapper.
+1.8.7 @Bean - Quando é injetado algum componente que não faz parte do Spring, é preciso criar uma classe de configuração e uma instância com as anotações do spring, para que fiquem disponíveis sempre que o projeto inicia, como no caso do ModelMapper.
 
-Funcionamento do ModelMapper - Ele transforma todas as propriedades das classes em tokens, depois compara os tokens de origem e destino, seguindo as regras 1 - Os nomes de tokens de origem precisam ser iguais aos tokens de destino, 2 - Não importa a ordem em que os tokens estejam. 3 - O nome da propriedade de origem, deve ter ao menos um token de correspondência.
-Explicado na aula 11.15. Entendendo a estratégia padrão do ModelMapper para correspondência de propriedades
+1.8.8 Funcionamento do ModelMapper - Ele transforma todas as propriedades das classes em tokens, depois compara os tokens de origem e destino, seguindo as regras 1 - Os nomes de tokens de origem precisam ser iguais aos tokens de destino, 2 - Não importa a ordem em que os tokens estejam. 3 - O nome da propriedade de origem, deve ter ao menos um token de correspondência.
+Entendendo a estratégia padrão do ModelMapper para correspondência de propriedades
+
+https://modelmapper.org/user-manual/
 
 ~~~
 <!-- http://modelmapper.org/downloads/ -->  
