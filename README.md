@@ -14,18 +14,18 @@ Este projeto é um mini sistema baseado no iFood e tem como objetivo me ajudar  
 - 1.4  Tratamento e modelagem de erros da API
 - 1.5  Validações com Bean Validation
 - 1.6  Explorando mais do JPA e Hibernate
-- 1.8  Testes unitario
-- 1.9  Boas práticas e técnicas para APIs
-- 1.10 Modelagem avançada e implementação da API
-- 1.11 Modelagem de projeções, pesquisas e relatórios
-- 1.12 Upload e download de arquivos
-- 1.13 E-mails transacionais e Domain Events
-- 1.14 Documentação da API com OpenAPI, Swagger UI e SpringFox
-- 1.15 Discoverability e HATEOAS A Glória do REST
-- 1.16 Evoluindo e versionando a API
-- 1.17 Logging
-- 1.18 Segurança com Spring Security e OAuth2
-- 1.19 OAuth2 avançado com JWT e controle de acesso
+- 1.7  Testes unitario
+- 1.8  Boas práticas e técnicas para APIs
+- 1.9 Modelagem avançada e implementação da API
+- 1.10 Modelagem de projeções, pesquisas e relatórios
+- 1.11 Upload e download de arquivos
+- 1.12 E-mails transacionais e Domain Events
+- 1.13 Documentação da API com OpenAPI, Swagger UI e SpringFox
+- 1.14 Discoverability e HATEOAS A Glória do REST
+- 1.15 Evoluindo e versionando a API
+- 1.16 Logging
+- 1.17 Segurança com Spring Security e OAuth2
+- 1.18 OAuth2 avançado com JWT e controle de acesso
 
 #### 1.1. Spring e Injeção de Dependências
 
@@ -55,7 +55,7 @@ REST com Spring permite criar APIs web que utilizam HTTP para comunicação. Usa
 
 Para tratar e modelar erros em uma API REST com Spring, você pode usar @ControllerAdvice para centralizar o tratamento de exceções, criando respostas de erro padronizadas. Crie exceções personalizadas para diferentes tipos de erros e use uma classe de resposta de erro para formatar as mensagens de erro. Isso garante que a API retorne respostas de erro consistentes e informativas.
 
-> exemplo de uso 
+> **exemplo de uso** 
 
 ```java
 @ControllerAdvice
@@ -82,7 +82,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 
 Bean Validation, integrado ao Spring, facilita a validação de dados de entrada. Você usa anotações para definir regras de validação diretamente nas classes do modelo. Aqui está um exemplo curto:
 
-> exemplo de uso 
+> **exemplo de uso**
 ```java
 @Getter
 @Setter
@@ -102,11 +102,11 @@ public class CidadeDtoRequest {
 #### 1.6  Explorando mais do JPA e Hibernate
 join fetch no jpql serve para que apenas uma consulta seja feita retornando todos os relacionamentos de uma só vez, ao contrário da consulta sem o fetch que faz vários selects separadamente.
 
-> Exemplo de output sem o join fetch em get /pedidos
+> **Exemplo de output sem o join fetch em get /pedidos**
 ![](/img/getPedidosSemJoinFetch.png)
 
 
-> Exemplo de output com join fetch em jpql.
+> **Exemplo de output com join fetch em jpql.**
 ```java
 	@Query("from Pedido pedido "  
      + "join fetch pedido.usuarioCliente "
@@ -115,6 +115,53 @@ join fetch no jpql serve para que apenas uma consulta seja feita retornando todo
 	List<Pedido> buscarTodosResumido();
 ```
 ![](/img/getPedidosComJoinFetch.png)
+
+#### 1.7  Testes unitario
+
+Testes unitários são fundamentais para garantir a qualidade do código, pois validam o comportamento individual de cada parte do software de forma controlada e automatizada. Eles são uma parte essencial da prática de desenvolvimento ágil e contribuem significativamente para a confiabilidade e manutenibilidade de sistemas de software complexos.
+
+> **Exemplo de um teste unitario.**
+
+```java
+@ExtendWith(SpringExtension.class)
+public class FluxoPedidoServiceTest {
+
+    @InjectMocks
+    private FluxoPedidoService fluxoPedidoService;
+
+    @Mock
+    private EmissaoPedidoServices emissaoPedidoServices;
+
+    private Pedido pedidoExistente;
+    private String codigoExistente;
+    private String codigoInexistente;
+
+    @BeforeEach
+    void setup() throws Exception {
+        codigoExistente = "123456";
+        codigoInexistente = "654321";
+
+        pedidoExistente = PedidoMockFactory.createMockPedido();
+        Mockito.when(emissaoPedidoServices.buscaPorCodigo(codigoExistente)).thenReturn(pedidoExistente);
+        Mockito.doThrow(PedidoNaoEncontradoException.class).when(emissaoPedidoServices).buscaPorCodigo(codigoInexistente);
+    }
+
+    @Test
+    public void confirmadoDeveConfirmarPedidoQueTenhaCodigoExistente() {
+        fluxoPedidoService.confirmado(codigoExistente);
+
+        assertTrue(pedidoExistente.getStatusPedido() == StatusPedido.CONFIRMADO);
+    }
+}
+```
+> **explicação**
+O teste confirmadoDeveConfirmarPedidoQueTenhaCodigoExistente verifica se o método confirmado da classe FluxoPedidoService confirma corretamente um pedido existente com base em seu código. Aqui está uma explicação curta do teste:
+
+- 1.7.1 Setup (setup method): Configura o ambiente de teste, inicializando variáveis e mockando o comportamento do serviço emissaoPedidoServices. O método buscaPorCodigo retorna um pedido existente para o código codigoExistente e lança uma exceção PedidoNaoEncontradoException para o código codigoInexistente.
+
+- 1.7.2 Test (confirmadoDeveConfirmarPedidoQueTenhaCodigoExistente): Invoca o método confirmado do fluxoPedidoService com o código codigoExistente. Em seguida, verifica se o status do pedido retornado é CONFIRMADO, assegurando que o método confirmado funciona corretamente para pedidos que existem no sistema.
+
+O objetivo é garantir que o método confirmado da classe FluxoPedidoService corretamente confirma o status de um pedido existente quando o código é válido.
 
 #### 1.9 Boas práticas e técnicas para APIs**
 
