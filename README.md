@@ -448,5 +448,3 @@ spring.sendgrid.api-key=${SENDGRID_API_KEY}
 
 O projeto será iniciado e você poderá acessar o aplicativo conforme configurado. Certifique-se de ter todos os pré-requisitos instalados e configurados antes de iniciar o projeto.
 
-
-6. 
